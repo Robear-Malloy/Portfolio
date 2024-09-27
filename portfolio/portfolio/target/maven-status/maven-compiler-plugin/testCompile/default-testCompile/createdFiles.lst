@@ -1,0 +1,4 @@
+com\robear\portfolio\PortfolioApplicationTests.class
+com\robear\portfolio\unit\controller\HelloWorldControllerTest.class
+com\robear\portfolio\unit\controller\UserControllerTest.class
+com\robear\portfolio\integration\HelloWorldControllerITest.class
