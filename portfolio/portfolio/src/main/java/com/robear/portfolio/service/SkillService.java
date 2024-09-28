@@ -32,7 +32,10 @@ public class SkillService {
     }
 
     public List<Skill> getSkillsOfType(SkillType type) {
-        return skillRepository.findAll().stream().filter(e -> e.getType().equals(type)).collect(Collectors.toList());
+        return skillRepository.findAll()
+                .stream()
+                .filter(e -> e.getType().equals(type))
+                .collect(Collectors.toList());
     }
 
     public void deleteSkill(Long id) {
