@@ -1,5 +1,6 @@
 package com.robear.portfolio.controller;
 
+import com.robear.portfolio.controller.interfaces.ISkillController;
 import com.robear.portfolio.model.Skill;
 import com.robear.portfolio.enums.SkillType;
 import com.robear.portfolio.service.SkillService;
@@ -12,24 +13,27 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/skills")
-public class SkillController {
+public class SkillController implements ISkillController {
 
     @Autowired
     private SkillService skillService;
 
     @PostMapping
+    @Override
     public ResponseEntity<Skill> createSkill(@RequestBody Skill skill) {
         Skill newSkill = skillService.addSkill(skill);
         return new ResponseEntity<>(newSkill, HttpStatus.CREATED);
     }
 
     @GetMapping
+    @Override
     public ResponseEntity<List<Skill>> getAllSkills() {
         List<Skill> skills = skillService.getAllSkills();
         return new ResponseEntity<>(skills, HttpStatus.OK);
     }
 
     @GetMapping("/type/{type}")
+    @Override
     public ResponseEntity<List<Skill>> getSkillsByType(
             @PathVariable("type") int type) {
         SkillType skillType = SkillType.fromValue(type);
@@ -38,6 +42,7 @@ public class SkillController {
     }
 
     @GetMapping("/id/{id}")
+    @Override
     public  ResponseEntity<Skill> getSkillById(
             @PathVariable("id") Long id) {
         Skill skill = skillService.getSkillById(id);
@@ -45,6 +50,7 @@ public class SkillController {
     }
 
     @DeleteMapping("/id/{id}")
+    @Override
     public void deleteSkillById(
             @PathVariable("id") Long id)
     {
