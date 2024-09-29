@@ -32,10 +32,14 @@ public class SkillService {
     }
 
     public List<Skill> getSkillsOfType(SkillType type) {
+        return skillRepository.findByType(type);
+
+        /* Keeping this here for myself, this is how I could use Java Stream to handle it.
         return skillRepository.findAll()
                 .stream()
                 .filter(e -> e.getType().equals(type))
                 .collect(Collectors.toList());
+         */
     }
 
     public void deleteSkill(Long id) {
