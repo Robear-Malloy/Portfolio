@@ -1,7 +1,6 @@
 package com.robear.portfolio.controller.interfaces;
 
 import com.robear.portfolio.model.Skill;
-import com.robear.portfolio.enums.SkillType;
 import org.springframework.http.ResponseEntity;
 import java.util.List;
 
