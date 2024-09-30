@@ -24,4 +24,9 @@ public enum SkillType
         }
         throw new IllegalArgumentException("Invalid SkillType Value: " + value);
     }
+
+    public static int toInt(SkillType type)
+    {
+        return type.getValue();
+    }
 }

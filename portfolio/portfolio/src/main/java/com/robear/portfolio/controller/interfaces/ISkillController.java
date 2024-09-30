@@ -9,5 +9,5 @@ public interface ISkillController {
     ResponseEntity<List<Skill>> getAllSkills();
     ResponseEntity<List<Skill>> getSkillsByType(int type);
     ResponseEntity<Skill> getSkillById(Long id);
-    void deleteSkillById(Long id);
+    ResponseEntity<Void> deleteSkillById(Long id);
 }
