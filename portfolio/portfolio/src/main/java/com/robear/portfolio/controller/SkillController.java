@@ -27,11 +27,12 @@ public class SkillController implements ISkillController {
     @Override
     public ResponseEntity<Skill> createSkill(@RequestBody Skill skill) {
         try {
+            logger.info("Adding Skill: {}", skill);
             Skill newSkill = skillService.addSkill(skill);
             return new ResponseEntity<>(newSkill, HttpStatus.CREATED);
         } catch(Exception e) {
-            logger.error("Error Creating Skill: {}, Exception: {}, Exception Message: {}",
-                    skill, e, e.getMessage());
+            logger.error("Error Creating Skill: {}, Exception Message: {}",
+                    skill, e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -40,10 +41,11 @@ public class SkillController implements ISkillController {
     @Override
     public ResponseEntity<List<Skill>> getAllSkills() {
         try {
+            logger.info("Getting All Skills");
             List<Skill> skills = skillService.getAllSkills();
             return new ResponseEntity<>(skills, HttpStatus.OK);
         } catch (Exception e) {
-            logger.error("Error Getting Skills. Exception Message: {}", e.getMessage(), e);
+            logger.error("Error Getting Skills. Exception Message: {}", e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -58,11 +60,11 @@ public class SkillController implements ISkillController {
             return new ResponseEntity<>(skills, HttpStatus.OK);
         } catch (SkillNotFoundException e) {
             logger.warn("Attempted to Retrieve Type {}, but not found: {}",
-                    type, e.getMessage(), e);
+                    type, e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             logger.error("Error deleting skill with Type {}: {}",
-                    type, e.getMessage(), e);
+                    type, e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
@@ -81,7 +83,7 @@ public class SkillController implements ISkillController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             logger.error("Error Retrieving skill with ID {}: {}",
-                    id, e.getMessage(), e);
+                    id, e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -96,11 +98,11 @@ public class SkillController implements ISkillController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch(SkillNotFoundException e) {
             logger.warn("Attempted to Delete ID {}, but not found: {}",
-                    id, e.getMessage(), e);
+                    id, e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch(Exception e) {
             logger.error("Error deleting skill with ID {}: {}",
-                    id, e.getMessage(), e);
+                    id, e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
