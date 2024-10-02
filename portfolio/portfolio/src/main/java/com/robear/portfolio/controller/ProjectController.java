@@ -9,9 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,8 +22,10 @@ public class ProjectController implements IProjectController {
     @Autowired
     private ProjectService projectService;
 
+    @PostMapping
     @Override
-    public ResponseEntity<Project> createProject(@RequestBody Project project) {
+    public ResponseEntity<Project> createProject(
+            @RequestBody Project project) {
         try {
             logger.info("Adding Project: {}", project);
             Project newProject = projectService.addProject(project);
@@ -37,6 +37,7 @@ public class ProjectController implements IProjectController {
         }
     }
 
+    @GetMapping
     @Override
     public ResponseEntity<List<Project>> getAllProjects() {
         try {
@@ -50,8 +51,10 @@ public class ProjectController implements IProjectController {
         }
     }
 
+    @GetMapping("/id/{id}")
     @Override
-    public ResponseEntity<Project> getProjectById(Long id) {
+    public ResponseEntity<Project> getProjectById(
+            @PathVariable("id") Long id) {
         try {
             logger.info("Retrieving information for Project ID: {}", id);
             Project project = projectService.getProjectById(id);
@@ -67,6 +70,7 @@ public class ProjectController implements IProjectController {
         }
     }
 
+    @GetMapping("/featured")
     @Override
     public ResponseEntity<List<Project>> getFeaturedProjects() {
         try {
@@ -84,8 +88,10 @@ public class ProjectController implements IProjectController {
         }
     }
 
+    @DeleteMapping("/id/{id}")
     @Override
-    public ResponseEntity<Void> deleteProjectById(Long id) {
+    public ResponseEntity<Void> deleteProjectById(
+            @PathVariable("id") Long id) {
         try {
             logger.info("Deleting Project ID: {}", id);
             projectService.deleteProject(id);
@@ -101,8 +107,10 @@ public class ProjectController implements IProjectController {
         }
     }
 
+    @PutMapping("/id/{id}")
     @Override
-    public ResponseEntity<Project> updateProjectById(Long id, Project project) {
+    public ResponseEntity<Project> updateProjectById(
+            @PathVariable("id") Long id, @RequestBody Project project) {
         try {
             logger.info("Updating Project Info: {} For Project ID: {}", project, id);
             Project newProject = projectService.updateProject(id, project);
@@ -118,8 +126,10 @@ public class ProjectController implements IProjectController {
         }
     }
 
+    @PatchMapping("/featured/{id}")
     @Override
-    public ResponseEntity<Project> setProjectIsFeatured(Long id, Boolean isFeatured) {
+    public ResponseEntity<Project> setProjectIsFeatured(
+            @PathVariable("id") Long id, @RequestParam Boolean isFeatured) {
         try {
             logger.info("");
             Project newProject = projectService.setFeatured(id, isFeatured);

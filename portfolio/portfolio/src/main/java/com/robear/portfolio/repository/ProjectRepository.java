@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ProjectRepository extends JpaRepository<Project, Long> {
-    @Query("SELECT p FROM Project p WHERE isFeatured = 1")
+    @Query("SELECT p FROM Project p WHERE p.isFeatured = true")
     List<Project> findFeatured();
-
 }

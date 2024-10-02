@@ -1,11 +1,13 @@
 package com.robear.portfolio.model;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 
+@Entity
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,10 +23,6 @@ public class Project {
     @Column(name = "description")
     private String description;
 
-    @Basic(optional = false)
-    @Column(name = "is_featured")
-    private Boolean isFeatured;
-
     @Column(name = "repo")
     private String repoLink;
 
@@ -33,6 +31,10 @@ public class Project {
 
     @Column(name = "photo")
     private String photoFile;
+
+    @Basic(optional = false)
+    @Column(name = "is_featured")
+    private Boolean isFeatured;
 
     public Long getId() {
         return id;
