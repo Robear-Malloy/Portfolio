@@ -44,6 +44,10 @@ public class ProjectController implements IProjectController {
             logger.info("Getting all Projects");
             List<Project> projects = projectService.getAllProjects();
             return new ResponseEntity<>(projects, HttpStatus.OK);
+        } catch (ProjectNotFoundException e) {
+            logger.warn("No Projects Found. Exception: {}",
+                    e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             logger.error("Error returning all projects. Exception: {}",
                     e.getMessage());
@@ -101,7 +105,7 @@ public class ProjectController implements IProjectController {
                     id, e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            logger.error("",
+            logger.error("Encounted Error Deleting Project ID: {}. Exception: {}",
                     id, e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

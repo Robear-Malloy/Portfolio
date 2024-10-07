@@ -37,7 +37,16 @@ public class ProjectService implements IProjectService {
     public List<Project> getAllProjects() {
         try {
             logger.info("Getting all projects from database");
-            return projectRepository.findAll();
+            List<Project> projects = projectRepository.findAll();
+
+            if (projects.isEmpty()) {
+                throw new ProjectNotFoundException("");
+            }
+
+            return projects;
+        } catch (ProjectNotFoundException e) {
+            logger.warn("No Projects found in Database");
+            throw e;
         } catch (Exception e) {
             logger.error("Unable to retrieve all projects");
             throw new RuntimeException("Error while retrieving all projects");
@@ -64,7 +73,7 @@ public class ProjectService implements IProjectService {
         try {
             logger.info("Retrieving All Featured Projects.");
             List<Project> featuredProjects = projectRepository.findAll();
-            if (featuredProjects == null)
+            if (featuredProjects.isEmpty())
             {
                 logger.warn("Unable to find any featured projects");
                 throw new ProjectNotFoundException(true);
