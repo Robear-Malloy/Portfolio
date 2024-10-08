@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -27,42 +26,113 @@ public class EducationController implements IEducationController {
     @Override
     public ResponseEntity<Education> createEducation(
             @RequestBody Education education) {
-        Education res = educationService.addEducation(education);
-        return new ResponseEntity<>(res, HttpStatus.OK);
+        try {
+            logger.info("Creating Education: {}",
+                    education);
+            Education result = educationService.addEducation(education);
+            return new ResponseEntity<>(result, HttpStatus.CREATED);
+        } catch (Exception e) {
+            logger.error("Error Creating Education: {}. Exception: {}",
+                    education, e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping
     @Override
     public ResponseEntity<List<Education>> getAllEducation() {
-        List<Education> educations = Collections.EMPTY_LIST;
-        return new ResponseEntity<>(educations , HttpStatus.OK);
+        try {
+            logger.info("Getting All Education Records");
+            List<Education> result = educationService.getAllEducation();
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (EducationNotFoundException e) {
+            logger.warn("No Education Records Found. Exception: {}",
+                    e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            logger.error("Error occurred while retrieving education. Exception {}",
+                    e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/{id}")
     @Override
     public ResponseEntity<Education> getEducationById(
             @PathVariable("id") Long id) {
-        return new ResponseEntity<>(new Education(), HttpStatus.OK);
+        try {
+            logger.info("Retrieving Education Information For ID: {}",
+                    id);
+            Education result = educationService.getEducationById(id);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (EducationNotFoundException e) {
+            logger.warn("No Education Records Found for ID: {}. Exception: {}",
+                    id, e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            logger.error("Error Retrieving Education ID: {}. Exception: {}",
+                    id, e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PutMapping("/{id}")
     @Override
     public ResponseEntity<Education> updateEducationById(
             @PathVariable("id") Long id, @RequestBody Education education) {
-        return new ResponseEntity<>(new Education(), HttpStatus.OK);
+        try {
+            logger.info("Updating Education ID: {}, With Data: {}",
+                    id, education);
+            Education result = educationService.updateEducationById(id, education);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (EducationNotFoundException e) {
+            logger.warn("No Education Records Found with ID: {}. Exception: {}",
+                    id, e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e){
+            logger.error("Error Occurred While Updating Education ID: {}. Exception: {}",
+                    id, e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PatchMapping("/gpa/{id}")
     @Override
     public ResponseEntity<Education> updateGpaById(
             @PathVariable("id") Long id, @RequestBody Float gpa) {
-        return new ResponseEntity<>(new Education(), HttpStatus.OK);
+        try {
+            logger.info("Updating Education ID: {} to a GPA: {}",
+                    id, gpa);
+            Education result = educationService.updateGpaById(id, gpa);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (EducationNotFoundException e) {
+            logger.warn("No Education Found to Update GPA for ID: {}. Exception: {}",
+                    id, e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            logger.error("Error Occurred While Updating GPA for ID: {}. Exception: {}",
+                    id, e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping("/{id}")
     @Override
     public ResponseEntity<Void> deleteEducation(
             @PathVariable Long id) {
-        return new ResponseEntity<>(HttpStatus.OK);
+        try {
+            logger.info("Deleting Education ID: {}",
+                    id);
+            educationService.deleteEducation(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (EducationNotFoundException e) {
+            logger.warn("No Education Records to Delete Found with ID: {}. Exception: {}",
+                    id, e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e){
+            logger.error("Error Occurred While Deleting Education ID: {}. Exception: {}",
+                    id, e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
