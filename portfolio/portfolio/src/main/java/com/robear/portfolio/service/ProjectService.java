@@ -40,7 +40,7 @@ public class ProjectService implements IProjectService {
             List<Project> projects = projectRepository.findAll();
 
             if (projects.isEmpty()) {
-                throw new ProjectNotFoundException("");
+                throw new ProjectNotFoundException("No projects found in database");
             }
 
             return projects;
@@ -59,9 +59,11 @@ public class ProjectService implements IProjectService {
             logger.info("Retrieving Project DB Record for ID: {}", id);
             return projectRepository.findById(id).
                     orElseThrow(() -> {
-                        logger.warn("Project not found with ID: {}", id);
                         return new ProjectNotFoundException(id);
                     });
+        } catch (ProjectNotFoundException e) {
+            logger.warn("Project not found with ID: {}", id);
+            throw e;
         } catch (Exception e) {
             logger.error("Unable to retrieve Project ID: {}", id);
             throw new RuntimeException("Error while retrieving project");
@@ -72,13 +74,14 @@ public class ProjectService implements IProjectService {
     public List<Project> getFeaturedProjects() {
         try {
             logger.info("Retrieving All Featured Projects.");
-            List<Project> featuredProjects = projectRepository.findAll();
-            if (featuredProjects.isEmpty())
-            {
-                logger.warn("Unable to find any featured projects");
+            List<Project> featuredProjects = projectRepository.findFeatured();
+            if (featuredProjects.isEmpty()) {
                 throw new ProjectNotFoundException(true);
             }
             return featuredProjects;
+        } catch (ProjectNotFoundException e) {
+            logger.warn("Unable to find any featured projects");
+            throw e;
         } catch (Exception e) {
             logger.error("Unable to retrieve featured projects");
             throw new RuntimeException("Error while retrieving projects");
@@ -88,10 +91,10 @@ public class ProjectService implements IProjectService {
     @Override
     public Project updateProject(Long id, Project project) {
         try {
-            logger.info("");
+            logger.info("Updating project information");
 
             Project existingProject = projectRepository.findById(id)
-                    .orElseThrow(() -> new ProjectNotFoundException(""));
+                    .orElseThrow(() -> new ProjectNotFoundException(id));
 
             if (project.getTitle() != null && !project.getTitle().isEmpty()) {
                 existingProject.setTitle(project.getTitle());
@@ -111,7 +114,7 @@ public class ProjectService implements IProjectService {
 
             return projectRepository.save(existingProject);
         } catch (ProjectNotFoundException e) {
-            logger.warn("Project not found : {}", e.getMessage());
+            logger.warn("Project not found: {}", e.getMessage());
             throw e;
         } catch (Exception e) {
             logger.error("Error updating project ID: {}. Exception: {}", id, e.getMessage());
@@ -125,7 +128,7 @@ public class ProjectService implements IProjectService {
             logger.info("Setting project ID: {} as featured: {}", id, isFeatured);
 
             Project existingProject = projectRepository.findById(id)
-                    .orElseThrow(() -> new ProjectNotFoundException(""));
+                    .orElseThrow(() -> new ProjectNotFoundException(id));
 
             existingProject.setIsFeatured(isFeatured);
 
