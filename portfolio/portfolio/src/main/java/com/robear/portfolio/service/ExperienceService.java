@@ -21,26 +21,100 @@ public class ExperienceService implements IExperienceService {
 
     @Override
     public Experience addExperience(Experience experience) {
-
+        try {
+            logger.info("Adding Experience to Database: {}", experience);
+            return experienceRepository.save(experience);
+        } catch (Exception e) {
+            logger.error("Error While Adding to Database Experience: {}", experience);
+            throw new RuntimeException("Error Adding Experinece");
+        }
     }
 
     @Override
     public List<Experience> getAllExperiences() {
-
+        try {
+            logger.info("Retrieving All Experiences from Database");
+            List<Experience> experiences = experienceRepository.findAll();
+            if (experiences.isEmpty()) {
+                throw new ExperienceNotFoundException("No Experiences Found in Database");
+            }
+            return experiences;
+        } catch (ExperienceNotFoundException e) {
+            logger.warn("No Experiences Found while Retrieving All");
+            throw e;
+        } catch (Exception e) {
+            logger.error("Error Occurred Retrieving All Experiences from Database");
+            throw new RuntimeException("Error Retrieving Experiences");
+        }
     }
 
     @Override
     public Experience getExperienceById(Long id) {
-
+        try {
+            logger.info("Retrieving Experience ID: {}",
+                    id);
+            Experience experience = experienceRepository.findById(id)
+                    .OrElseThrow(() -> {
+                return new ExperienceNotFoundException(id);
+            });
+            return experience;
+        } catch (ExperienceNotFoundException e) {
+            logger.warn("No Experience ID: {} Found in DB",
+                    id);
+            throw e;
+        } catch (Exception e) {
+            logger.error("Error Retrieving Experience ID: {} from DB",
+                    id);
+            throw new RuntimeException("Error Retrieving Experience ID");
+        }
     }
 
     @Override
     public Experience updateExperience(Long id, Experience experience) {
+        try {
+            logger.info("Updating Experience ID: {} With experience: {}",
+                    id, experience);
+            Experience result = getExperienceById(id);
 
+            if (experience.getCompany() != null && !experience.getCompany().isEmpty()) {
+                result.setCompany(project.getCompany());
+            }
+            if (experience.getPosition() != null && !experience.getPosition().isEmpty()) {
+                result.setPosition(experience.getPosition());
+            }
+            if (experience.getDateStarted() != null && !experience.getDateStarted().isEmpty()) {
+                result.setDateStarted(experience.getDateStarted());
+            }
+            if (experience.getDateEnded() != null && !experience.getDateEnded().isEmpty()) {
+                result.setDateEnded(experience.getDateEnded());
+            }
+
+            return result;
+        } catch (ExperienceNotFoundException e) {
+            logger.warn("No Experience Found to Update For ID: {}",
+                    id);
+            throw e;
+        } catch (Exception e) {
+            logger.error("Error Occurred Updating Experience ID: {}",
+                    id);
+            throw new RuntimeException("Error Updating Experience");
+        }
     }
 
     @Override
     public void deleteExperience(Long id) {
-
+        try {
+            Experience experience = getExperienceById(id);
+            experienceRepository.deleteById(id);
+            logger.info("Deleted Experience ID: {}", id)
+        } catch (ExperienceNotFoundException e) {
+            logger.warn("No Experience Found to Delete. ID: {}",
+                    id);
+            throw e;
+        } catch (Exception e) {
+            logger.error("Error Occurred Deleting Experience ID: {} from Database",
+                    id);
+            throw new RuntimeException("Error Deleting Experience");
+        }
     }
 }
