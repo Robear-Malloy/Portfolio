@@ -3,6 +3,7 @@ package com.robear.portfolio.service;
 import com.robear.portfolio.model.Education;
 import com.robear.portfolio.repository.EducationRepository;
 import com.robear.portfolio.service.interfaces.IEducationService;
+import com.robear.portfolio.exception.EducationNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +62,7 @@ public class EducationService implements IEducationService {
                     id);
             return educationRepository.findById(id)
                     .orElseThrow(() -> {
-                return new ProjectNotFoundException(id);
+                return new EducationNotFoundException(id);
             });
         } catch(EducationNotFoundException e) {
             logger.warn("No Education Found With ID: {}",
@@ -78,7 +79,7 @@ public class EducationService implements IEducationService {
     public Education updateEducationById(Long id, Education education) {
         try {
             logger.info("Updating Education ID: {} With Education Information: {}",
-                    gpa, education);
+                    id, education);
             Education result = getEducationById(id);
 
             if (education.getSchool() != null && !education.getSchool().isEmpty()) {
@@ -87,7 +88,7 @@ public class EducationService implements IEducationService {
             if (education.getDegree() != null && !education.getDegree().isEmpty()) {
                 result.setDegree(education.getDegree());
             }
-            if (education.getRepoLink() != null && !education.getRepoLink().isEmpty()) {
+            if (education.getGpa() != null && education.getGpa() != 0) {
                 result.setGpa(education.getGpa());
             }
             if (education.getDateStarted() != null && !education.getDateStarted().isEmpty()) {
