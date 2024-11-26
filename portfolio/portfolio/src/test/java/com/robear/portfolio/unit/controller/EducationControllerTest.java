@@ -247,7 +247,8 @@ public class EducationControllerTest {
 
     @Test
     public void testDeleteEducationWhenNoRecordFound() {
-        doThrow(new EducationNotFoundException("")).when(educationService).deleteEducation(education.getId());
+        doThrow(new EducationNotFoundException("")).when(educationService)
+                .deleteEducation(education.getId());
 
         ResponseEntity<Void> response =
                 educationController.deleteEducation(education.getId());
@@ -259,7 +260,8 @@ public class EducationControllerTest {
 
     @Test
     public void testDeleteEducationWhenThrowsException() {
-        doThrow(new RuntimeException("")).when(educationService).deleteEducation(education.getId());
+        doThrow(new RuntimeException("")).when(educationService)
+                .deleteEducation(education.getId());
 
         ResponseEntity<Void> response =
                 educationController.deleteEducation(education.getId());
