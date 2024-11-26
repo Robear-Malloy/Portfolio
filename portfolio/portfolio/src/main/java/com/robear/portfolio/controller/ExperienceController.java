@@ -1,6 +1,6 @@
 package com.robear.portfolio.controller;
 
-import com.robear.portfolio.interfaces.IExperienceController;
+import com.robear.portfolio.controller.interfaces.IExperienceController;
 import com.robear.portfolio.exception.ExperienceNotFoundException;
 import com.robear.portfolio.model.Experience;
 import com.robear.portfolio.service.ExperienceService;
@@ -30,17 +30,17 @@ public class ExperienceController implements IExperienceController {
             logger.info("Creating New Experience: {}",
                     experience);
             Experience result = experienceService.addExperience(experience);
-            return ResponseEntity<>(result, HttpStatus.CREATED);
+            return new ResponseEntity<>(result, HttpStatus.CREATED);
         } catch(Exception e) {
             logger.error("Error While Creating Experience: {}. Exception {}",
                     experience, e.getMessage());
-            return ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping
     @Override
-    public ResponesEntity<List<Experience>> getAllExperiences() {
+    public ResponseEntity<List<Experience>> getAllExperiences() {
         try {
             logger.info("Retrieving All Experiences");
             List<Experience> result = experienceService.getAllExperiences();
@@ -79,7 +79,7 @@ public class ExperienceController implements IExperienceController {
             @PathVariable("id") Long id, @RequestBody Experience experience) {
         try {
             logger.info("Updating ID: {} With Experience: {}", id, experience);
-            Experience result = experienceService.updateExperience(id);
+            Experience result = experienceService.updateExperience(id, experience);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (ExperienceNotFoundException e) {
             logger.warn("No Experience Found to Update with ID: {}. Exception: {}",

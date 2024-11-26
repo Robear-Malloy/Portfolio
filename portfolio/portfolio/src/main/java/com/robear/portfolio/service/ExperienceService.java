@@ -1,4 +1,4 @@
-package com.robear.portfolio.service
+package com.robear.portfolio.service;
 
 import com.robear.portfolio.exception.ExperienceNotFoundException;
 import com.robear.portfolio.model.Experience;
@@ -53,11 +53,10 @@ public class ExperienceService implements IExperienceService {
         try {
             logger.info("Retrieving Experience ID: {}",
                     id);
-            Experience experience = experienceRepository.findById(id)
-                    .OrElseThrow(() -> {
+            return experienceRepository.findById(id)
+                    .orElseThrow(() -> {
                 return new ExperienceNotFoundException(id);
             });
-            return experience;
         } catch (ExperienceNotFoundException e) {
             logger.warn("No Experience ID: {} Found in DB",
                     id);
@@ -65,7 +64,7 @@ public class ExperienceService implements IExperienceService {
         } catch (Exception e) {
             logger.error("Error Retrieving Experience ID: {} from DB",
                     id);
-            throw new RuntimeException("Error Retrieving Experience ID");
+            throw new RuntimeException("Error Retrieving Experience ID: " + id);
         }
     }
 
@@ -77,7 +76,7 @@ public class ExperienceService implements IExperienceService {
             Experience result = getExperienceById(id);
 
             if (experience.getCompany() != null && !experience.getCompany().isEmpty()) {
-                result.setCompany(project.getCompany());
+                result.setCompany(experience.getCompany());
             }
             if (experience.getPosition() != null && !experience.getPosition().isEmpty()) {
                 result.setPosition(experience.getPosition());
@@ -89,7 +88,7 @@ public class ExperienceService implements IExperienceService {
                 result.setDateEnded(experience.getDateEnded());
             }
 
-            return result;
+            return experienceRepository.save(result);
         } catch (ExperienceNotFoundException e) {
             logger.warn("No Experience Found to Update For ID: {}",
                     id);
@@ -106,7 +105,7 @@ public class ExperienceService implements IExperienceService {
         try {
             Experience experience = getExperienceById(id);
             experienceRepository.deleteById(id);
-            logger.info("Deleted Experience ID: {}", id)
+            logger.info("Deleted Experience ID: {}", id);
         } catch (ExperienceNotFoundException e) {
             logger.warn("No Experience Found to Delete. ID: {}",
                     id);

@@ -17,7 +17,7 @@ public class Experience {
 
     @Basic(optional = false)
     @Column(name = "company")
-    private String company
+    private String company;
 
     @Basic(optional = false)
     @Column(name = "posititon")
