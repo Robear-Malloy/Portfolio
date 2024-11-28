@@ -20,7 +20,7 @@ public class Experience {
     private String company;
 
     @Basic(optional = false)
-    @Column(name = "posititon")
+    @Column(name = "position")
     private String position;
 
     @Basic(optional = false)
