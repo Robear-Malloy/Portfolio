@@ -31,6 +31,8 @@ public class TechStackService implements ITechStackService {
                 throw new InvalidTechStackException("Cannot Add Project/Experience");
             }
             return techStackRepository.save(stack);
+        } catch (InvalidTechStackException e) {
+            throw e;
         } catch (Exception e) {
             logger.error("Error Creating new tech stack: {}, Error: {}",
                     stack, e.getMessage());

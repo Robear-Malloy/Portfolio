@@ -2,6 +2,7 @@ package com.robear.portfolio.controller;
 
 import com.robear.portfolio.controller.interfaces.ITechStackController;
 import com.robear.portfolio.enums.TechType;
+import com.robear.portfolio.exception.InvalidTechStackException;
 import com.robear.portfolio.exception.TechStackNotFoundException;
 import com.robear.portfolio.model.TechStack;
 import com.robear.portfolio.service.TechStackService;
@@ -32,6 +33,9 @@ public class TechStackController implements ITechStackController {
                     techStack);
             TechStack result = techStackService.createTechStack(techStack);
             return new ResponseEntity<>(result, HttpStatus.CREATED);
+        } catch (InvalidTechStackException e) {
+            logger.warn("Invalid tech stack entered");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             logger.error("Error creating a new tech stack: {}, Exception: {}",
                     techStack, e.getMessage());
