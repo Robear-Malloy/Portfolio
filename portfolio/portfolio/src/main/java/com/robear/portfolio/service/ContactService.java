@@ -1,9 +1,11 @@
 package com.robear.portfolio.service;
 
 import com.robear.portfolio.model.Contact;
+import com.robear.portfolio.model.Email;
 import com.robear.portfolio.repository.ContactRepository;
 import com.robear.portfolio.service.interfaces.IContactService;
 import com.robear.portfolio.exception.ContactNotFoundException;
+import com.robear.portfolio.util.EmailHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +17,18 @@ import java.util.List;
 public class ContactService implements IContactService {
     private static Logger logger = LoggerFactory.getLogger(ContactService.class);
     private final ContactRepository contactRepository;
+    private final EmailHelper emailHelper;
 
     @Autowired
-    public ContactService(ContactRepository contactRepository) { this.contactRepository = contactRepository; }
+    public ContactService(ContactRepository contactRepository, EmailHelper emailHelper) {
+        this.contactRepository = contactRepository;
+        this.emailHelper = emailHelper; }
 
     @Override
     public Contact addContact(Contact contact) {
         try {
             logger.info("Adding Contact: {} to Database", contact);
+            //sendEmail(contact);
             return contactRepository.save(contact);
         } catch (Exception e) {
             logger.error("Error adding contact to the database");
@@ -76,5 +82,23 @@ public class ContactService implements IContactService {
             logger.error("Error Toggling Pending Flag");
             throw new RuntimeException("Error Adding Contact to Database");
         }
+    }
+
+    private void sendEmail(Contact contact) {
+        StringBuilder body = new StringBuilder();
+        body.append("<html>")
+                .append("<body>")
+                .append("<h1>Pending Contacts</h1>")
+                .append("<p><b>Name:</b> ").append(contact.getName()).append("</p>")
+                .append("<p><b>Email:</b> ").append(contact.getEmail()).append("</p>")
+                .append("<p><b>Company:</b> ").append(contact.getCompany()).append("</p>")
+                .append("<p><b>Description:</b> ").append(contact.getDescription()).append("</p>")
+                .append("</body>")
+                .append("</html>");
+
+        Email email = new Email();
+        email.setSubject("[Important]: New Contact Reached Out");
+        email.setBody(body.toString());
+        emailHelper.sendEmail(email);
     }
 }
