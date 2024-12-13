@@ -18,7 +18,6 @@ public class HealthCheckController {
     public ResponseEntity<String> healthCheck() {
         try {
             // Add DB Connection Check when set up
-
             logger.info("Health Check: App Healthy");
             return ResponseEntity.ok("Application is health");
         } catch (Exception e) {
