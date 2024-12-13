@@ -74,6 +74,9 @@ public class ExperienceDescriptionController implements IExperienceDescriptionCo
             logger.info("Deleting Experience Description: {}", description);
             experienceDescriptionService.deleteExperienceDescription(description);
             return new ResponseEntity<>(HttpStatus.OK);
+        } catch (ExperienceDescriptionNotFoundException e) {
+            logger.warn("Unable to find a matching description to delete");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             logger.error("Error Deleting Experience Description: {}. Error: {}", description, e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
