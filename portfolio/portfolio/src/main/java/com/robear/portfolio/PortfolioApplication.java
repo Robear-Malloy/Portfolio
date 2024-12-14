@@ -2,6 +2,7 @@ package com.robear.portfolio;
 
 import java.util.Arrays;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,6 +13,12 @@ import org.springframework.context.annotation.Bean;
 public class PortfolioApplication {
 
 	public static void main(String[] args) {
+		Dotenv dotenv = Dotenv.load();
+
+		String emailPassword = dotenv.get("EMAIL_PASSWORD");
+
+		System.setProperty("EMAIL_PASSWORD", emailPassword);
+
 		SpringApplication.run(PortfolioApplication.class, args);
 	}
 
