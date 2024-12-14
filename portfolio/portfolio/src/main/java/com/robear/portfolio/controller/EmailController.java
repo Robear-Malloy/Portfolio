@@ -33,4 +33,11 @@ public class EmailController implements IEmailController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PostMapping("/test")
+    public ResponseEntity<Void> test() {
+        logger.info("Entering Test Email");
+        emailService.sendTestEmail();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

@@ -64,4 +64,11 @@ public class EmailService implements IEmailService {
             throw new RuntimeException();
         }
     }
+
+    public void sendTestEmail() {
+        Email email = new Email();
+        email.setSubject("Test Portfolio Email");
+        email.setBody("Test Text in Body");
+        emailHelper.sendEmail(email);
+    }
 }
