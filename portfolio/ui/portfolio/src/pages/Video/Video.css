@@ -1,0 +1,45 @@
+.video-page {
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+    color: #333;
+  }
+  
+  .video-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .video-header h1 {
+    font-size: 2.5rem;
+  }
+  
+  .video-header p {
+    font-size: 1.2rem;
+    color: #555;
+  }
+  
+  .video-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .video-item {
+    max-width: 400px;
+    text-align: center;
+  }
+  
+  .video-item iframe {
+    width: 100%;
+    height: 225px;
+    border: none;
+    border-radius: 10px;
+  }
+  
+  .video-item h3 {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    color: #2575fc;
+  }
+  
