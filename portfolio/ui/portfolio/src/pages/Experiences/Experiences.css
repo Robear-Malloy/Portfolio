@@ -1,0 +1,43 @@
+.experiences-page {
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+    color: #333;
+  }
+  
+  .experiences-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .experiences-header h1 {
+    font-size: 2.5rem;
+  }
+  
+  .experiences-header p {
+    font-size: 1.2rem;
+    color: #555;
+  }
+  
+  .experiences-list {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .experience-item {
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .experience-item h2 {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    color: #2575fc;
+  }
+  
+  .experience-item p {
+    font-size: 1rem;
+    color: #555;
+  }
+  
