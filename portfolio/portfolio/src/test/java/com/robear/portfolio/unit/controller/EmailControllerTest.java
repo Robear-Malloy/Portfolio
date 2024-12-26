@@ -30,7 +30,7 @@ public class EmailControllerTest {
     public void testSendEmailsWhenSuccessful() {
         doNothing().when(emailService).sendPendingEmails();
 
-        ResponseEntity<Void> response = emailController.SendEmails();
+        ResponseEntity<Void> response = emailController.sendEmails();
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         verify(emailService, times(1)).sendPendingEmails();
@@ -40,7 +40,7 @@ public class EmailControllerTest {
     public void testSendEmailsWhenThrowsException() {
         doThrow(new RuntimeException("Error Sending Emails")).when(emailService).sendPendingEmails();
 
-        ResponseEntity<Void> response = emailController.SendEmails();
+        ResponseEntity<Void> response = emailController.sendEmails();
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
         verify(emailService, times(1)).sendPendingEmails();
