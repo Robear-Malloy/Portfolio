@@ -1,6 +1,7 @@
 package com.robear.portfolio.controller;
 
 import com.robear.portfolio.controller.interfaces.IEmailController;
+import com.robear.portfolio.model.Email;
 import com.robear.portfolio.service.EmailService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,13 +24,26 @@ public class EmailController implements IEmailController {
 
     @Override
     @PostMapping("/sendPending")
-    public ResponseEntity<Void> SendEmails() {
+    public ResponseEntity<Void> sendEmails() {
         try {
             logger.info("Sending emails to all pending emails.");
             emailService.sendPendingEmails();
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Sending All Pending Emails");
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
+    @PostMapping("/contact")
+    public ResponseEntity<Void> sendContact(Email email) {
+        try {
+            logger.info("Sending contact email");
+            emailService.sendContactEmail(email);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Error sending the contact email");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

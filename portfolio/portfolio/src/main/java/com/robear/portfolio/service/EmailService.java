@@ -65,6 +65,36 @@ public class EmailService implements IEmailService {
         }
     }
 
+    @Override
+    public void sendContactEmail(Email email) {
+        try {
+            logger.info("Email was sent from Contact Section");
+
+            StringBuilder body = new StringBuilder();
+            body.append("<html><body>");
+            body.append("<h1>Pending Contacts</h1>");
+            body.append("<table border='1' style='border-collapse: collapse; width: 100%;'>");
+            body.append("<tr>")
+                    .append("<th>Name</th>")
+                    .append("<th>Email</th>")
+                    .append("<th>Company</th>")
+                    .append("<th>Description</th>")
+                    .append("<th>Date Sent</th>")
+                    .append("</tr>");
+
+            body.append("</table>");
+            body.append("</body></html>");
+
+            email.setSubject("[PORTFOLIO]: Contact Message");
+            email.setBody(body.toString());
+            emailHelper.sendEmail(email);
+
+        } catch (Exception e) {
+            logger.error("Error sending contact email.");
+            throw new RuntimeException();
+        }
+    }
+
     public void sendTestEmail() {
         Email email = new Email();
         email.setSubject("Test Portfolio Email");
