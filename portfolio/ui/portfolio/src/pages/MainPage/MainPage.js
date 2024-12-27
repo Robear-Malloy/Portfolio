@@ -1,21 +1,30 @@
-import React from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import './MainPage.css';
+import { ThemeContext } from '../../utils/ThemeContext';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
+import EducationSection from '../../components/Education/EducationSection';
+import Experience from '../../components/Experience/Experience';
+import Hero from '../../components/Hero/Hero';
+import Skills from '../../components/Skills/Skills';
+import Projects from '../../components/Projects/Projects';
+import Contact from '../../components/Contact/Contact';
 
 const MainPage = () => {
+  const { darkMode } = useContext(ThemeContext);
+ 
   return (
-    <div className="main-page">
-      <header className="hero-section">
-        <h1 className="hero-title">Welcome to My Portfolio</h1>
-        <p className="hero-subtitle">Showcasing my projects, experiences, and tutorials.</p>
-        <button className="cta-button">Explore More</button>
-      </header>
-      <section className="about-section">
-        <h2>About Me</h2>
-        <p>
-          Hi, I'm Robert Malloy, a passionate developer with a knack for creating engaging and functional
-          web applications. Check out my experiences, projects, and tutorials to learn more about my journey.
-        </p>
-      </section>
+    <div className={`main-page ${darkMode ? 'dark-mode' : 'light-mode'}`}>
+      <Header />
+      <Hero />
+      <Skills />
+      <section className="experience-education-section">
+        <Experience />
+        <EducationSection />
+      </section> 
+      <Projects />
+      <Contact />
+      <Footer />
     </div>
   );
 };

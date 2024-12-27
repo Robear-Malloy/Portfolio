@@ -1,0 +1,29 @@
+.experience-section 
+{
+  width: 48%; 
+}
+
+.experience-item
+{
+  margin-bottom: 20px;
+}
+
+.experience-section h3 {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.experience-section p {
+  font-size: 1rem;
+  margin: 5px 0;
+}
+
+.experience-section.light-mode {
+  background-color: #FFF5E6;
+  color: var(--text-light);
+}
+
+.experience-section.dark-mode {
+  background-color: #333333;
+  color: var(--text-dark);
+}
