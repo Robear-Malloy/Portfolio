@@ -1,9 +1,11 @@
 import React from 'react';
 import './Experiences.css';
+import Header from '../../components/Header/Header';
 
 const Experiences = () => {
   return (
     <div className="experiences-page">
+      <Header />
       <header className="experiences-header">
         <h1>My Experiences</h1>
         <p>A showcase of my professional journey and achievements.</p>

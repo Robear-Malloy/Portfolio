@@ -1,59 +1,51 @@
-/* General styles for the main page */
+/* Theme Variables */
+:root {
+  --background-light: #ffffff;
+  --text-light: #333333;
+  --background-dark: #1a1a1a;
+  --text-dark: #e0e0e0;
+  --accent-light: #FF8C00;
+  --accent-dark: #FFA500;
+  --hover-light: #ff7f00;
+  --hover-dark: #ff8c00;
+}
+
 .main-page {
-    font-family: 'Arial', sans-serif;
-    color: #333;
-    line-height: 1.6;
-  }
-  
-  /* Hero Section */
-  .hero-section {
-    background: linear-gradient(135deg, #6a11cb, #2575fc);
-    color: white;
-    text-align: center;
-    padding: 50px 20px;
-  }
-  
-  .hero-title {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-  }
-  
-  .hero-subtitle {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-  }
-  
-  .cta-button {
-    background-color: #ffffff;
-    color: #2575fc;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  
-  .cta-button:hover {
-    background-color: #2575fc;
-    color: white;
-  }
-  
-  /* About Section */
-  .about-section {
-    padding: 40px 20px;
-    text-align: center;
-  }
-  
-  .about-section h2 {
-    font-size: 2rem;
-    margin-bottom: 15px;
-  }
-  
-  .about-section p {
-    max-width: 600px;
-    margin: 0 auto;
-    font-size: 1rem;
-    color: #555;
-  }
-  
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.main-page.light-mode {
+  background-color: var(--background-light);
+  color: var(--text-light);
+}
+
+.main-page.dark-mode {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
+}
+
+.experience-education-section {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 40px 20px;
+}
+
+.learn-more-button {
+  padding: 10px 20px;
+  background-color: var(--accent-light);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 20px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.learn-more-button:hover {
+  background-color: var(--accent-dark);
+}
+

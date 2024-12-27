@@ -1,0 +1,141 @@
+/* Footer styling */
+.footer {
+    background-color: var(--footer-bg-color);
+    color: var(--footer-text-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    width: 100%;
+    position: relative;
+    border-top: 2px solid var(--footer-border-color);
+  }
+  
+  .footer-left,
+  .footer-center,
+  .footer-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+  }
+  
+  .footer-left {
+    position: absolute;
+    left: 20px;
+  }
+  
+  .footer-center {
+    gap: 15px;
+  }
+  
+  .footer-right {
+    position: absolute;
+    right: 20px;
+  }
+  
+  .footer-icon {
+    color: var(--footer-link-color);
+    text-decoration: none;
+    font-size: 1.2rem;
+    margin: 0 15px;
+  }
+  
+  .footer-icon:hover {
+    text-decoration: underline;
+  }
+  
+  .privacy-policy {
+    background: none;
+    border: none;
+    color: var(--footer-link-color);
+    cursor: pointer;
+    font-size: 1rem;
+    text-decoration: underline;
+  }
+  
+  .privacy-policy:hover {
+    color: var(--footer-link-hover-color);
+  }
+  
+  .footer-about {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    text-align: center;
+    color: var(--footer-about-text-color);
+  }
+  
+  .privacy-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .privacy-modal-content {
+    background-color: var(--modal-bg-color);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .privacy-modal-content h2 {
+    margin-bottom: 10px;
+    color: var(--text-color);
+  }
+  
+  .privacy-modal-content p {
+    margin-bottom: 20px;
+    color: var(--text-color);
+  }
+  
+  .privacy-modal-content button {
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .privacy-modal-content button:hover {
+    background-color: var(--button-hover-bg-color);
+  }
+  
+  /* Light mode variables */
+  :root {
+    --footer-bg-color: #f4f4f4;
+    --footer-text-color: #333;
+    --footer-link-color: #0077b5; /* Blue for links */
+    --footer-link-hover-color: #005582; /* Darker blue on hover */
+    --footer-about-text-color: #555;
+    --footer-border-color: #ddd;
+    --modal-bg-color: white;
+    --text-color: black;
+    --button-bg-color: #0077b5;
+    --button-text-color: white;
+    --button-hover-bg-color: #005582;
+  }
+  
+  /* Dark mode variables */
+  body.dark-mode {
+    --footer-bg-color: #333;
+    --footer-text-color: #f4f4f4;
+    --footer-link-color: #ffa500; /* Orange for links */
+    --footer-link-hover-color: #ff8c00; /* Darker orange on hover */
+    --footer-about-text-color: #bbb;
+    --footer-border-color: #555;
+    --modal-bg-color: #444;
+    --text-color: #f4f4f4;
+    --button-bg-color: #ffa500;
+    --button-text-color: #222;
+    --button-hover-bg-color: #ff8c00;
+  }
+  

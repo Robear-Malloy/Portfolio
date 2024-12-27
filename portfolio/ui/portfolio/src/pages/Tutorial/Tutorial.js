@@ -1,9 +1,11 @@
 import React from 'react';
 import './Tutorial.css';
+import Header from '../../components/Header/Header';
 
 const Tutorial = () => {
   return (
     <div className="tutorial-page">
+      <Header />
       <header className="tutorial-header">
         <h1>Tutorials</h1>
         <p>Learn new skills and techniques through my curated tutorials.</p>

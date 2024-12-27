@@ -1,0 +1,39 @@
+.education-section {
+    width: 48%;
+    padding: 20px;
+  }
+  
+  .education-section h3 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+  }
+  
+  .education-section p {
+    font-size: 1rem;
+    margin: 5px 0;
+  }
+  
+  .education-section ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .education-section li {
+    margin: 5px 0;
+  }
+  
+  /* Light Mode and Dark Mode for Education Section */
+  .education-section.light-mode {
+    background-color: #FFF5E6;
+    color: var(--text-light);
+  }
+  
+  .education-section.dark-mode {
+    background-color: #333333;
+    color: var(--text-dark);
+  }
+  
+  /* Education Item */
+  .education-item {
+    margin-bottom: 20px;
+  }
