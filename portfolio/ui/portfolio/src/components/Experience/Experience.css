@@ -1,29 +1,80 @@
-.experience-section 
-{
-  width: 48%; 
+.experience-section {
+  width: 60%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: #333;
+  font-family: 'Arial', sans-serif;
 }
 
-.experience-item
-{
+.section-title {
+  text-align: center;
+  font-size: 2rem;
   margin-bottom: 20px;
+  color: #2c3e50;
+  font-weight: bold;
 }
 
-.experience-section h3 {
-  font-size: 1.2rem;
+.experience-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.experience-item {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.experience-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.experience-position {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #34495e;
   margin-bottom: 5px;
 }
 
-.experience-section p {
+.experience-company {
+  font-size: 1.2rem;
+  color: #7f8c8d;
+  margin-bottom: 10px;
+}
+
+.experience-dates {
   font-size: 1rem;
-  margin: 5px 0;
+  color: #95a5a6;
 }
 
-.experience-section.light-mode {
-  background-color: #FFF5E6;
-  color: var(--text-light);
+.button-container {
+  text-align: center;
+  margin-top: 20px;
 }
 
-.experience-section.dark-mode {
-  background-color: #333333;
-  color: var(--text-dark);
+.learn-more-button {
+  background-color: var(--button-bg-color);
+  color: var(--button-text-color);
+  border: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
+
+.learn-more-button:hover {
+  background-color: var(--button-hover-bg-color);
+}
+
+.no-underline {
+  text-decoration: none;
+}
+

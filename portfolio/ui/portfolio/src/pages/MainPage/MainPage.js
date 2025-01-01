@@ -9,6 +9,7 @@ import Hero from '../../components/Hero/Hero';
 import Skills from '../../components/Skills/Skills';
 import Projects from '../../components/Projects/Projects';
 import Contact from '../../components/Contact/Contact';
+import AboutMe from '../../components/AboutMe/AboutMe';
 
 const MainPage = () => {
   const { darkMode } = useContext(ThemeContext);
@@ -18,11 +19,12 @@ const MainPage = () => {
       <Header />
       <Hero />
       <Skills />
-      <section className="experience-education-section">
+      <section className="experience-education-section" id="experience">
         <Experience />
-        <EducationSection />
+        <EducationSection/>
       </section> 
       <Projects />
+      <AboutMe />
       <Contact />
       <Footer />
     </div>

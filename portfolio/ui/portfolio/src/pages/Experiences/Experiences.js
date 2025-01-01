@@ -1,6 +1,7 @@
 import React from 'react';
 import './Experiences.css';
 import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
 
 const Experiences = () => {
   return (
@@ -20,6 +21,7 @@ const Experiences = () => {
           <p>Designed and implemented responsive user interfaces for e-commerce platforms.</p>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };

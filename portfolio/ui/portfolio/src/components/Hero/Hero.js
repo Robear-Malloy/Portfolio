@@ -12,10 +12,10 @@ const Hero = () => {
             I'm Robert Malloy, a curious software engineer who enjoys working across all areas of development—from embedded systems to web applications, REST APIs to tutorials. Explore my projects, and feel free to reach out if you'd like to chat!
             </p>
             <div className="cta-buttons">
-                <button className="cta-button" onClick={() => window.scrollTo({ top: document.getElementById('contact-section').offsetTop, behavior: 'smooth' })}>
+                <button className="cta-button" onClick={() => window.scrollTo({ top: document.getElementById('contact').offsetTop, behavior: 'smooth' })}>
                   Contact Me
                 </button>
-                <button className="cta-button" onClick={() => window.scrollTo({ top: document.getElementById('projects-section').offsetTop, behavior: 'smooth' })}>
+                <button className="cta-button" onClick={() => window.scrollTo({ top: document.getElementById('projects').offsetTop, behavior: 'smooth' })}>
                   Projects
                 </button>
             </div>

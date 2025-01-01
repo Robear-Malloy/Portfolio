@@ -1,45 +1,186 @@
 .video-page {
-    font-family: 'Arial', sans-serif;
-    padding: 20px;
-    color: #333;
-  }
-  
-  .video-header {
-    text-align: center;
-    margin-bottom: 40px;
-  }
-  
-  .video-header h1 {
-    font-size: 2.5rem;
-  }
-  
-  .video-header p {
-    font-size: 1.2rem;
-    color: #555;
-  }
-  
-  .video-gallery {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-  }
-  
-  .video-item {
-    max-width: 400px;
-    text-align: center;
-  }
-  
-  .video-item iframe {
-    width: 100%;
-    height: 225px;
-    border: none;
-    border-radius: 10px;
-  }
-  
-  .video-item h3 {
-    margin-top: 10px;
-    font-size: 1.2rem;
-    color: #2575fc;
-  }
-  
+  font-family: 'Arial', sans-serif;
+  padding-top: 20px;
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.video-page.light-mode {
+  background-color: var(--background-light);
+  color: var(--text-light);
+}
+
+.video-page.dark-mode {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
+}
+
+.video-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.video-header h1 {
+  font-size: 2.5rem;
+  color: var(--accent-light);
+}
+
+.video-header.light-mode h1 {
+  color: var(--accent-light);
+}
+
+.video-header.dark-mode h1 {
+  color: var(--accent-dark);
+}
+
+.video-header p {
+  font-size: 1.2rem;
+}
+
+.video-header.light-mode p {
+  color: var(--text-light);
+}
+
+.video-header.dark-mode p {
+  color: var(--text-dark);
+}
+
+.theme-toggle-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: var(--accent-light);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.theme-toggle-button:hover {
+  background-color: var(--hover-light);
+}
+
+.theme-toggle-button.dark-mode {
+  background-color: var(--accent-dark);
+}
+
+.theme-toggle-button.dark-mode:hover {
+  background-color: var(--hover-dark);
+}
+
+.video-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.video-item {
+  max-width: 800px;
+  text-align: center;
+  color: var(--text-light);
+  padding: 20px;
+  margin-bottom: 50px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.video-item.light-mode {
+  background-color: var(--background-light);
+}
+
+.video-item.dark-mode {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
+}
+
+.video-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.video-item iframe {
+  width: 100%;
+  height: 450px;
+  border: none;
+  border-radius: 10px;
+}
+
+.video-item h3 {
+  margin-top: 10px;
+  font-size: 1.8rem;
+  color: var(--accent-light);
+}
+
+.video-item.dark-mode h3 {
+  color: var(--accent-dark);
+}
+
+.video-item p {
+  font-size: 1.2rem;
+}
+
+.video-item.light-mode p {
+  color: var(--text-light);
+}
+
+.video-item.dark-mode p {
+  color: var(--text-dark);
+}
+
+.video-thumbnails {
+  margin: 20px auto;
+  text-align: center;
+}
+
+.video-thumbnails h2 {
+  font-size: 1.8rem;
+  color: var(--accent-light);
+  margin-bottom: 20px;
+}
+
+.video-thumbnails.dark-mode h2 {
+  color: var(--accent-dark);
+}
+
+.thumbnails-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.thumbnail-item {
+  cursor: pointer;
+  max-width: 150px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.thumbnail-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.thumbnail-image {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.thumbnail-item:hover .thumbnail-image {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.thumbnail-item p {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+.thumbnail-item.dark-mode p {
+  color: var(--text-dark);
+}

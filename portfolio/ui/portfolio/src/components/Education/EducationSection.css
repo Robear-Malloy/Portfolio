@@ -1,39 +1,105 @@
 .education-section {
-    width: 48%;
-    padding: 20px;
-  }
-  
-  .education-section h3 {
-    font-size: 1.2rem;
-    margin-bottom: 5px;
-  }
-  
-  .education-section p {
-    font-size: 1rem;
-    margin: 5px 0;
-  }
-  
-  .education-section ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .education-section li {
-    margin: 5px 0;
-  }
-  
-  /* Light Mode and Dark Mode for Education Section */
-  .education-section.light-mode {
-    background-color: #FFF5E6;
-    color: var(--text-light);
-  }
-  
-  .education-section.dark-mode {
-    background-color: #333333;
-    color: var(--text-dark);
-  }
-  
-  /* Education Item */
-  .education-item {
-    margin-bottom: 20px;
-  }
+  width: 60%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: #333;
+  font-family: 'Arial', sans-serif;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #2c3e50;
+  font-weight: bold;
+}
+
+.education-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.education-item {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.education-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.education-degree {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #34495e;
+  margin-bottom: 5px;
+}
+
+.education-school {
+  font-size: 1.2rem;
+  color: #7f8c8d;
+  margin-bottom: 10px;
+}
+
+.education-gpa {
+  font-size: 1rem;
+  color: #16a085;
+  margin-bottom: 5px;
+}
+
+.education-dates {
+  font-size: 1rem;
+  color: #95a5a6;
+}
+
+.certifications-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.certifications-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.certification-item {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.certification-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.certification-name {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #34495e;
+}
+
+.certification-date {
+  font-size: 1rem;
+  color: #7f8c8d;
+}
+
