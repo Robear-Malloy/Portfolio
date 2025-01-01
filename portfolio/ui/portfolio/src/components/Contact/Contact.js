@@ -35,7 +35,7 @@ const Contact = () => {
   };
 
   return (
-    <section className="contact-section" id="contact-section">
+    <section className="contact-section" id="contact" >
       <h2>Contact</h2>
       <form className="contact-form" onSubmit={handleSubmit}>
         <input

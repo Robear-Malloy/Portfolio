@@ -1,0 +1,80 @@
+.education-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.education-modal {
+    background: var(--modal-bg-color);
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    color: var(--text-color);
+}
+
+.modal-title {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: var(--button-bg-color);
+    font-weight: bold;
+}
+
+.modal-courses-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.modal-courses-list li {
+    font-size: 1rem;
+    margin: 10px 0;
+    color: var(--text-color);
+    padding: 8px;
+    border-bottom: 1px solid var(--input-border-color);
+}
+
+.modal-courses-list li:last-child {
+    border-bottom: none;
+}
+
+.modal-close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+.modal-close-button:hover {
+    color: var(--button-hover-bg-color);
+}
+
+.modal-close-bottom {
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+}
+
+.modal-close-bottom:hover {
+    background-color: var(--button-hover-bg-color);
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import './Tutorial.css';
 import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
 
 const Tutorial = () => {
   return (
@@ -22,6 +23,7 @@ const Tutorial = () => {
           <button>Read More</button>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };
