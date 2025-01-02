@@ -34,13 +34,17 @@ const Navbar = () => {
     } else if (location.pathname === '/experiences') {
       return (
         <ul className="nav-center">
-          <li><a href="#skills">Experiences</a></li>
+          <li><a href="#education">Education</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#projects">Projects</a></li>
         </ul>
       );
     } else if (location.pathname === '/tutorial') {
       return (
         <ul className="nav-center">
-          <li><a href="#skills">Tutorial</a></li>
+          <li><a href="#tutorial">API Tutorial</a></li>
+          <li><a href="#thank-you">Thank You</a></li>
         </ul>
       );
     }
