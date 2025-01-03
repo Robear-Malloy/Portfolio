@@ -63,7 +63,7 @@ public class VideoControllerTest {
 
         ResponseEntity<List<Video>> response = videoController.getAllVideos();
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FOUND);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().get(0).getId()).isEqualTo(video.getId());
     }

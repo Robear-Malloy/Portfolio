@@ -38,7 +38,7 @@ const Experiences = () => {
     fetchData();
   }, []);
 
-  const renderTable = (id, title, data, columns) => (
+  const renderTable = (id, title, data, columns, customRenderers = {}) => (
     <div id={id} className={`table-section ${darkMode ? 'dark-mode' : ''}`}>
       <h2>{title}</h2>
       {loading ? (
@@ -49,7 +49,7 @@ const Experiences = () => {
             <TableHead>
               <TableRow>
                 {columns.map((column, index) => (
-                  <TableCell key={index}>{column}</TableCell>
+                  <TableCell key={index}>{column.header}</TableCell>
                 ))}
               </TableRow>
             </TableHead>
@@ -57,7 +57,11 @@ const Experiences = () => {
               {data.map((row, index) => (
                 <TableRow key={index}>
                   {columns.map((column, colIndex) => (
-                    <TableCell key={colIndex}>{row[column.toLowerCase()]}</TableCell>
+                    <TableCell key={colIndex}>
+                      {customRenderers[column.key]
+                        ? customRenderers[column.key](row)
+                        : row[column.key]}
+                    </TableCell>
                   ))}
                 </TableRow>
               ))}
@@ -68,21 +72,51 @@ const Experiences = () => {
     </div>
   );
   
-  
-
   return (
     <div className={`experiences-page ${darkMode ? 'dark-mode' : 'light-mode'}`}>
       <Header />
       <section className="tables-container">
-        {renderTable('education', 'Education', education, ['Institution', 'Degree', 'Year'])}
-        {renderTable('skills', 'Skills', skills, ['Skill', 'Level'])}
-        {renderTable('experience', 'Experience', experiences, ['Company', 'Role', 'Duration'])}
-        {renderTable('projects', 'Projects', projects, ['Name', 'Description', 'Year'])}
+        {renderTable(
+          'education',
+          'Education',
+          education,
+          [
+            { key: 'school', header: 'Institution' },
+            { key: 'degree', header: 'Degree' },
+            { key: 'duration', header: 'Duration' },
+          ],
+          {
+            duration: (row) =>
+              `${row.dateStarted} - ${row.dateEnded ? row.dateEnded : 'Present'}`,
+          }
+        )}
+        {renderTable('skills', 'Skills', skills, [
+          { key: 'name', header: 'Name' },
+          { key: 'type', header: 'Specialty'},
+          { key: 'level', header: 'Level' },
+        ])}
+        {renderTable(
+          'experience',
+          'Experience',
+          experiences,
+          [
+            { key: 'company', header: 'Company' },
+            { key: 'position', header: 'Role' },
+            { key: 'duration', header: 'Duration' },
+          ],
+          {
+            duration: (row) =>
+              `${row.dateStarted} - ${row.dateEnded ? row.dateEnded : 'Present'}`,
+          }
+        )}
+        {renderTable('projects', 'Projects', projects, [
+          { key: 'title', header: 'Title' },
+          { key: 'description', header: 'Description' },
+        ])}
       </section>
-
       <Footer />
     </div>
   );
-};
+}  
 
 export default Experiences;
