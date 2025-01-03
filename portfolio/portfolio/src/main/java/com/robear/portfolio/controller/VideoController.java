@@ -23,7 +23,8 @@ public class VideoController implements IVideoController {
 
     @PostMapping
     @Override
-    public ResponseEntity<Video> createVideo(Video video) {
+    public ResponseEntity<Video> createVideo(
+            @RequestBody Video video) {
         try {
             logger.info("Creating a new video: {}", video);
             Video result = videoService.addVideo(video);
@@ -40,16 +41,17 @@ public class VideoController implements IVideoController {
         try {
             logger.info("Getting All Videos.");
             List<Video> result = videoService.getAllVideos();
-            return new ResponseEntity<>(result, HttpStatus.FOUND);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error getting all videos.");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/{id}")
+    @PutMapping()
     @Override
-    public ResponseEntity<Video> updateVideo(Video video) {
+    public ResponseEntity<Video> updateVideo(
+            @RequestBody Video video) {
         try {
             logger.info("Updating video: {} with content: {}", video.getId(), video);
             Video result = videoService.updateVideo(video);
@@ -65,7 +67,8 @@ public class VideoController implements IVideoController {
 
     @DeleteMapping("/{id}")
     @Override
-    public ResponseEntity<Void> deleteVideo(Long id) {
+    public ResponseEntity<Void> deleteVideo(
+            @PathVariable Long id) {
         try {
             logger.info("Deleting video id: {}", id);
             videoService.deleteVideo(id);

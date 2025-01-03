@@ -13,13 +13,13 @@ const Tutorial = () => {
   };
 
   const getCurlCommand = `curl -X GET http://localhost:8080/api/resume`;
-  const postCurlCommand = `curl -X POST http://localhost:8080 \\
+  const postCurlCommand = `curl -X POST http://localhost:8080/api/visitor \\
   -H "Content-Type: application/json" \\
-  -d '{"Name": "Your Name", "Message": "Your Message"}'`;
+  -d '{"name": "Your Name", "message": "Your Message"}'`;
   const currentDateTime = new Date().toISOString();
-  const visitorPostCommand = `curl -X POST http://localhost:8080/api/visitor \\
+  const visitorPostCommand = `curl -X POST http://localhost:8080/api/visitor/auth \\
   -H "Content-Type: application/json" \\
-  -d '{"datetime": "${currentDateTime}", "name": ""}'`;
+  -d '{"name": "Your name", message: "Your Message"}'`;
 
   return (
     <div className={`video-page ${darkMode ? 'dark-mode' : 'light-mode'}`}>

@@ -29,9 +29,9 @@ const SettingsModal = ({ isOpen, onClose }) => {
             className="settings-select"
           >
             <option value="EN">English</option>
-            <option value="FR">French</option>
-            <option value="JP">Japanese</option>
-            <option value="NL">Dutch</option>
+            <option value="FR">Français</option>
+            {/* <option value="JP">Japanese</option> */}
+            {/* <option value="NL">Dutch</option> */}
           </select>
         </div>
 
