@@ -36,6 +36,7 @@ public class ContactController implements IContactController {
     }
 
     @Override
+    @GetMapping
     public ResponseEntity<List<Contact>> getAllContacts() {
         try {
             logger.info("Retrieving all contacts");
