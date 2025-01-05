@@ -13,7 +13,7 @@ const Tutorial = () => {
   };
 
   const getCurlCommand = `curl -X GET http://localhost:8080/api/resume`;
-  const postCurlCommand = `curl -X POST http://localhost:8080/api/visitor \\
+  const postCurlCommand = `curl -X POST http://localhost:8080/api/visitor/demo \\
   -H "Content-Type: application/json" \\
   -d '{"name": "Your Name", "message": "Your Message"}'`;
   const currentDateTime = new Date().toISOString();
@@ -31,7 +31,7 @@ const Tutorial = () => {
 
         <div className="api-example">
           <h3>GET Endpoint</h3>
-          <p>Use this cURL command to fetch your resume:</p>
+          <p>Use this cURL command to fetch my resume:</p>
           <div className="code-box">
             <code>{getCurlCommand}</code>
             <button onClick={() => copyToClipboard(getCurlCommand)}>Copy</button>

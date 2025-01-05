@@ -24,7 +24,8 @@ public class ExperienceDescriptionController implements IExperienceDescriptionCo
 
     @Override
     @PostMapping
-    public ResponseEntity<ExperienceDescription> createExperienceDescription(ExperienceDescription description) {
+    public ResponseEntity<ExperienceDescription> createExperienceDescription(
+            @RequestBody ExperienceDescription description) {
         try {
             logger.info("Creating a new Experience Description: {}", description);
             ExperienceDescription result = experienceDescriptionService.addExperienceDescription(description);
@@ -36,24 +37,26 @@ public class ExperienceDescriptionController implements IExperienceDescriptionCo
     }
 
     @Override
-    @GetMapping
-    public ResponseEntity<List<ExperienceDescription>> getAllExperienceDescriptionById(Long id) {
+    @GetMapping("/{experienceId}")
+    public ResponseEntity<List<ExperienceDescription>> getAllExperienceDescriptionById(
+            @PathVariable Long experienceId) {
         try {
-            logger.info("Getting All Experience By Description By Id: {}", id);
-            List<ExperienceDescription> result = experienceDescriptionService.getExperienceDescriptions(id);
+            logger.info("Getting All Experience By Description By Id: {}", experienceId);
+            List<ExperienceDescription> result = experienceDescriptionService.getExperienceDescriptions(experienceId);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (ExperienceDescriptionNotFoundException e) {
-            logger.warn("Could not find experience descriptions for id: {}", id);
+            logger.warn("Could not find experience descriptions for id: {}", experienceId);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            logger.error("Error retrieving experience descriptions for id: {}", id);
+            logger.error("Error retrieving experience descriptions for id: {}", experienceId);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @Override
     @PutMapping
-    public ResponseEntity<ExperienceDescription> updateExperienceDescription(ExperienceDescription description) {
+    public ResponseEntity<ExperienceDescription> updateExperienceDescription(
+            @RequestBody ExperienceDescription description) {
         try {
             logger.info("Updating Experience Description: {}", description);
             ExperienceDescription result = experienceDescriptionService.updateExperienceDescription(description);

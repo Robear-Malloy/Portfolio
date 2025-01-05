@@ -1,11 +1,12 @@
 import React from 'react';
 import './Hero.css';
+import pfpImage from "../../assets/images/hero.JPEG"; 
 
 const Hero = () => {
   return (
     <header className="hero-section">
         <div className="hero-content">
-            <img src="path_to_your_image/pfp.png" alt="Robert Malloy" className="hero-image" />
+            <img src={pfpImage} alt="Robert Malloy" className="hero-image" />
             <h1 className="hero-title">Howdy, I'm Robert</h1>
             <h2 className="hero-subtitle">Fullstack Engineer</h2>
             <p className="hero-description">

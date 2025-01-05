@@ -70,22 +70,24 @@ public class EmailService implements IEmailService {
         try {
             logger.info("Email was sent from Contact Section");
 
+            if (email.getSubject() == null || email.getSubject().isEmpty()) {
+                email.setSubject("No Subject Provided");
+            }
+
+            if (email.getFromEmail() == null || email.getFromEmail().isEmpty()) {
+                email.setSubject("No Email Provided");
+            }
+
             StringBuilder body = new StringBuilder();
-            body.append("<html><body>");
-            body.append("<h1>Pending Contacts</h1>");
-            body.append("<table border='1' style='border-collapse: collapse; width: 100%;'>");
-            body.append("<tr>")
-                    .append("<th>Name</th>")
-                    .append("<th>Email</th>")
-                    .append("<th>Company</th>")
-                    .append("<th>Description</th>")
-                    .append("<th>Date Sent</th>")
-                    .append("</tr>");
+            body.append("The Following Email Sent From Portfolio Website\n\n");
+            body.append("Name: ").append(email.getName()).append("\n");
+            body.append("Email: ").append(email.getFromEmail()).append("\n\n");
+            body.append("Message:\n").append(email.getBody()).append("\n");
 
-            body.append("</table>");
-            body.append("</body></html>");
+            StringBuilder subject = new StringBuilder();
+            subject.append("[PORTFOLIO]: ").append(email.getSubject());
 
-            email.setSubject("[PORTFOLIO]: Contact Message");
+            email.setSubject(subject.toString());
             email.setBody(body.toString());
             emailHelper.sendEmail(email);
 

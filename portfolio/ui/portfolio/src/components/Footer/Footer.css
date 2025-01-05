@@ -25,7 +25,7 @@
 .footer-left {
   position: absolute;
   left: 20px;
-  margin-left: 15%
+  margin-left: 15%;
 }
 
 .footer-center {
@@ -35,7 +35,7 @@
 .footer-right {
   position: absolute;
   right: 20px;
-  margin-right: 15%
+  margin-right: 15%;
 }
 
 .footer-icon {
@@ -49,7 +49,6 @@
 .footer-icon:hover {
   color: var(--footer-icon-hover-color);
 }
-
 
 .privacy-policy {
   background: none;
@@ -77,26 +76,42 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
 .privacy-modal-content {
   background-color: var(--modal-bg-color);
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  border-radius: 15px;
+  text-align: left;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  width: 90%;
+  animation: slideIn 0.3s ease-out;
 }
 
 .privacy-modal-content h2 {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   color: var(--text-color);
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 .privacy-modal-content p {
+  margin-bottom: 20px;
+  color: var(--text-color);
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.privacy-modal-content ul {
+  list-style-type: disc;
+  margin-left: 20px;
   margin-bottom: 20px;
   color: var(--text-color);
 }
@@ -105,9 +120,11 @@
   background-color: var(--button-bg-color);
   color: var(--button-text-color);
   border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
+  padding: 12px 25px;
+  border-radius: 8px;
   cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
 }
 
 .privacy-modal-content button:hover {
@@ -130,11 +147,11 @@
 }
 
 .health-dot.healthy {
-  background-color: #28a745; /* Green */
+  background-color: #28a745;
 }
 
 .health-dot.unhealthy {
-  background-color: #dc3545; /* Red */
+  background-color: #dc3545;
 }
 
 @keyframes pulse {
@@ -148,8 +165,24 @@
   }
 }
 
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 
-/* Light Mode Footer Colors */
+@keyframes slideIn {
+  0% {
+    transform: translateY(-50px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
 :root {
   --footer-bg-color: #f4f4f4;
   --footer-text-color: #333;
@@ -164,7 +197,6 @@
   --button-hover-bg-color: #ff8c00;
 }
 
-/* Dark Mode Footer Colors */
 body.dark-mode {
   --footer-bg-color: #333;
   --footer-text-color: #f4f4f4;

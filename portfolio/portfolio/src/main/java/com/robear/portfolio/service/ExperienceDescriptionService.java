@@ -35,17 +35,17 @@ public class ExperienceDescriptionService implements IExperienceDescriptionServi
     }
 
     @Override
-    public List<ExperienceDescription> getExperienceDescriptions(Long id) {
+    public List<ExperienceDescription> getExperienceDescriptions(Long experienceId) {
         try {
-            logger.info("Getting Experience Descriptions for id: {}", id);
+            logger.info("Getting Experience Descriptions for id: {}", experienceId);
             List<ExperienceDescription> descriptions =
-                    experienceDescriptionRepository.findAllDescriptionByExperienceId(id);
+                    experienceDescriptionRepository.findAllDescriptionByExperienceId(experienceId);
             if (descriptions.isEmpty()) {
-                throw new ExperienceDescriptionNotFoundException("No descriptions found for experience ID: " + id);
+                throw new ExperienceDescriptionNotFoundException("No descriptions found for experience ID: " + experienceId);
             }
             return descriptions;
         } catch (ExperienceDescriptionNotFoundException e) {
-            logger.warn("Unable to find experience descriptions in database for id: {}", id);
+            logger.warn("Unable to find experience descriptions in database for id: {}", experienceId);
             throw new ExperienceDescriptionNotFoundException("No description found");
         } catch (Exception e) {
             logger.error("Error occurred getting experience descriptions from database.", e);

@@ -20,7 +20,7 @@ public class VisitorController implements IVisitorController {
     @Autowired
     private VisitorService visitorService;
 
-    @PostMapping
+    @PostMapping("/demo")
     @Override
     public ResponseEntity<Visitor> createVisitor(
             @RequestBody Visitor visitor) {
@@ -48,14 +48,14 @@ public class VisitorController implements IVisitorController {
         }
     }
 
-    @GetMapping("/auth")
+    @PostMapping("/auth")
     @Override
     public ResponseEntity<Visitor> createAuthVisitor(
             @RequestBody Visitor visitor) {
         try {
             logger.info("Creating a new authorized visitor: {}", visitor);
             StringBuilder authMessage = new StringBuilder();
-            authMessage.append("[Authorized]").append(visitor.getMessage());
+            authMessage.append("[Authorized] ").append(visitor.getMessage());
 
             visitor.setMessage(authMessage.toString());
             Visitor result = visitorService.addVisitor(visitor);

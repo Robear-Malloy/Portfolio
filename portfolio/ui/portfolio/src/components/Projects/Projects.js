@@ -5,10 +5,19 @@ const Projects = () => {
   const [projectsData, setProjectsData] = useState([]);
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
 
+  const username = process.env.REACT_APP_API_USERNAME;
+  const password = process.env.REACT_APP_API_PASSWORD;
+  const encodedAuth = btoa(`${username}:${password}`); 
+
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/projects');
+        const response = await fetch('http://localhost:8080/api/projects', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Basic ${encodedAuth}`, 
+          },
+        });
         const data = await response.json();
         const featuredProjects = data.filter(project => project.isFeatured);
         setProjectsData(featuredProjects);
@@ -18,7 +27,7 @@ const Projects = () => {
     };
 
     fetchProjects();
-  }, []);
+  }, [encodedAuth]);
 
   const handleNextProject = () => {
     setCurrentProjectIndex((prevIndex) => (prevIndex + 1) % projectsData.length);
@@ -38,6 +47,7 @@ const Projects = () => {
   }
 
   const currentProject = projectsData[currentProjectIndex];
+  const imagePath = require(`../../assets/images/${currentProject.photoFile}`);
 
   return (
     <section className="projects-section" id="projects"> 
@@ -72,7 +82,7 @@ const Projects = () => {
             </div>
           </div>
           <div className="project-image">
-            <img src={currentProject.photoFile} alt={currentProject.title} />
+            <img src={imagePath} alt={currentProject.title} />
           </div>
         </div>
         <button className="arrow-button right" onClick={handleNextProject}>→</button>

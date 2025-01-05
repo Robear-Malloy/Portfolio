@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import TechStackModal from './TechStackModal';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CircularProgress } from '@mui/material';
 import './Experiences.css';
 import Header from '../../components/Header/Header';
@@ -13,15 +14,29 @@ const Experiences = () => {
   const [experiences, setExperiences] = useState([]);
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [techStack, setTechStack] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const username = process.env.REACT_APP_API_USERNAME;
+        const password = process.env.REACT_APP_API_PASSWORD;
+        const encodedAuth = btoa(`${username}:${password}`); 
+
         const [educationRes, skillsRes, experiencesRes, projectsRes] = await Promise.all([
-          axios.get('http://localhost:8080/api/education'),
-          axios.get('http://localhost:8080/api/skills'),
-          axios.get('http://localhost:8080/api/experiences'),
-          axios.get('http://localhost:8080/api/projects'),
+          axios.get('http://localhost:8080/api/education', {
+            headers: { 'Authorization': `Basic ${encodedAuth}` }
+          }),
+          axios.get('http://localhost:8080/api/skills', {
+            headers: { 'Authorization': `Basic ${encodedAuth}` }
+          }),
+          axios.get('http://localhost:8080/api/experiences', {
+            headers: { 'Authorization': `Basic ${encodedAuth}` }
+          }),
+          axios.get('http://localhost:8080/api/projects', {
+            headers: { 'Authorization': `Basic ${encodedAuth}` }
+          }),
         ]);
 
         setEducation(educationRes.data);
@@ -38,7 +53,23 @@ const Experiences = () => {
     fetchData();
   }, []);
 
-  const renderTable = (id, title, data, columns, customRenderers = {}) => (
+  const handleRowClick = async (type, id) => {
+    try {
+      const username = process.env.REACT_APP_API_USERNAME;
+      const password = process.env.REACT_APP_API_PASSWORD;
+      const encodedAuth = btoa(`${username}:${password}`);
+
+      const response = await axios.get(`http://localhost:8080/api/tech/${type}/${id}`, {
+        headers: { 'Authorization': `Basic ${encodedAuth}` }
+      });
+      setTechStack(response.data);
+      setModalOpen(true);
+    } catch (error) {
+      console.error(`Error fetching tech stack for ${type} ID ${id}:`, error);
+    }
+  };
+
+  const renderTable = (id, title, data, columns, type) => (
     <div id={id} className={`table-section ${darkMode ? 'dark-mode' : ''}`}>
       <h2>{title}</h2>
       {loading ? (
@@ -55,13 +86,13 @@ const Experiences = () => {
             </TableHead>
             <TableBody>
               {data.map((row, index) => (
-                <TableRow key={index}>
+                <TableRow
+                  key={index}
+                  onClick={() => handleRowClick(type, row.id)}
+                  style={{ cursor: 'pointer' }}
+                >
                   {columns.map((column, colIndex) => (
-                    <TableCell key={colIndex}>
-                      {customRenderers[column.key]
-                        ? customRenderers[column.key](row)
-                        : row[column.key]}
-                    </TableCell>
+                    <TableCell key={colIndex}>{row[column.key]}</TableCell>
                   ))}
                 </TableRow>
               ))}
@@ -71,7 +102,7 @@ const Experiences = () => {
       )}
     </div>
   );
-  
+
   return (
     <div className={`experiences-page ${darkMode ? 'dark-mode' : 'light-mode'}`}>
       <Header />
@@ -79,44 +110,52 @@ const Experiences = () => {
         {renderTable(
           'education',
           'Education',
-          education,
+          education.map((row) => ({
+            ...row,
+            duration: `${row.dateStarted} - ${row.dateEnded || 'Present'}`,
+          })),
           [
             { key: 'school', header: 'Institution' },
             { key: 'degree', header: 'Degree' },
             { key: 'duration', header: 'Duration' },
           ],
-          {
-            duration: (row) =>
-              `${row.dateStarted} - ${row.dateEnded ? row.dateEnded : 'Present'}`,
-          }
+          'education'
         )}
         {renderTable('skills', 'Skills', skills, [
           { key: 'name', header: 'Name' },
-          { key: 'type', header: 'Specialty'},
-          { key: 'level', header: 'Level' },
+          { key: 'type', header: 'Specialty' },
+          //{ key: 'level', header: 'Level' },
         ])}
         {renderTable(
           'experience',
           'Experience',
-          experiences,
+          experiences.map((row) => ({
+            ...row,
+            duration: `${row.dateStarted} - ${row.dateEnded || 'Present'}`,
+          })),
           [
             { key: 'company', header: 'Company' },
             { key: 'position', header: 'Role' },
             { key: 'duration', header: 'Duration' },
           ],
-          {
-            duration: (row) =>
-              `${row.dateStarted} - ${row.dateEnded ? row.dateEnded : 'Present'}`,
-          }
+          'experience'
         )}
         {renderTable('projects', 'Projects', projects, [
           { key: 'title', header: 'Title' },
           { key: 'description', header: 'Description' },
-        ])}
+        ], 'project')}
       </section>
       <Footer />
+      {modalOpen && (
+        <TechStackModal
+          isOpen={modalOpen}
+          onClose={() => setModalOpen(false)}
+          techStack={techStack}
+          skills={skills}
+      />
+      )}
     </div>
   );
-}  
+};
 
 export default Experiences;

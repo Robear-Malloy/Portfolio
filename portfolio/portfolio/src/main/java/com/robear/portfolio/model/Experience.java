@@ -30,6 +30,10 @@ public class Experience {
     @Column(name = "date_ended")
     private String dateEnded;
 
+    @Basic(optional = false)
+    @Column(name = "is_featured")
+    private Boolean isFeatured;
+
     public Long getId() { return id; }
 
     public void setId(Long id) { this.id = id; }
@@ -49,4 +53,8 @@ public class Experience {
     public String getDateEnded() { return dateEnded; }
 
     public void setDateEnded(String dateEnded) { this.dateEnded = dateEnded; }
+
+    public Boolean getIsFeatured() { return isFeatured; }
+
+    public void setIsFeatured(Boolean isFeatured) { this.isFeatured = isFeatured; }
 }

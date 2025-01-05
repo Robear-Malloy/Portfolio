@@ -8,6 +8,7 @@ public interface IExperienceService {
     Experience addExperience(Experience experience);
     List<Experience> getAllExperiences();
     Experience getExperienceById(Long id);
+    List<Experience> getAllFeaturedExperiences();
     Experience updateExperience(Long id, Experience experience);
     void deleteExperience(Long id);
 }
