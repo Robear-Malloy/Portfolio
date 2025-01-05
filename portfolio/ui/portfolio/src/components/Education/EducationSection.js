@@ -6,37 +6,54 @@ import EducationModal from './EducationModal';
 
 const EducationSection = () => {
   const [educationData, setEducationData] = useState([]);
-  //const [certifications, setCertifications] = useState([]);
+  const [selectedEducationId, setSelectedEducationId] = useState(null);
+  const [certifications, setCertifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const username = process.env.REACT_APP_API_USERNAME;
+  const password = process.env.REACT_APP_API_PASSWORD;
+  const encodedAuth = btoa(`${username}:${password}`);
+
   useEffect(() => {
-    const fetchEducation = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/education');
-        setEducationData(response.data);
-        //setCertifications(response.data.certifications);
+        const [educationResponse, certificationResponse] = await Promise.all([
+          axios.get('http://localhost:8080/api/education', {
+            headers: {
+              'Authorization': `Basic ${encodedAuth}`,
+            },
+          }),
+          axios.get('http://localhost:8080/api/certification', {
+            headers: {
+              'Authorization': `Basic ${encodedAuth}`, 
+            },
+          }),
+        ]);
+        setEducationData(educationResponse.data);
+        setCertifications(certificationResponse.data);
       } catch (err) {
-        setError('Failed to fetch education data.');
-        console.error('Error fetching education data:', err);
+        setError('Failed to fetch data.');
+        console.error('Error fetching data:', err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchEducation();
-  }, []);
+    fetchData();
+  }, [encodedAuth]);
 
   if (loading) {
-    return <div className="education-section">Loading education data...</div>;
+    return <div className="education-section">Loading data...</div>;
   }
 
   if (error) {
     return <div className="education-section">{error}</div>;
   }
 
-  const handleItemClick = () => {
+  const handleItemClick = (id) => {
+    setSelectedEducationId(id);
     setIsModalOpen(true);
   };
 
@@ -45,43 +62,33 @@ const EducationSection = () => {
       <h2 className="section-title">Education</h2>
       <div className="education-list">
         {educationData.map((edu) => (
-          <div key={edu.id} onClick={handleItemClick}>
-          <EducationItem
-            degree={edu.degree}
-            school={edu.school}
-            gpa={edu.gpa}
-            dateStarted={edu.dateStarted}
-            dateEnded={edu.dateEnded}
-          />
+          <div key={edu.id} onClick={() => handleItemClick(edu.id)}>
+            <EducationItem
+              degree={edu.degree}
+              school={edu.school}
+              gpa={edu.gpa}
+              dateStarted={edu.dateStarted}
+              dateEnded={edu.dateEnded}
+            />
           </div>
         ))}
       </div>
 
-      <EducationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <EducationModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        educationId={selectedEducationId}
+      />
 
       <h3 className="certifications-title">Certifications</h3>
       <ul className="certifications-list">
-        <li className="certification-item">
-          <span className="certification-name">Azure 900</span>
-          <span className="certification-date">03/12/24</span>
-        </li>
-        <li className="certification-item">
-          <span className="certification-name">CompTIA Security+</span>
-          <span className="certification-date">09/12/23</span>
-        </li>
-        <li className="certification-item">
-          <span className="certification-name">PSD 1</span>
-          <span className="certification-date">12/12/24</span>
-        </li>
-      </ul>
-      {/* <ul className="certifications-list">
-        {certifications.map((cert, index) => (
-          <li key={index} className="certification-item">
+        {certifications.map((cert) => (
+          <li key={cert.id} className="certification-item">
             <span className="certification-name">{cert.name}</span>
-            <span className="certification-date">{cert.date}</span>
+            <span className="certification-date">{cert.dateCompleted}</span>
           </li>
         ))}
-      </ul> */}
+      </ul>
     </section>
   );
 };

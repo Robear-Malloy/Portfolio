@@ -14,7 +14,17 @@ const Footer = () => {
   useEffect(() => {
     const fetchHealthStatus = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/health');
+        const username = process.env.REACT_APP_API_USERNAME;
+        const password = process.env.REACT_APP_API_PASSWORD;
+        const encodedAuth = btoa(`${username}:${password}`);
+
+        const response = await fetch('http://localhost:8080/api/health', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Basic ${encodedAuth}`,
+          },
+        });
+
         if (response.ok) {
           setHealthStatus('healthy');
         } else {
@@ -89,7 +99,20 @@ const Footer = () => {
           <div className="privacy-modal-content">
             <h2>Privacy Policy</h2>
             <p>
-              This is a sample privacy policy. Please replace this text with your actual privacy policy.
+              We value your privacy and are committed to protecting your personal information. 
+              This website only stores information provided by users who:
+            </p>
+            <ul>
+              <li>Contact us via the <strong>Contact Form</strong>.</li>
+              <li>Use the <strong>visitor POST endpoint</strong>.</li>
+            </ul>
+            <p>
+              All data is securely stored and protected using industry-standard encryption methods. 
+              Additionally, this website uses <strong>SSL (Secure Sockets Layer)</strong> to ensure 
+              all communication between your browser and our servers is encrypted and secure.
+            </p>
+            <p>
+              We do not share or sell your information to third parties. For more details, please contact us directly.
             </p>
             <button onClick={togglePrivacyModal}>Close</button>
           </div>

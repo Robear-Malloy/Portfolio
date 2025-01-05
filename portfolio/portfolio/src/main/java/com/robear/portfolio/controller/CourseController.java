@@ -47,7 +47,7 @@ public class CourseController implements ICourseController {
         }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{educationId}")
     @Override
     public ResponseEntity<List<Course>> getAllCoursesForSchool(
             @PathVariable Long educationId) {

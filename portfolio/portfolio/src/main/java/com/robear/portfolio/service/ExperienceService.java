@@ -69,6 +69,24 @@ public class ExperienceService implements IExperienceService {
     }
 
     @Override
+    public List<Experience> getAllFeaturedExperiences() {
+        try {
+            logger.info("Retrieving All Featured Experiences from Database");
+            List<Experience> experiences = experienceRepository.findFeatured();
+            if (experiences.isEmpty()) {
+                throw new ExperienceNotFoundException("No Experiences Found in Database");
+            }
+            return experiences;
+        } catch (ExperienceNotFoundException e) {
+            logger.warn("No Featured Experiences Found while Retrieving All");
+            throw e;
+        } catch (Exception e) {
+            logger.error("Error Occurred Retrieving All Featured Experiences from Database");
+            throw new RuntimeException("Error Retrieving Experiences");
+        }
+    }
+
+    @Override
     public Experience updateExperience(Long id, Experience experience) {
         try {
             logger.info("Updating Experience ID: {} With experience: {}",

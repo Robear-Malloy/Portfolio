@@ -9,6 +9,8 @@ public class Email {
 
     private String fromEmail;
 
+    private String name;
+
     public String getSubject() { return this.subject; }
 
     public void setSubject(String subject) { this.subject = subject; }
@@ -24,4 +26,8 @@ public class Email {
     public String getFromEmail() { return this.fromEmail; }
 
     public void setFromEmail(String fromEmail) { this.fromEmail = fromEmail; }
+
+    public String getName() { return this.name; }
+
+    public void setName(String name) { this.name = name; }
 }

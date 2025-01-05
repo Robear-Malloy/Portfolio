@@ -10,21 +10,37 @@ const Experience = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
 
+  const username = process.env.REACT_APP_API_USERNAME;
+  const password = process.env.REACT_APP_API_PASSWORD;
+  const encodedAuth = btoa(`${username}:${password}`);
+
   useEffect(() => {
     const fetchExperiences = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/experiences');
-        setExperiences(response.data);
+        const response = await fetch('http://localhost:8080/api/experiences/isFeatured', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Basic ${encodedAuth}`,
+          },
+        });
+
+        const data = await response.json();
+
+        if (data && data.length > 0) {
+          setExperiences(data);
+        } else {
+          setError('No experiences found.');
+        }
       } catch (err) {
-        setError('Failed to fetch experience data.');
         console.error('Error fetching experience data:', err);
+        setError('Failed to fetch experience data.');
       } finally {
         setLoading(false);
       }
     };
 
     fetchExperiences();
-  }, []);
+  }, [encodedAuth]);
 
   if (loading) {
     return <div className="experience-section">Loading experiences...</div>;

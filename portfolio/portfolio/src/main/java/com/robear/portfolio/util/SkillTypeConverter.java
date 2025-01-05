@@ -1,13 +1,25 @@
 package com.robear.portfolio.util;
 
 import com.robear.portfolio.enums.SkillType;
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.stereotype.Component;
+import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 
-@Component
-public class SkillTypeConverter implements Converter<Integer, SkillType> {
+@Converter(autoApply = true)
+public class SkillTypeConverter implements AttributeConverter<SkillType, Integer> {
+
     @Override
-    public SkillType convert(Integer source) {
-        return SkillType.fromValue(source);
+    public Integer convertToDatabaseColumn(SkillType skillType) {
+        if (skillType == null) {
+            return null;
+        }
+        return skillType.getValue(); // Maps enum to its integer value
+    }
+
+    @Override
+    public SkillType convertToEntityAttribute(Integer dbData) {
+        if (dbData == null) {
+            return null;
+        }
+        return SkillType.fromValue(dbData); // Maps integer to enum
     }
 }

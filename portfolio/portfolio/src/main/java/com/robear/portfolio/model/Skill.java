@@ -17,6 +17,7 @@ public class Skill
     @Column(name = "name")
     private String name;
 
+    @Enumerated(EnumType.ORDINAL)
     @Basic(optional = false)
     @Column(name = "type")
     private SkillType type;

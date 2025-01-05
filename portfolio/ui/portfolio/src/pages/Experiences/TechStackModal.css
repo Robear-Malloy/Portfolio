@@ -1,0 +1,118 @@
+.tech-stack-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .tech-stack-modal {
+    background-color: var(--background-light);
+    color: var(--text-light);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .tech-stack-modal.dark-mode {
+    background-color: var(--background-dark);
+    color: var(--text-dark);
+  }
+  
+  .modal-close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .modal-close-button.dark-mode {
+    color: var(--text-dark);
+  }
+  
+  .modal-close-button:hover {
+    color: var(--hover-light);
+  }
+  
+  .modal-close-button.dark-mode:hover {
+    color: var(--hover-dark);
+  }
+  
+  .tech-stack-modal h2 {
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    color: var(--accent-light);
+  }
+  
+  .tech-stack-modal.dark-mode h2 {
+    color: var(--accent-dark);
+  }
+  
+  .tech-stack-modal ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .tech-stack-modal ul li {
+    font-size: 1rem;
+    color: var(--text-light);
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .tech-stack-modal.dark-mode ul li {
+    color: var(--text-dark);
+    border-bottom: 1px solid var(--text-dark);
+  }
+  
+  .tech-stack-modal ul li:hover {
+    background-color: var(--hover-light);
+    color: white;
+  }
+  
+  .tech-stack-modal.dark-mode ul li:hover {
+    background-color: var(--hover-dark);
+  }
+  
+  .tech-stack-modal button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: white;
+    background-color: var(--accent-light);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .tech-stack-modal button:hover {
+    background-color: var(--hover-light);
+  }
+  
+  .tech-stack-modal.dark-mode button {
+    background-color: var(--accent-dark);
+  }
+  
+  .tech-stack-modal.dark-mode button:hover {
+    background-color: var(--hover-dark);
+  }
+  

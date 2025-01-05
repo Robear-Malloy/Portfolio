@@ -4,12 +4,17 @@ import './Contact.css';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
+    name: '',
     email: '',
-    phone: '',
+    subject: '',
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [responseMessage, setResponseMessage] = useState('');
+
+  const username = process.env.REACT_APP_API_USERNAME;
+  const password = process.env.REACT_APP_API_PASSWORD;
+  const encodedAuth = btoa(`${username}:${password}`);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -21,8 +26,21 @@ const Contact = () => {
     setIsSubmitting(true);
     setResponseMessage('');
 
+    const emailData = {
+      subject: formData.subject,       
+      body: formData.message,          
+      toEmail: formData.email,         
+      fromEmail: formData.email,       
+      name: formData.name,             
+    };
+
     try {
-      const response = await axios.post('http://localhost:8080/api/email/test'); // Replace with actual endpoint and payload
+      const response = await axios.post('http://localhost:8080/api/email/contact', emailData, {
+        headers: {
+          'Authorization': `Basic ${encodedAuth}`,
+        },
+      });
+
       if (response.status === 200) {
         setResponseMessage('Message sent successfully!');
       }
@@ -35,33 +53,39 @@ const Contact = () => {
   };
 
   return (
-    <section className="contact-section" id="contact" >
+    <section className="contact-section" id="contact">
       <h2>Contact</h2>
       <form className="contact-form" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="name"
+          placeholder="Your Name"
+          value={formData.name}
+          onChange={handleInputChange}
+          required 
+        />
         <input
           type="email"
           name="email"
           placeholder="Your Email"
           value={formData.email}
           onChange={handleInputChange}
-          required
         />
         <input
           type="text"
-          name="phone"
-          placeholder="Your Phone"
-          value={formData.phone}
+          name="subject"
+          placeholder="Your Subject"
+          value={formData.subject}
           onChange={handleInputChange}
-          required
         />
         <textarea
           name="message"
           placeholder="Your Message"
           value={formData.message}
           onChange={handleInputChange}
-          required
+          required 
         ></textarea>
-        <button type="submit" disabled={isSubmitting}>
+        <button type="submit" disabled={isSubmitting || !formData.name || !formData.message}>
           {isSubmitting ? 'Sending...' : 'Send'}
         </button>
       </form>

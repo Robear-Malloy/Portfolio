@@ -37,7 +37,8 @@ public class EmailController implements IEmailController {
 
     @Override
     @PostMapping("/contact")
-    public ResponseEntity<Void> sendContact(Email email) {
+    public ResponseEntity<Void> sendContact(
+            @RequestBody Email email) {
         try {
             logger.info("Sending contact email");
             emailService.sendContactEmail(email);

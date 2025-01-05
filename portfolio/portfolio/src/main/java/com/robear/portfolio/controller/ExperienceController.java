@@ -73,6 +73,23 @@ public class ExperienceController implements IExperienceController {
         }
     }
 
+    @GetMapping("/isFeatured")
+    @Override
+    public ResponseEntity<List<Experience>> getFeaturedExperiences() {
+        try {
+            logger.info("Retrieving All Featured Experiences");
+            List<Experience> result = experienceService.getAllFeaturedExperiences();
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (ExperienceNotFoundException e) {
+            logger.warn("No Featured Experiences Found");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            logger.error("Error Retrieving All Featured Experiences. Exception: {}",
+                    e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping("/{id}")
     @Override
     public ResponseEntity<Experience> updateExperienceById(

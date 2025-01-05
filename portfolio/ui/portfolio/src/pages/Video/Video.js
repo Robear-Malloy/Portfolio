@@ -14,7 +14,16 @@ const Video = () => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/video');
+        const username = process.env.REACT_APP_API_USERNAME;
+        const password = process.env.REACT_APP_API_PASSWORD;
+        const encodedAuth = btoa(`${username}:${password}`); 
+
+        const response = await fetch('http://localhost:8080/api/video', {
+          headers: {
+            'Authorization': `Basic ${encodedAuth}`,
+          },
+        });
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -39,7 +48,7 @@ const Video = () => {
     }
     return null;
   };
-  
+
   if (loading) {
     return <div className="loading">Loading videos...</div>;
   }

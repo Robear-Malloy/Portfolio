@@ -1,24 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import './AboutMe.css';
+import languagesImage from '../../assets/images/cat.JPEG';
+import climbingImage from '../../assets/images/hiking.JPEG';
+import travelingImage from '../../assets/images/travel.JPEG';
 
 const AboutMe = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const slides = [
     {
-      title: 'Passion for Learning Languages',
-      content: 'I love diving into new languages, exploring their grammar, and understanding different cultures through words. It’s like unlocking a new way to think and connect with the world.',
-      image: 'path/to/languages.jpg', // Replace with your image path
+      title: 'My Cats',
+      content: 'My fiance and I rescued two kittens that have now grown into not-so-little rowdy cats that join us in about everything we do. (Even programming lol!). They are a huge part of our little family and are just the beginning.',
+      image: languagesImage,
     },
     {
-      title: 'Love for Rock Climbing',
-      content: 'Rock climbing challenges me both mentally and physically. Reaching the top of a route is incredibly rewarding, and it’s a constant reminder of perseverance and focus.',
-      image: 'path/to/climbing.jpg', // Replace with your image path
+      title: 'Love Hiking the Outdoors',
+      content: 'When I\'m not at my computer working on projects, I like to take time to step away from the keyboard and enjoy nature. In Florida, I don\'t have many opportunities for climbs, so I try to go somewhere new every year',
+      image: climbingImage, 
     },
     {
       title: 'Adventures in Traveling',
-      content: 'Traveling opens my eyes to the beauty and diversity of the world. From bustling cities to serene landscapes, every journey is a story waiting to be told.',
-      image: 'path/to/traveling.jpg', // Replace with your image path
+      content: 'Traveling gives me an opportunity to experience life outside my own bubble, and allows me to talk with people from all walks of life. Seeing new places is great, but my favorite is getting to practice language skills with the locals.',
+      image: travelingImage,
     },
   ];
 

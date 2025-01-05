@@ -8,7 +8,7 @@ import './Navbar.css';
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const location = useLocation();  // Access current route
+  const location = useLocation(); 
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const toggleModal = () => setModalOpen(!modalOpen);
