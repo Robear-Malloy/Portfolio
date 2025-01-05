@@ -12,7 +12,7 @@ const Projects = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/projects', {
+        const response = await fetch('http://localhost:8080/api/projects/featured', {
           method: 'GET',
           headers: {
             'Authorization': `Basic ${encodedAuth}`, 

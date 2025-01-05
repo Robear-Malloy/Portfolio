@@ -8,6 +8,7 @@ import com.robear.portfolio.repository.SkillRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.stream.*;
@@ -34,6 +35,7 @@ public class SkillService implements ISkillService {
         }
     }
 
+    @Cacheable(value="skills")
     @Override
     public List<Skill> getAllSkills() {
         try {
