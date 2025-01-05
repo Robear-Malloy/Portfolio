@@ -6,6 +6,7 @@ import com.robear.portfolio.service.interfaces.ICourseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,6 +32,7 @@ public class CourseService implements ICourseService {
         }
     }
 
+    @Cacheable(value="courses")
     @Override
     public List<Course> getAllCourses() {
         try {
@@ -42,6 +44,7 @@ public class CourseService implements ICourseService {
         }
     }
 
+    @Cacheable(value="courses")
     @Override
     public List<Course> getAllEducationCourses(Long educationId) {
         try {

@@ -61,53 +61,5 @@ public class PortfolioApplication {
 	}
 }
 
-@Configuration
-class SecurityConfig {
-
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http
-				.csrf(csrf -> csrf.disable())
-				.authorizeHttpRequests(auth -> auth
-						.requestMatchers("/api/visitor/demo/**").permitAll()
-						.requestMatchers("/api/resume/**").permitAll()
-						.anyRequest().authenticated()
-				)
-				.httpBasic(withDefaults())
-				.formLogin(withDefaults())
-				.cors();
-
-		return http.build();
-	}
-
-	@Bean
-	public InMemoryUserDetailsManager userDetailsService() {
-		Dotenv dotenv = Dotenv.load();
-
-		String username = dotenv.get("PORTFOLIO_USERNAME");
-		String password = dotenv.get("PORTFOLIO_PASSWORD");
-
-		UserDetails user = User.withDefaultPasswordEncoder()
-				.username(username)
-				.password(password)
-				.roles("USER")
-				.build();
-
-		return new InMemoryUserDetailsManager(user);
-	}
-
-	@Bean
-	public UrlBasedCorsConfigurationSource corsConfigurationSource() {
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		CorsConfiguration config = new CorsConfiguration();
-		config.setAllowCredentials(true);
-		config.addAllowedOrigin("http://localhost:3000");
-		config.addAllowedMethod("*");
-		config.addAllowedHeader("*");
-		source.registerCorsConfiguration("/api/**", config);
-		return source;
-	}
-}
-
 
 
