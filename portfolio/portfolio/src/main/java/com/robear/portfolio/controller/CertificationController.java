@@ -36,13 +36,14 @@ public class CertificationController implements ICertificationController {
 
     @GetMapping
     @Override
-    public ResponseEntity<List<Certification>> getAllCertifications() {
+    public ResponseEntity<List<Certification>> getAllCertifications(
+            @RequestParam(value = "lang", required = false, defaultValue = "en") String lang) {
         try {
-            logger.info("Getting All Certificates");
-            List<Certification> result = certificationService.getAllCertification();
+            logger.info("Getting All Certifications for language: {}", lang);
+            List<Certification> result = certificationService.getAllCertification(lang);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
-            logger.error("Error Retrieving all Certifications: {}", e.getMessage());
+            logger.error("Error Retrieving Certifications: {}", e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

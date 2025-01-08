@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import './Experience.css';
 import ExperienceModal from './ExperienceModal';
 
 const Experience = () => {
+  const { t } = useTranslation();
   const [experiences, setExperiences] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -29,11 +31,11 @@ const Experience = () => {
         if (data && data.length > 0) {
           setExperiences(data);
         } else {
-          setError('No experiences found.');
+          setError(t('experience.noneFound'));
         }
       } catch (err) {
         console.error('Error fetching experience data:', err);
-        setError('Failed to fetch experience data.');
+        setError(t('experience.error'));
       } finally {
         setLoading(false);
       }
@@ -43,7 +45,7 @@ const Experience = () => {
   }, [encodedAuth]);
 
   if (loading) {
-    return <div className="experience-section">Loading experiences...</div>;
+    return <div className="experience-section">{t('experience.loading')}</div>;
   }
 
   if (error) {
@@ -57,7 +59,7 @@ const Experience = () => {
 
   return (
     <section className="experience-section">
-      <h2 className="section-title">Experience</h2>
+      <h2 className="section-title">{t('experience.title')}</h2>
       <div className="experience-list">
         {experiences.map((experience) => (
           <div
@@ -82,7 +84,7 @@ const Experience = () => {
       />
       <div className="button-container">
         <a href="http://localhost:3000/experiences" className="no-underline">
-          <button className="learn-more-button">Learn More</button>
+          <button className="learn-more-button">{t('experience.button')}</button>
         </a>
       </div>
     </section>

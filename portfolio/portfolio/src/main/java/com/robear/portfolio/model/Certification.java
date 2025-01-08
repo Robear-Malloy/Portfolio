@@ -23,6 +23,10 @@ public class Certification {
     @Column(name = "date_completed")
     private String dateCompleted;
 
+    @Basic(optional = false)
+    @Column(name = "language")
+    private String language;
+
     public Long getId() { return id; }
 
     public void setId(Long id) { this.id = id; }
@@ -34,4 +38,8 @@ public class Certification {
     public String getDateCompleted() { return dateCompleted; }
 
     public void setDateCompleted(String dateCompleted) { this.dateCompleted = dateCompleted; }
+
+    public String getLanguage() { return language; }
+
+    public void setLanguage(String language) { this.language = language; }
 }

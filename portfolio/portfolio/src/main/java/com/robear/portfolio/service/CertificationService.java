@@ -34,10 +34,10 @@ public class CertificationService implements ICertificationService {
 
     @Cacheable(value="certifications")
     @Override
-    public List<Certification> getAllCertification() {
+    public List<Certification> getAllCertification(String lang) {
         try {
             logger.info("Getting all certifications from database");
-            return certificationRepository.findAll();
+            return certificationRepository.findAllByLanguage(lang);
         } catch (Exception e) {
             logger.error("Error retrieving certifications from database");
             throw e;

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import './Projects.css';
 
 const Projects = () => {
+  const { t } = useTranslation();
   const [projectsData, setProjectsData] = useState([]);
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
 
@@ -40,8 +42,8 @@ const Projects = () => {
   if (projectsData.length === 0) {
     return (
       <section className="projects-section">
-        <h2>Projects</h2>
-        <p>Loading projects...</p>
+        <h2>{t('projects.title')}</h2>
+        <p>{t('projects.loading')}</p>
       </section>
     );
   }
@@ -51,7 +53,7 @@ const Projects = () => {
 
   return (
     <section className="projects-section" id="projects"> 
-      <h2>Projects</h2>
+      <h2>{t('projects.title')}</h2>
       <div className="carousel-container">
         <button className="arrow-button left" onClick={handlePrevProject}>←</button>
         <div className="project-card">
@@ -66,7 +68,7 @@ const Projects = () => {
                   target="_blank" 
                   rel="noopener noreferrer"
                 >
-                  Demo
+                  {t('projects.demo')}
                 </a>
               )}
               {currentProject.repoLink && (
@@ -76,7 +78,7 @@ const Projects = () => {
                   target="_blank" 
                   rel="noopener noreferrer"
                 >
-                  Repo
+                  {t('projects.repo')}
                 </a>
               )}
             </div>

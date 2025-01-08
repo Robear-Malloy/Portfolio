@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import TechStackModal from './TechStackModal';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CircularProgress } from '@mui/material';
@@ -8,6 +9,7 @@ import Footer from '../../components/Footer/Footer';
 import { ThemeContext } from '../../utils/ThemeContext';
 
 const Experiences = () => {
+  const { t } = useTranslation();
   const { darkMode } = useContext(ThemeContext);
   const [education, setEducation] = useState([]);
   const [skills, setSkills] = useState([]);
@@ -109,40 +111,40 @@ const Experiences = () => {
       <section className="tables-container">
         {renderTable(
           'education',
-          'Education',
+          t('experienceTables.education.title'),
           education.map((row) => ({
             ...row,
-            duration: `${row.dateStarted} - ${row.dateEnded || 'Present'}`,
+            duration: `${row.dateStarted} - ${row.dateEnded || t('experienceTables.education.present')}`,
           })),
           [
-            { key: 'school', header: 'Institution' },
-            { key: 'degree', header: 'Degree' },
-            { key: 'duration', header: 'Duration' },
+            { key: 'school', header: t('experienceTables.education.school') },
+            { key: 'degree', header: t('experienceTables.education.degree') },
+            { key: 'duration', header: t('experienceTables.education.duration') },
           ],
           'education'
         )}
-        {renderTable('skills', 'Skills', skills, [
-          { key: 'name', header: 'Name' },
-          { key: 'type', header: 'Specialty' },
+        {renderTable('skills', t('experienceTables.skill.title'), skills, [
+          { key: 'name', header: t('experienceTables.skill.name') },
+          { key: 'type', header: t('experienceTables.skill.type') },
           //{ key: 'level', header: 'Level' },
         ])}
         {renderTable(
           'experience',
-          'Experience',
+          t('experienceTables.experience.title'),
           experiences.map((row) => ({
             ...row,
-            duration: `${row.dateStarted} - ${row.dateEnded || 'Present'}`,
+            duration: `${row.dateStarted} - ${row.dateEnded || t('experienceTables.experience.present')}`,
           })),
           [
-            { key: 'company', header: 'Company' },
-            { key: 'position', header: 'Role' },
-            { key: 'duration', header: 'Duration' },
+            { key: 'company', header: t('experienceTables.experience.company') },
+            { key: 'position', header: t('experienceTables.experience.role') },
+            { key: 'duration', header: t('experienceTables.experience.duration') },
           ],
           'experience'
         )}
-        {renderTable('projects', 'Projects', projects, [
-          { key: 'title', header: 'Title' },
-          { key: 'description', header: 'Description' },
+        {renderTable('projects', t('experienceTables.project.title'), projects, [
+          { key: 'title', header: t('experienceTables.project.name') },
+          { key: 'description', header: t('experienceTables.project.description') },
         ], 'project')}
       </section>
       <Footer />

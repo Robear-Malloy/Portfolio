@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FaNode, FaReact, FaDatabase, FaQuestion } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom'; 
+import { useTranslation } from 'react-i18next';
 import './Skills.css';
 
 const Skills = () => {
+  const { t } = useTranslation();
   const [skills, setSkills] = useState([]);
   const [randomSkill, setRandomSkill] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -68,10 +70,10 @@ const Skills = () => {
 
   return (
     <section className="skills-section" id="skills">
-      <h2>Skills</h2>
+      <h2>{t('skills.title')}</h2>
       <div className="skills-container">
         <div className="skill-box">
-          <h3>Backend</h3>
+          <h3>{t('skills.backend')}</h3>
           <div className="icons-container">
             {backendSkills.map(skill => (
               <div key={skill.id} className="icon-box" data-tooltip={skill.name}>
@@ -82,7 +84,7 @@ const Skills = () => {
         </div>
 
         <div className="skill-box">
-          <h3>Frontend</h3>
+          <h3>{t('skills.frontend')}</h3>
           <div className="icons-container">
             {frontendSkills.map(skill => (
               <div key={skill.id} className="icon-box" data-tooltip={skill.name}>
@@ -95,7 +97,7 @@ const Skills = () => {
 
       <div className="random-skill-box" onClick={handleRandomSkillClick}>
         <div className="random-skill-container" ref={randomSkillBoxRef}>
-          <h3>Mystery Box</h3>
+          <h3>{t('skills.mystery')}</h3>
           {isLoading ? (
             <div className="loading-spinner">
               <FaQuestion size={40} />
@@ -113,7 +115,7 @@ const Skills = () => {
       </div>
 
       <button className="see-more-button" onClick={handleSeeMoreClick}>
-        See More
+      {t('skills.button')}
       </button>
     </section>
   );

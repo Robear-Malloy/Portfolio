@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface ICertificationController {
     ResponseEntity<Certification> createCertification(Certification certification);
-    ResponseEntity<List<Certification>> getAllCertifications();
+    ResponseEntity<List<Certification>> getAllCertifications(String lang);
     ResponseEntity<Void> deleteCertification(Long id);
 }
