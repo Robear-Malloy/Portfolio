@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import './EducationModal.css';
 
 const EducationModal = ({ isOpen, onClose, educationId }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -18,16 +18,23 @@ const EducationModal = ({ isOpen, onClose, educationId }) => {
 
     const fetchCourses = async () => {
       setLoading(true);
+      setError(null); // Reset error state before fetching
       try {
-        const response = await fetch(`http://localhost:8080/api/course/${educationId}`, {
-          method: 'GET',
-          headers: {
-            'Authorization': `Basic ${encodedAuth}`,
-          },
-        });
+        const response = await fetch(
+          `http://localhost:8080/api/course/${i18n.language}/${educationId}`,
+          {
+            method: 'GET',
+            headers: {
+              'Authorization': `Basic ${encodedAuth}`,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
         const data = await response.json();
-        console.log(data);
 
         if (data && data.length > 0) {
           setCourses(data);
@@ -43,7 +50,7 @@ const EducationModal = ({ isOpen, onClose, educationId }) => {
     };
 
     fetchCourses();
-  }, [educationId, encodedAuth]);
+  }, [educationId, i18n.language, encodedAuth, t]);
 
   if (!isOpen) {
     return null;
@@ -68,7 +75,7 @@ const EducationModal = ({ isOpen, onClose, educationId }) => {
           </ul>
         )}
         <button className="modal-close-bottom" onClick={onClose}>
-        {t('educationModal.button')}
+          {t('educationModal.button')}
         </button>
       </div>
     </div>,

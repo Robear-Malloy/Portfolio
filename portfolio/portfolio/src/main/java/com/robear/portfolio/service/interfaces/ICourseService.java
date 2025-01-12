@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface ICourseService {
     Course addCourse(Course course);
-    List<Course> getAllCourses();
-    List<Course> getAllEducationCourses(Long educationId);
+    List<Course> getAllCourses(String lang);
+    List<Course> getAllEducationCourses(String lang, Long educationId);
     void deleteCourse(Long id);
 }

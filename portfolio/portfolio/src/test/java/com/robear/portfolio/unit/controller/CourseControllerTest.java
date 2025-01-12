@@ -33,6 +33,7 @@ public class CourseControllerTest {
         course.setId(1L);
         course.setEducationId(1L);
         course.setName("Test Course");
+        course.setLanguage("en");
     }
 
     @Test
@@ -60,49 +61,49 @@ public class CourseControllerTest {
     @Test
     public void testGetAllCoursesWhenSuccessful() {
         List<Course> courses = Collections.singletonList(course);
-        when(courseService.getAllCourses()).thenReturn(courses);
+        when(courseService.getAllCourses(course.getLanguage())).thenReturn(courses);
 
-        ResponseEntity<List<Course>> response = courseController.getAllCourses();
+        ResponseEntity<List<Course>> response = courseController.getAllCourses(course.getLanguage());
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().get(0).getId()).isEqualTo(course.getId());
-        verify(courseService).getAllCourses();
+        verify(courseService).getAllCourses(course.getLanguage());
     }
 
     @Test
     public void testGetAllCoursesWhenThrowsException() {
-        when(courseService.getAllCourses()).thenThrow(new RuntimeException("Error"));
+        when(courseService.getAllCourses(course.getLanguage())).thenThrow(new RuntimeException("Error"));
 
-        ResponseEntity<List<Course>> response = courseController.getAllCourses();
+        ResponseEntity<List<Course>> response = courseController.getAllCourses(course.getLanguage());
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
-        verify(courseService).getAllCourses();
+        verify(courseService).getAllCourses(course.getLanguage());
     }
 
     @Test
     public void testGetAllCoursesForSchoolWhenSuccessful() {
         List<Course> courses = Collections.singletonList(course);
         Long educationId = 1L;
-        when(courseService.getAllEducationCourses(educationId)).thenReturn(courses);
+        when(courseService.getAllEducationCourses(course.getLanguage(), educationId)).thenReturn(courses);
 
-        ResponseEntity<List<Course>> response = courseController.getAllCoursesForSchool(educationId);
+        ResponseEntity<List<Course>> response = courseController.getAllCoursesForSchool(course.getLanguage(), educationId);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().get(0).getId()).isEqualTo(course.getId());
-        verify(courseService).getAllEducationCourses(educationId);
+        verify(courseService).getAllEducationCourses(course.getLanguage(), educationId);
     }
 
     @Test
     public void testGetAllCoursesForSchoolWhenThrowsException() {
         Long educationId = 1L;
-        when(courseService.getAllEducationCourses(educationId)).thenThrow(new RuntimeException("Error"));
+        when(courseService.getAllEducationCourses(course.getLanguage(), educationId)).thenThrow(new RuntimeException("Error"));
 
-        ResponseEntity<List<Course>> response = courseController.getAllCoursesForSchool(educationId);
+        ResponseEntity<List<Course>> response = courseController.getAllCoursesForSchool(course.getLanguage(), educationId);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
-        verify(courseService).getAllEducationCourses(educationId);
+        verify(courseService).getAllEducationCourses(course.getLanguage(), educationId);
     }
 
     @Test
