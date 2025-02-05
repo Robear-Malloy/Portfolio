@@ -35,10 +35,10 @@ public class VideoService implements IVideoService {
 
     @Cacheable(value="videos")
     @Override
-    public List<Video> getAllVideos() {
+    public List<Video> getAllVideos(String lang) {
         try {
             logger.info("Returning all videos.");
-            List<Video> videos = videoRepository.findAll();
+            List<Video> videos = videoRepository.findAllByLanguage(lang);
             if (videos.isEmpty()) {
                 throw new VideoNotFoundException("None Found");
             }

@@ -6,7 +6,7 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 
 const Video = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { darkMode } = useContext(ThemeContext);
   const [videos, setVideos] = useState([]);
   const [currentVideo, setCurrentVideo] = useState(null);
@@ -20,7 +20,7 @@ const Video = () => {
         const password = process.env.REACT_APP_API_PASSWORD;
         const encodedAuth = btoa(`${username}:${password}`); 
 
-        const response = await fetch('http://localhost:8080/api/video', {
+        const response = await fetch(`http://localhost:8080/api/video?lang=${i18n.language}`, {
           headers: {
             'Authorization': `Basic ${encodedAuth}`,
           },
@@ -41,7 +41,7 @@ const Video = () => {
     };
 
     fetchVideos();
-  }, []);
+  }, [i18n.language]); 
 
   const getVideoId = (link) => {
     const url = new URL(link);

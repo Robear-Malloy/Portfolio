@@ -63,37 +63,37 @@ public class VideoServiceTest {
     @Test
     public void testGetAllVideosWhenSuccessful() {
         List<Video> videos = Collections.singletonList(existingVideo);
-        when(videoRepository.findAll()).thenReturn(videos);
+        when(videoRepository.findAllByLanguage("en")).thenReturn(videos);
 
-        List<Video> result = videoService.getAllVideos();
+        List<Video> result = videoService.getAllVideos("en");
 
         assertThat(result).isNotNull();
         assertThat(result.get(0).getId()).isEqualTo(existingVideo.getId());
-        verify(videoRepository).findAll();
+        verify(videoRepository).findAllByLanguage("en");
     }
 
     @Test
     public void testGetAllVideosWhenNoneFound() {
-        when(videoRepository.findAll()).thenReturn(Collections.emptyList());
+        when(videoRepository.findAllByLanguage("en")).thenReturn(Collections.emptyList());
 
         VideoNotFoundException exception = assertThrows(VideoNotFoundException.class, () -> {
-            videoService.getAllVideos();
+            videoService.getAllVideos("en");
         });
 
         assertThat(exception.getMessage()).contains("None Found");
-        verify(videoRepository).findAll();
+        verify(videoRepository).findAllByLanguage("en");
     }
 
     @Test
     public void testGetAllVideosWhenThrowsException() {
-        when(videoRepository.findAll()).thenThrow(new RuntimeException("Error retrieving videos"));
+        when(videoRepository.findAllByLanguage("en")).thenThrow(new RuntimeException("Error retrieving videos"));
 
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            videoService.getAllVideos();
+            videoService.getAllVideos("en");
         });
 
         assertThat(exception.getMessage()).contains("Error retrieving videos");
-        verify(videoRepository).findAll();
+        verify(videoRepository).findAllByLanguage("en");
     }
 
     @Test

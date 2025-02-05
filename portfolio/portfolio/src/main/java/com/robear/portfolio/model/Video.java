@@ -27,6 +27,10 @@ public class Video {
     @Column(name = "link")
     private String link;
 
+    @Basic(optional = false)
+    @Column(name = "language")
+    private String language;
+
     public Long getId() { return id; }
 
     public void setId(Long id) { this.id = id; }
@@ -42,4 +46,8 @@ public class Video {
     public String getLink() { return link; }
 
     public void setLink(String link) { this.link = link; }
+
+    public String getLanguage() { return language; }
+
+    public void setLanguage(String language) { this.language = language; }
 }
