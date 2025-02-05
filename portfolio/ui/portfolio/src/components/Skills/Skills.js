@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FaNode, FaReact, FaDatabase, FaQuestion } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom'; 
 import { useTranslation } from 'react-i18next';
 import './Skills.css';
 
 const Skills = () => {
-  const { t, i18n } = useTranslation();  // Added i18n to access the current language
+  const { t, i18n } = useTranslation(); 
   const [skills, setSkills] = useState([]);
   const [randomSkill, setRandomSkill] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -19,7 +18,6 @@ const Skills = () => {
         const password = process.env.REACT_APP_API_PASSWORD;
         const encodedAuth = btoa(`${username}:${password}`);
         
-        // Get the current language (default is "en")
         const language = i18n.language || 'en';
 
         const response = await fetch(`http://localhost:8080/api/skills?lang=${language}`, {
@@ -71,6 +69,10 @@ const Skills = () => {
     navigate('/experiences'); 
   };
 
+  const getIconPath = (iconName) => {
+    return `/assets/skill-icons/${iconName}.svg`; 
+  };
+
   return (
     <section className="skills-section" id="skills">
       <h2>{t('skills.title')}</h2>
@@ -80,7 +82,7 @@ const Skills = () => {
           <div className="icons-container">
             {backendSkills.map(skill => (
               <div key={skill.id} className="icon-box" data-tooltip={skill.name}>
-                <FaNode size={40} />
+                <img src={getIconPath(skill.icon)} alt={skill.name} width={40} height={40} />
               </div>
             ))}
           </div>
@@ -91,7 +93,7 @@ const Skills = () => {
           <div className="icons-container">
             {frontendSkills.map(skill => (
               <div key={skill.id} className="icon-box" data-tooltip={skill.name}>
-                <FaReact size={40} />
+                <img src={getIconPath(skill.icon)} alt={skill.name} width={40} height={40} />
               </div>
             ))}
           </div>
@@ -103,15 +105,15 @@ const Skills = () => {
           <h3>{t('skills.mystery')}</h3>
           {isLoading ? (
             <div className="loading-spinner">
-              <FaQuestion size={40} />
+              <img src={getIconPath('question')} alt="Loading" width={40} height={40} />
             </div>
           ) : randomSkill ? (
             <div className="icon-box" data-tooltip={randomSkill.name}>
-              <FaDatabase size={40} />
+              <img src={getIconPath(randomSkill.icon)} alt={randomSkill.name} width={40} height={40} />
             </div>
           ) : (
             <div className="icon-box">
-              <FaQuestion size={40} />
+              <img src={getIconPath('question')} alt="Loading" width={40} height={40} />
             </div>
           )}
         </div>

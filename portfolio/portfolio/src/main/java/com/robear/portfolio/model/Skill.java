@@ -26,6 +26,10 @@ public class Skill
     @Column(name = "language")
     private String language;
 
+    @Basic(optional = false)
+    @Column(name = "icon")
+    private String icon;
+
     public Long getId() {
         return id;
     }
@@ -49,4 +53,8 @@ public class Skill
     public String getLanguage() { return language; }
 
     public void setLanguage(String language) { this.language = language; }
+
+    public String getIcon() { return icon; }
+
+    public void setIcon(String icon) { this.icon = icon; }
 }
