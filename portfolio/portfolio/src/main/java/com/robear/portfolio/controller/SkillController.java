@@ -39,10 +39,12 @@ public class SkillController implements ISkillController {
 
     @GetMapping
     @Override
-    public ResponseEntity<List<Skill>> getAllSkills() {
+    public ResponseEntity<List<Skill>> getAllSkills(
+            @RequestParam(value = "lang", required = false, defaultValue = "en") String lang
+    ) {
         try {
             logger.info("Getting All Skills");
-            List<Skill> skills = skillService.getAllSkills();
+            List<Skill> skills = skillService.getAllSkills(lang);
             return new ResponseEntity<>(skills, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error Getting Skills. Exception Message: {}", e.getMessage());

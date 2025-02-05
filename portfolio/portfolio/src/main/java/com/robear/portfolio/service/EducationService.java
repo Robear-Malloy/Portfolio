@@ -38,10 +38,10 @@ public class EducationService implements IEducationService {
 
     @Cacheable(value="education")
     @Override
-    public List<Education> getAllEducation() {
+    public List<Education> getAllEducation(String lang) {
         try {
             logger.info("Retrieving All Education Results from Database");
-            List<Education> educationList = educationRepository.findAll();
+            List<Education> educationList = educationRepository.findAllByLanguage(lang);
 
             if (educationList.isEmpty()) {
                 throw new EducationNotFoundException("No Education Records Returned From Database");

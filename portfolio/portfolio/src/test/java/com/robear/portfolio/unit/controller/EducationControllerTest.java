@@ -35,6 +35,7 @@ public class EducationControllerTest {
         education.setGpa(4.0f);
         education.setDateStarted("12-01-20");
         education.setDateEnded("12-01-20");
+        education.setLanguage("en");
         MockitoAnnotations.openMocks(this);
     }
 
@@ -69,11 +70,11 @@ public class EducationControllerTest {
     @Test
     public void testGetAllEducationWhenRecordsExist() {
         List<Education> educationList = Collections.singletonList(education);
-        when(educationService.getAllEducation())
+        when(educationService.getAllEducation(education.getLanguage()))
                 .thenReturn(educationList);
 
         ResponseEntity<List<Education>> response =
-                educationController.getAllEducation();
+                educationController.getAllEducation(education.getLanguage());
 
         assertThat(response.getStatusCode())
                 .isEqualTo(HttpStatus.OK);
@@ -84,11 +85,11 @@ public class EducationControllerTest {
 
     @Test
     public void testGetAllEducationWhenRecordDoesNotExist() {
-        when(educationService.getAllEducation())
+        when(educationService.getAllEducation(education.getLanguage()))
                 .thenThrow(new EducationNotFoundException(""));
 
         ResponseEntity<List<Education>> response =
-                educationController.getAllEducation();
+                educationController.getAllEducation(education.getLanguage());
 
         assertThat(response.getStatusCode())
                 .isEqualTo(HttpStatus.NOT_FOUND);
@@ -97,11 +98,11 @@ public class EducationControllerTest {
 
     @Test
     public void testGetAllEducationWhenThrowsException() {
-        when(educationService.getAllEducation())
+        when(educationService.getAllEducation(education.getLanguage()))
                 .thenThrow(new RuntimeException(""));
 
         ResponseEntity<List<Education>> response =
-                educationController.getAllEducation();
+                educationController.getAllEducation(education.getLanguage());
 
         assertThat(response.getStatusCode())
                 .isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);

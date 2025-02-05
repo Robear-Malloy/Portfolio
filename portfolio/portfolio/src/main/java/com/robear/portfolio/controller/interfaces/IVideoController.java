@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IVideoController {
     ResponseEntity<Video> createVideo(Video video);
-    ResponseEntity<List<Video>> getAllVideos();
+    ResponseEntity<List<Video>> getAllVideos(String lang);
     ResponseEntity<Video> updateVideo(Video video);
     ResponseEntity<Void> deleteVideo(Long id);
 }

@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { ThemeContext } from '../../utils/ThemeContext';
+import { useTranslation } from 'react-i18next';
 import './Video.css';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 
 const Video = () => {
+  const { t, i18n } = useTranslation();
   const { darkMode } = useContext(ThemeContext);
   const [videos, setVideos] = useState([]);
   const [currentVideo, setCurrentVideo] = useState(null);
@@ -18,7 +20,7 @@ const Video = () => {
         const password = process.env.REACT_APP_API_PASSWORD;
         const encodedAuth = btoa(`${username}:${password}`); 
 
-        const response = await fetch('http://localhost:8080/api/video', {
+        const response = await fetch(`http://localhost:8080/api/video?lang=${i18n.language}`, {
           headers: {
             'Authorization': `Basic ${encodedAuth}`,
           },
@@ -33,13 +35,13 @@ const Video = () => {
         setLoading(false);
       } catch (err) {
         console.error('Failed to fetch videos:', err);
-        setError('Failed to load videos. Please try again later.');
+        setError(t('video.error'));
         setLoading(false);
       }
     };
 
     fetchVideos();
-  }, []);
+  }, [i18n.language]); 
 
   const getVideoId = (link) => {
     const url = new URL(link);
@@ -50,7 +52,7 @@ const Video = () => {
   };
 
   if (loading) {
-    return <div className="loading">Loading videos...</div>;
+    return <div className="loading">{t('video.loading')}</div>;
   }
 
   if (error) {
@@ -61,8 +63,8 @@ const Video = () => {
     <div className={`video-page ${darkMode ? 'dark-mode' : 'light-mode'}`}>
       <Header />
       <header className="video-header">
-        <h1>Featured Video</h1>
-        <p>Explore video tutorials and projects I’ve worked on.</p>
+        <h1>{t('video.title')}</h1>
+        <p>{t('video.text')}</p>
       </header>
       <section className="video-thumbnails">
         <div className="thumbnails-container">

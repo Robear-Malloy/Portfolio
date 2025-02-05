@@ -60,10 +60,10 @@ public class ProjectControllerTest {
     public void testGetAllProjectsWhenProjectExists() {
         Project project = createTestProject();
         List<Project> projects = Collections.singletonList(project);
-        when(projectService.getAllProjects()).thenReturn(projects);
+        when(projectService.getAllProjects("en")).thenReturn(projects);
 
         ResponseEntity<List<Project>> response =
-                projectController.getAllProjects();
+                projectController.getAllProjects("en");
 
         assertThat(response.getStatusCode())
                 .isEqualTo(HttpStatus.OK);
@@ -74,11 +74,11 @@ public class ProjectControllerTest {
 
     @Test
     public void testGetAllProjectsWhenProjectDoesNotExist() {
-        when(projectService.getAllProjects())
+        when(projectService.getAllProjects("en"))
                 .thenThrow(new ProjectNotFoundException(""));
 
         ResponseEntity<List<Project>> response =
-                projectController.getAllProjects();
+                projectController.getAllProjects("en");
 
         assertThat(response.getStatusCode())
                 .isEqualTo(HttpStatus.NOT_FOUND);
@@ -87,11 +87,11 @@ public class ProjectControllerTest {
 
     @Test
     public void testGetAllProjectsWhenThrowsException() {
-        when(projectService.getAllProjects())
+        when(projectService.getAllProjects("en"))
                 .thenThrow(new RuntimeException(""));
 
         ResponseEntity<List<Project>> response =
-                projectController.getAllProjects();
+                projectController.getAllProjects("en");
 
         assertThat(response.getStatusCode())
                 .isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -144,39 +144,40 @@ public class ProjectControllerTest {
     public void testGetFeaturedProjectsWhenProjectExists() {
         Project project = createTestProject();
         List<Project> projects = Collections.singletonList(project);
-        when(projectService.getFeaturedProjects())
-                .thenReturn(projects);
+        when(projectService.getFeaturedProjects("en")).thenReturn(projects); // pass "en" as lang
 
         ResponseEntity<List<Project>> response =
-                projectController.getFeaturedProjects();
+                projectController.getFeaturedProjects("en"); // pass "en" as lang
 
         assertThat(response.getStatusCode())
                 .isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();
-        assertThat(response.getBody().getFirst().getId())
-                .isEqualTo(projects.getFirst().getId());
+        assertThat(response.getBody().get(0).getId()) // Corrected method to fetch by index
+                .isEqualTo(projects.get(0).getId());
     }
+
 
     @Test
     public void testGetFeaturedProjectsWhenProjectDoesNotExist() {
-        when(projectService.getFeaturedProjects())
+        when(projectService.getFeaturedProjects("en"))
                 .thenThrow(new ProjectNotFoundException(""));
 
         ResponseEntity<List<Project>> response =
-                projectController.getFeaturedProjects();
+                projectController.getFeaturedProjects("en"); // pass "en" as lang
 
         assertThat(response.getStatusCode())
                 .isEqualTo(HttpStatus.NOT_FOUND);
         assertThat(response.getBody()).isNull();
     }
 
+
     @Test
     public void testGetFeaturedProjectsWhenThrowsException() {
-        when(projectService.getFeaturedProjects())
+        when(projectService.getFeaturedProjects("en"))
                 .thenThrow(new RuntimeException(""));
 
         ResponseEntity<List<Project>> response =
-                projectController.getFeaturedProjects();
+                projectController.getFeaturedProjects("en");
 
         assertThat(response.getStatusCode())
                 .isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);

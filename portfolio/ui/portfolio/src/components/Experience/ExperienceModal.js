@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import ReactDOM from 'react-dom';
-import axios from 'axios';
 import './ExperienceModal.css';
 
 const ExperienceModal = ({ isOpen, onClose, job }) => {
+  const { t, i18n } = useTranslation();
   const [responsibilities, setResponsibilities] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -18,14 +19,21 @@ const ExperienceModal = ({ isOpen, onClose, job }) => {
     const fetchResponsibilities = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`http://localhost:8080/api/experience-description/${job.id}`, {
+        const response = await fetch(`http://localhost:8080/api/experience-description/${job.id}?lang=${i18n.language}`, {
+          method: 'GET',
           headers: {
-            'Authorization': `Basic ${encodedAuth}`, 
+            'Authorization': `Basic ${encodedAuth}`,
           },
         });
-        setResponsibilities(response.data);
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch responsibilities');
+        }
+
+        const data = await response.json();
+        setResponsibilities(data);
       } catch (err) {
-        setError('Failed to fetch responsibilities.');
+        setError(t('experienceModal.error'));
         console.error('Error fetching responsibilities:', err);
       } finally {
         setLoading(false);
@@ -33,7 +41,7 @@ const ExperienceModal = ({ isOpen, onClose, job }) => {
     };
 
     fetchResponsibilities();
-  }, [job, encodedAuth]);
+  }, [job, encodedAuth, i18n.language]);
 
   if (!isOpen || !job) {
     return null;
@@ -46,7 +54,7 @@ const ExperienceModal = ({ isOpen, onClose, job }) => {
           &times;
         </button>
         <h2 className="modal-title">
-          {job.position} at {job.company}
+          {job.position} {t('experienceModal.at')} {job.company}
         </h2>
         <p className="modal-dates">
           <em>
@@ -54,7 +62,7 @@ const ExperienceModal = ({ isOpen, onClose, job }) => {
           </em>
         </p>
         {loading ? (
-          <p>Loading responsibilities...</p>
+          <p>{t('experienceModal.loading')}</p>
         ) : error ? (
           <p>{error}</p>
         ) : (
@@ -65,7 +73,7 @@ const ExperienceModal = ({ isOpen, onClose, job }) => {
           </ul>
         )}
         <button className="modal-close-bottom" onClick={onClose}>
-          Close
+          {t('experienceModal.button')}
         </button>
       </div>
     </div>,

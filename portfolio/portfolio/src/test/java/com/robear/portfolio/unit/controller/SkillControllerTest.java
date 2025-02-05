@@ -64,9 +64,9 @@ public class SkillControllerTest {
         Skill skill = createTestSkill();
         List<Skill> skills = Collections.singletonList(skill);
 
-        when(skillService.getAllSkills()).thenReturn(skills);
+        when(skillService.getAllSkills("en")).thenReturn(skills);
 
-        ResponseEntity<List<Skill>> response = skillController.getAllSkills();
+        ResponseEntity<List<Skill>> response = skillController.getAllSkills("en");
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).hasSize(skills.size());
@@ -76,9 +76,9 @@ public class SkillControllerTest {
 
     @Test
     public void testGetAllSkillsWhenNoSkills() {
-        when(skillService.getAllSkills()).thenReturn(Collections.emptyList());
+        when(skillService.getAllSkills("en")).thenReturn(Collections.emptyList());
 
-        ResponseEntity<List<Skill>> response = skillController.getAllSkills();
+        ResponseEntity<List<Skill>> response = skillController.getAllSkills("en");
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();
@@ -87,9 +87,9 @@ public class SkillControllerTest {
 
     @Test
     public void testGetAllSkillsWhenThrowsException() {
-        when(skillService.getAllSkills()).thenThrow(new RuntimeException("Service Error"));
+        when(skillService.getAllSkills("en")).thenThrow(new RuntimeException("Service Error"));
 
-        ResponseEntity<List<Skill>> response = skillController.getAllSkills();
+        ResponseEntity<List<Skill>> response = skillController.getAllSkills("en");
 
         assertThat(response.getStatusCode())
                 .isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);

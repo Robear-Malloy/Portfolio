@@ -38,12 +38,14 @@ public class EducationController implements IEducationController {
         }
     }
 
-    @GetMapping
+    @GetMapping()
     @Override
-    public ResponseEntity<List<Education>> getAllEducation() {
+    public ResponseEntity<List<Education>> getAllEducation(
+            @RequestParam(value = "lang", required = false, defaultValue = "en") String lang
+    ) {
         try {
             logger.info("Getting All Education Records");
-            List<Education> result = educationService.getAllEducation();
+            List<Education> result = educationService.getAllEducation(lang);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (EducationNotFoundException e) {
             logger.warn("No Education Records Found. Exception: {}",

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 import './Experience.css';
 import ExperienceModal from './ExperienceModal';
 
 const Experience = () => {
+  const { t, i18n } = useTranslation();
   const [experiences, setExperiences] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -14,36 +15,48 @@ const Experience = () => {
   const password = process.env.REACT_APP_API_PASSWORD;
   const encodedAuth = btoa(`${username}:${password}`);
 
-  useEffect(() => {
-    const fetchExperiences = async () => {
-      try {
-        const response = await fetch('http://localhost:8080/api/experiences/isFeatured', {
-          method: 'GET',
-          headers: {
-            'Authorization': `Basic ${encodedAuth}`,
-          },
-        });
+  // Fetch the experiences data
+  const fetchExperiences = async (language) => {
+    try {
+      setLoading(true);
+      const response = await fetch(`http://localhost:8080/api/experiences/isFeatured?lang=${language}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Basic ${encodedAuth}`,
+        },
+      });
 
-        const data = await response.json();
+      const data = await response.json();
 
-        if (data && data.length > 0) {
-          setExperiences(data);
-        } else {
-          setError('No experiences found.');
-        }
-      } catch (err) {
-        console.error('Error fetching experience data:', err);
-        setError('Failed to fetch experience data.');
-      } finally {
-        setLoading(false);
+      if (data && data.length > 0) {
+        setExperiences(data);
+      } else {
+        setError(t('experience.noneFound'));
       }
+    } catch (err) {
+      console.error('Error fetching experience data:', err);
+      setError(t('experience.error'));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchExperiences(i18n.language);
+
+    const handleLanguageChange = (lng) => {
+      fetchExperiences(lng);
     };
 
-    fetchExperiences();
-  }, [encodedAuth]);
+    i18n.on('languageChanged', handleLanguageChange);
+
+    return () => {
+      i18n.off('languageChanged', handleLanguageChange);
+    };
+  }, [i18n]);
 
   if (loading) {
-    return <div className="experience-section">Loading experiences...</div>;
+    return <div className="experience-section">{t('experience.loading')}</div>;
   }
 
   if (error) {
@@ -57,7 +70,7 @@ const Experience = () => {
 
   return (
     <section className="experience-section">
-      <h2 className="section-title">Experience</h2>
+      <h2 className="section-title">{t('experience.title')}</h2>
       <div className="experience-list">
         {experiences.map((experience) => (
           <div
@@ -82,7 +95,7 @@ const Experience = () => {
       />
       <div className="button-container">
         <a href="http://localhost:3000/experiences" className="no-underline">
-          <button className="learn-more-button">Learn More</button>
+          <button className="learn-more-button">{t('experience.button')}</button>
         </a>
       </div>
     </section>

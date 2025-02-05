@@ -34,10 +34,10 @@ public class CourseService implements ICourseService {
 
     @Cacheable(value="courses")
     @Override
-    public List<Course> getAllCourses() {
+    public List<Course> getAllCourses(String lang) {
         try {
             logger.info("Getting All Courses from Database");
-            return courseRepository.findAll();
+            return courseRepository.findAllByLanguage(lang);
         } catch (Exception e) {
             logger.error("Error getting all courses from database");
             throw e;
@@ -46,10 +46,10 @@ public class CourseService implements ICourseService {
 
     @Cacheable(value="courses")
     @Override
-    public List<Course> getAllEducationCourses(Long educationId) {
+    public List<Course> getAllEducationCourses(String lang, Long educationId) {
         try {
             logger.info("Get all courses for education: {}", educationId);
-            return courseRepository.findSchoolCourses(educationId);
+            return courseRepository.findSchoolCourses(lang, educationId);
         } catch (Exception e) {
             logger.error("Error getting all courses for associated education");
             throw e;

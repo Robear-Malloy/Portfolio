@@ -35,6 +35,10 @@ public class Education {
     @Column(name = "date_ended")
     private String dateEnded;
 
+    @Basic(optional = false)
+    @Column(name = "language")
+    private String language;
+
     public Long getId() {
         return id;
     }
@@ -62,4 +66,8 @@ public class Education {
     public String getDateEnded() { return dateEnded; }
 
     public void setDateEnded(String dateEnded) { this.dateEnded = dateEnded; }
+
+    public String getLanguage() { return language; }
+
+    public void setLanguage(String language) { this.language = language; }
 }

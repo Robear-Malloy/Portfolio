@@ -1,13 +1,18 @@
 import React, { useContext, useState } from 'react';
 import { ThemeContext } from '../../utils/ThemeContext';
+import { useTranslation } from 'react-i18next';
 import './SettingsModal.css';
 
 const SettingsModal = ({ isOpen, onClose }) => {
+  const { t } = useTranslation();
   const { darkMode, toggleDarkMode } = useContext(ThemeContext);
-  const [selectedLanguage, setSelectedLanguage] = useState('EN');
+  const { i18n } = useTranslation(); 
+  const [selectedLanguage, setSelectedLanguage] = useState(i18n.language.toUpperCase());
 
   const handleLanguageChange = (event) => {
+    const newLanguage = event.target.value.toLowerCase(); 
     setSelectedLanguage(event.target.value);
+    i18n.changeLanguage(newLanguage);
   };
 
   if (!isOpen) return null;
@@ -18,10 +23,10 @@ const SettingsModal = ({ isOpen, onClose }) => {
         <button className="close-button" onClick={onClose} aria-label="Close Settings Modal">
           &times;
         </button>
-        <h2>Settings</h2>
+        <h2>{t('settings.title')}</h2>
 
         <div className="settings-group">
-          <label htmlFor="language-select">Language</label>
+          <label htmlFor="language-select">{t('settings.language')}</label>
           <select
             id="language-select"
             value={selectedLanguage}
@@ -36,7 +41,7 @@ const SettingsModal = ({ isOpen, onClose }) => {
         </div>
 
         <div className="settings-group">
-          <label htmlFor="dark-mode-switch">Dark Mode</label>
+          <label htmlFor="dark-mode-switch">{t('settings.darkMode')}</label>
           <div className="slider-container">
             <input
               type="checkbox"
@@ -50,7 +55,7 @@ const SettingsModal = ({ isOpen, onClose }) => {
         </div>
 
         <button className="save-button" onClick={onClose}>
-          Save Changes
+        {t('settings.save')}
         </button>
       </div>
     </div>

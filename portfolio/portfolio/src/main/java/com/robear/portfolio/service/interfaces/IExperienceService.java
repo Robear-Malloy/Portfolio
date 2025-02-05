@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface IExperienceService {
     Experience addExperience(Experience experience);
-    List<Experience> getAllExperiences();
+    List<Experience> getAllExperiences(String lang);
     Experience getExperienceById(Long id);
-    List<Experience> getAllFeaturedExperiences();
+    List<Experience> getAllFeaturedExperiences(String lang);
     Experience updateExperience(Long id, Experience experience);
     void deleteExperience(Long id);
 }

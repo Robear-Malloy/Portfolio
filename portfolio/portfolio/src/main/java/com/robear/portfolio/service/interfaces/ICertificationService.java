@@ -5,6 +5,6 @@ import java.util.List;
 
 public interface ICertificationService {
     Certification addCertification(Certification certification);
-    List<Certification> getAllCertification();
+    List<Certification> getAllCertification(String lang);
     void deleteCertification(Long id);
 }

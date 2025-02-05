@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ISkillController {
     ResponseEntity<Skill> createSkill(Skill skill);
-    ResponseEntity<List<Skill>> getAllSkills();
+    ResponseEntity<List<Skill>> getAllSkills(String lang);
     ResponseEntity<List<Skill>> getSkillsByType(int type);
     ResponseEntity<Skill> getSkillById(Long id);
     ResponseEntity<Void> deleteSkillById(Long id);

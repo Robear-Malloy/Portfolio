@@ -59,9 +59,9 @@ public class VideoControllerTest {
     public void testGetAllVideosWhenVideosExist() {
         Video video = createTestVideo();
         List<Video> videos = Collections.singletonList(video);
-        when(videoService.getAllVideos()).thenReturn(videos);
+        when(videoService.getAllVideos("en")).thenReturn(videos);
 
-        ResponseEntity<List<Video>> response = videoController.getAllVideos();
+        ResponseEntity<List<Video>> response = videoController.getAllVideos("en");
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();
@@ -70,9 +70,9 @@ public class VideoControllerTest {
 
     @Test
     public void testGetAllVideosWhenThrowsException() {
-        when(videoService.getAllVideos()).thenThrow(new RuntimeException("Service Error"));
+        when(videoService.getAllVideos("en")).thenThrow(new RuntimeException("Service Error"));
 
-        ResponseEntity<List<Video>> response = videoController.getAllVideos();
+        ResponseEntity<List<Video>> response = videoController.getAllVideos("en");
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
         assertThat(response.getBody()).isNull();

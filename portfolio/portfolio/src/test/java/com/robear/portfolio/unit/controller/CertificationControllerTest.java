@@ -33,6 +33,7 @@ public class CertificationControllerTest {
         certification.setId(1L);
         certification.setName("Test Certification");
         certification.setDateCompleted("01/01/2025");
+        certification.setLanguage("en");
     }
 
     @Test
@@ -60,24 +61,24 @@ public class CertificationControllerTest {
     @Test
     public void testGetAllCertificationsWhenSuccessful() {
         List<Certification> certifications = Collections.singletonList(certification);
-        when(certificationService.getAllCertification()).thenReturn(certifications);
+        when(certificationService.getAllCertification(certification.getLanguage())).thenReturn(certifications);
 
-        ResponseEntity<List<Certification>> response = certificationController.getAllCertifications();
+        ResponseEntity<List<Certification>> response = certificationController.getAllCertifications(certification.getLanguage());
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().get(0).getId()).isEqualTo(certification.getId());
-        verify(certificationService).getAllCertification();
+        verify(certificationService).getAllCertification(certification.getLanguage());
     }
 
     @Test
     public void testGetAllCertificationsWhenThrowsException() {
-        when(certificationService.getAllCertification()).thenThrow(new RuntimeException("Error"));
+        when(certificationService.getAllCertification(certification.getLanguage())).thenThrow(new RuntimeException("Error"));
 
-        ResponseEntity<List<Certification>> response = certificationController.getAllCertifications();
+        ResponseEntity<List<Certification>> response = certificationController.getAllCertifications(certification.getLanguage());
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
-        verify(certificationService).getAllCertification();
+        verify(certificationService).getAllCertification(certification.getLanguage());
     }
 
     @Test

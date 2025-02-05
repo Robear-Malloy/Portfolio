@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 import TechStackModal from './TechStackModal';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CircularProgress } from '@mui/material';
 import './Experiences.css';
@@ -8,6 +8,7 @@ import Footer from '../../components/Footer/Footer';
 import { ThemeContext } from '../../utils/ThemeContext';
 
 const Experiences = () => {
+  const { t, i18n } = useTranslation();
   const { darkMode } = useContext(ThemeContext);
   const [education, setEducation] = useState([]);
   const [skills, setSkills] = useState([]);
@@ -22,27 +23,45 @@ const Experiences = () => {
       try {
         const username = process.env.REACT_APP_API_USERNAME;
         const password = process.env.REACT_APP_API_PASSWORD;
-        const encodedAuth = btoa(`${username}:${password}`); 
+        const encodedAuth = btoa(`${username}:${password}`);
+        const language = i18n.language || 'en'; 
 
         const [educationRes, skillsRes, experiencesRes, projectsRes] = await Promise.all([
-          axios.get('http://localhost:8080/api/education', {
-            headers: { 'Authorization': `Basic ${encodedAuth}` }
+          fetch(`http://localhost:8080/api/education?lang=${language}`, {
+            method: 'GET',
+            headers: {
+              'Authorization': `Basic ${encodedAuth}`,
+            },
           }),
-          axios.get('http://localhost:8080/api/skills', {
-            headers: { 'Authorization': `Basic ${encodedAuth}` }
+          fetch(`http://localhost:8080/api/skills?lang=${language}`, {
+            method: 'GET',
+            headers: {
+              'Authorization': `Basic ${encodedAuth}`,
+            },
           }),
-          axios.get('http://localhost:8080/api/experiences', {
-            headers: { 'Authorization': `Basic ${encodedAuth}` }
+          fetch(`http://localhost:8080/api/experiences?lang=${language}`, {
+            method: 'GET',
+            headers: {
+              'Authorization': `Basic ${encodedAuth}`,
+            },
           }),
-          axios.get('http://localhost:8080/api/projects', {
-            headers: { 'Authorization': `Basic ${encodedAuth}` }
+          fetch(`http://localhost:8080/api/projects?lang=${language}`, {
+            method: 'GET',
+            headers: {
+              'Authorization': `Basic ${encodedAuth}`,
+            },
           }),
         ]);
 
-        setEducation(educationRes.data);
-        setSkills(skillsRes.data);
-        setExperiences(experiencesRes.data);
-        setProjects(projectsRes.data);
+        const educationData = await educationRes.json();
+        const skillsData = await skillsRes.json();
+        const experiencesData = await experiencesRes.json();
+        const projectsData = await projectsRes.json();
+
+        setEducation(educationData);
+        setSkills(skillsData);
+        setExperiences(experiencesData);
+        setProjects(projectsData);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -51,18 +70,28 @@ const Experiences = () => {
     };
 
     fetchData();
-  }, []);
+  }, [i18n.language]); 
 
   const handleRowClick = async (type, id) => {
+    if (type === 'education' || type === 'skills') {
+      return;
+    }
+  
     try {
       const username = process.env.REACT_APP_API_USERNAME;
       const password = process.env.REACT_APP_API_PASSWORD;
       const encodedAuth = btoa(`${username}:${password}`);
-
-      const response = await axios.get(`http://localhost:8080/api/tech/${type}/${id}`, {
-        headers: { 'Authorization': `Basic ${encodedAuth}` }
+      const language = i18n.language || 'en'; 
+  
+      const response = await fetch(`http://localhost:8080/api/tech/${type}/${id}?lang=${language}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Basic ${encodedAuth}`,
+        },
       });
-      setTechStack(response.data);
+  
+      const data = await response.json();
+      setTechStack(data);
       setModalOpen(true);
     } catch (error) {
       console.error(`Error fetching tech stack for ${type} ID ${id}:`, error);
@@ -109,40 +138,40 @@ const Experiences = () => {
       <section className="tables-container">
         {renderTable(
           'education',
-          'Education',
+          t('experienceTables.education.title'),
           education.map((row) => ({
             ...row,
-            duration: `${row.dateStarted} - ${row.dateEnded || 'Present'}`,
+            duration: `${row.dateStarted} - ${row.dateEnded || t('experienceTables.education.present')}`,
           })),
           [
-            { key: 'school', header: 'Institution' },
-            { key: 'degree', header: 'Degree' },
-            { key: 'duration', header: 'Duration' },
+            { key: 'school', header: t('experienceTables.education.school') },
+            { key: 'degree', header: t('experienceTables.education.degree') },
+            { key: 'duration', header: t('experienceTables.education.duration') },
           ],
           'education'
         )}
-        {renderTable('skills', 'Skills', skills, [
-          { key: 'name', header: 'Name' },
-          { key: 'type', header: 'Specialty' },
-          //{ key: 'level', header: 'Level' },
-        ])}
+        {renderTable('skills', t('experienceTables.skill.title'), skills, [
+          { key: 'name', header: t('experienceTables.skill.name') },
+          { key: 'type', header: t('experienceTables.skill.type') },
+        ],
+        'skills')}
         {renderTable(
           'experience',
-          'Experience',
+          t('experienceTables.experience.title'),
           experiences.map((row) => ({
             ...row,
-            duration: `${row.dateStarted} - ${row.dateEnded || 'Present'}`,
+            duration: `${row.dateStarted} - ${row.dateEnded || t('experienceTables.experience.present')}`,
           })),
           [
-            { key: 'company', header: 'Company' },
-            { key: 'position', header: 'Role' },
-            { key: 'duration', header: 'Duration' },
+            { key: 'company', header: t('experienceTables.experience.company') },
+            { key: 'position', header: t('experienceTables.experience.role') },
+            { key: 'duration', header: t('experienceTables.experience.duration') },
           ],
           'experience'
         )}
-        {renderTable('projects', 'Projects', projects, [
-          { key: 'title', header: 'Title' },
-          { key: 'description', header: 'Description' },
+        {renderTable('projects', t('experienceTables.project.title'), projects, [
+          { key: 'title', header: t('experienceTables.project.name') },
+          { key: 'description', header: t('experienceTables.project.description') },
         ], 'project')}
       </section>
       <Footer />
@@ -152,7 +181,7 @@ const Experiences = () => {
           onClose={() => setModalOpen(false)}
           techStack={techStack}
           skills={skills}
-      />
+        />
       )}
     </div>
   );

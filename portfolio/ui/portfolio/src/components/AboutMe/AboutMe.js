@@ -1,26 +1,28 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import './AboutMe.css';
-import languagesImage from '../../assets/images/cat.JPEG';
+import catImage from '../../assets/images/cat.JPEG';
 import climbingImage from '../../assets/images/hiking.JPEG';
 import travelingImage from '../../assets/images/travel.JPEG';
 
 const AboutMe = () => {
+  const { t } = useTranslation();
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const slides = [
     {
-      title: 'My Cats',
-      content: 'My fiance and I rescued two kittens that have now grown into not-so-little rowdy cats that join us in about everything we do. (Even programming lol!). They are a huge part of our little family and are just the beginning.',
-      image: languagesImage,
+      title: t('aboutMe.card1.title'),
+      content: t('aboutMe.card1.content'),
+      image: catImage,
     },
     {
-      title: 'Love Hiking the Outdoors',
-      content: 'When I\'m not at my computer working on projects, I like to take time to step away from the keyboard and enjoy nature. In Florida, I don\'t have many opportunities for climbs, so I try to go somewhere new every year',
+      title: t('aboutMe.card2.title'),
+      content: t('aboutMe.card2.content'),
       image: climbingImage, 
     },
     {
-      title: 'Adventures in Traveling',
-      content: 'Traveling gives me an opportunity to experience life outside my own bubble, and allows me to talk with people from all walks of life. Seeing new places is great, but my favorite is getting to practice language skills with the locals.',
+      title: t('aboutMe.card3.title'),
+      content: t('aboutMe.card3.content'),
       image: travelingImage,
     },
   ];
@@ -39,7 +41,7 @@ const AboutMe = () => {
 
   return (
     <div id="about-me" className="about-me-container">
-      <h2>About Me</h2>
+      <h2>{t('aboutMe.title')}</h2>
       <div className="about-me-card">
         <img src={slides[currentSlide].image} alt={slides[currentSlide].title} className="about-me-image" />
         <div className="about-me-content">

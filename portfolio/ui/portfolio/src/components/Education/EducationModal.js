@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import ReactDOM from 'react-dom';
 import './EducationModal.css';
 
 const EducationModal = ({ isOpen, onClose, educationId }) => {
+  const { t, i18n } = useTranslation();
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -16,32 +18,39 @@ const EducationModal = ({ isOpen, onClose, educationId }) => {
 
     const fetchCourses = async () => {
       setLoading(true);
+      setError(null); 
       try {
-        const response = await fetch(`http://localhost:8080/api/course/${educationId}`, {
-          method: 'GET',
-          headers: {
-            'Authorization': `Basic ${encodedAuth}`,
-          },
-        });
+        const response = await fetch(
+          `http://localhost:8080/api/course/${educationId}?lang=${i18n.language}`,
+          {
+            method: 'GET',
+            headers: {
+              'Authorization': `Basic ${encodedAuth}`,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
         const data = await response.json();
-        console.log(data);
 
         if (data && data.length > 0) {
           setCourses(data);
         } else {
-          setError('No courses found.');
+          setError(t('educationModal.noneFound'));
         }
       } catch (err) {
         console.error('Error fetching related courses:', err);
-        setError('Failed to fetch related courses.');
+        setError(t('educationModal.error'));
       } finally {
         setLoading(false);
       }
     };
 
     fetchCourses();
-  }, [educationId, encodedAuth]);
+  }, [educationId, i18n.language, encodedAuth, t]);
 
   if (!isOpen) {
     return null;
@@ -53,9 +62,9 @@ const EducationModal = ({ isOpen, onClose, educationId }) => {
         <button className="modal-close-button" onClick={onClose}>
           &times;
         </button>
-        <h2 className="modal-title">Related Courses</h2>
+        <h2 className="modal-title">{t('educationModal.title')}</h2>
         {loading ? (
-          <p>Loading courses...</p>
+          <p>{t('educationModal.loading')}</p>
         ) : error ? (
           <p>{error}</p>
         ) : (
@@ -66,7 +75,7 @@ const EducationModal = ({ isOpen, onClose, educationId }) => {
           </ul>
         )}
         <button className="modal-close-bottom" onClick={onClose}>
-          Close
+          {t('educationModal.button')}
         </button>
       </div>
     </div>,

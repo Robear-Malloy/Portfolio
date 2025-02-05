@@ -35,6 +35,7 @@ public class EducationServiceTest {
         education.setGpa(4.0f);
         education.setDateStarted("12-01-20");
         education.setDateEnded("12-01-20");
+        education.setLanguage("en");
         MockitoAnnotations.openMocks(this);
     }
 
@@ -68,44 +69,44 @@ public class EducationServiceTest {
     @Test
     public void testGetAllEducationWhenRecordsFound() {
         List<Education> educationList = Collections.singletonList(education);
-        when(educationRepository.findAll())
+        when(educationRepository.findAllByLanguage("en"))
                 .thenReturn(educationList);
 
         List<Education> result =
-                educationService.getAllEducation();
+                educationService.getAllEducation(education.getLanguage());
 
         assertThat(result).isNotNull();
         assertThat(result)
                 .isEqualTo(educationList);
-        verify(educationRepository).findAll();
+        verify(educationRepository).findAllByLanguage("en");
     }
 
     @Test
     public void testGetAllEducationWhenNoRecordsFound() {
-        when(educationRepository.findAll())
+        when(educationRepository.findAllByLanguage("en"))
                 .thenReturn(Collections.emptyList());
 
         EducationNotFoundException exception = assertThrows(EducationNotFoundException.class, () -> {
-            educationService.getAllEducation();
+            educationService.getAllEducation(education.getLanguage());
         });
 
         assertThat(exception.getMessage())
                 .isEqualTo("No Education Records Returned From Database");
-        verify(educationRepository).findAll();
+        verify(educationRepository).findAllByLanguage("en");
     }
 
     @Test
     public void testGetAllEducationWhenThrowsException() {
-        when(educationRepository.findAll())
+        when(educationRepository.findAllByLanguage("en"))
                 .thenThrow(new RuntimeException(""));
 
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            educationService.getAllEducation();
+            educationService.getAllEducation(education.getLanguage());
         });
 
         assertThat(exception.getMessage())
                 .isEqualTo("Error Retrieving Education Information");
-        verify(educationRepository).findAll();
+        verify(educationRepository).findAllByLanguage("en");
     }
 
     @Test

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IEducationController {
     ResponseEntity<Education> createEducation(Education education);
-    ResponseEntity<List<Education>> getAllEducation();
+    ResponseEntity<List<Education>> getAllEducation(String lang);
     ResponseEntity<Education> getEducationById(Long id);
     ResponseEntity<Education> updateEducationById(Long id, Education education);
     ResponseEntity<Education> updateGpaById(Long id, Float gpa);

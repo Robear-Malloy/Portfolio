@@ -27,10 +27,10 @@ public class ResumeController {
     @Autowired
     private SkillController skillController;
 
-    @GetMapping
-    public ResponseEntity<Object> getResume() {
+    @GetMapping("/{lang}")
+    public ResponseEntity<Object> getResume(@PathVariable String lang) {
         try {
-            ResponseEntity<List<Education>> educationResponse = educationController.getAllEducation();
+            ResponseEntity<List<Education>> educationResponse = educationController.getAllEducation(lang);
             ResponseEntity<List<Experience>> experienceResponse = experienceController.getAllExperiences();
             ResponseEntity<List<Project>> projectResponse = projectController.getAllProjects();
             ResponseEntity<List<Skill>> skillResponse = skillController.getAllSkills();

@@ -37,9 +37,9 @@ public class SkillService implements ISkillService {
 
     @Cacheable(value="skills")
     @Override
-    public List<Skill> getAllSkills() {
+    public List<Skill> getAllSkills(String lang) {
         try {
-            return skillRepository.findAll();
+            return skillRepository.findByLanguage(lang);
         } catch(Exception e) {
             logger.error("Error retrieving skills", e);
             throw new RuntimeException("Unable to retrieve skills", e);

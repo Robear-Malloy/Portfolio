@@ -34,12 +34,13 @@ public class CourseController implements ICourseController {
         }
     }
 
-    @GetMapping
+    @GetMapping()
     @Override
-    public ResponseEntity<List<Course>> getAllCourses() {
+    public ResponseEntity<List<Course>> getAllCourses(
+            @RequestParam(value = "lang", required = false, defaultValue = "en") String lang) {
         try {
             logger.info("Getting all courses");
-            List<Course> result = courseService.getAllCourses();
+            List<Course> result = courseService.getAllCourses(lang);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error getting all courses. {}", e.getMessage());
@@ -50,10 +51,11 @@ public class CourseController implements ICourseController {
     @GetMapping("/{educationId}")
     @Override
     public ResponseEntity<List<Course>> getAllCoursesForSchool(
+            @RequestParam(value = "lang", required = false, defaultValue = "en") String lang,
             @PathVariable Long educationId) {
         try {
             logger.info("Getting all courses associated with education id: {}", educationId);
-            List<Course> result = courseService.getAllEducationCourses(educationId);
+            List<Course> result = courseService.getAllEducationCourses(lang, educationId);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error getting all courses for school. {}", e.getMessage());

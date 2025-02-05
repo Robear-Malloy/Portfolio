@@ -1,33 +1,36 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import './Projects.css';
 
 const Projects = () => {
+  const { t, i18n } = useTranslation();
   const [projectsData, setProjectsData] = useState([]);
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
-
+  
   const username = process.env.REACT_APP_API_USERNAME;
   const password = process.env.REACT_APP_API_PASSWORD;
   const encodedAuth = btoa(`${username}:${password}`); 
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const response = await fetch('http://localhost:8080/api/projects/featured', {
-          method: 'GET',
-          headers: {
-            'Authorization': `Basic ${encodedAuth}`, 
-          },
-        });
-        const data = await response.json();
-        const featuredProjects = data.filter(project => project.isFeatured);
-        setProjectsData(featuredProjects);
-      } catch (error) {
-        console.error('Error fetching projects:', error);
-      }
-    };
+  const fetchProjects = async (lang) => {
+    try {
+      const response = await fetch(`http://localhost:8080/api/projects/featured?lang=${lang}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Basic ${encodedAuth}`, 
+        },
+      });
+      const data = await response.json();
+      const featuredProjects = data.filter(project => project.isFeatured);
+      setProjectsData(featuredProjects);
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+    }
+  };
 
-    fetchProjects();
-  }, [encodedAuth]);
+  useEffect(() => {
+    const currentLang = i18n.language;
+    fetchProjects(currentLang);
+  }, [i18n.language]);
 
   const handleNextProject = () => {
     setCurrentProjectIndex((prevIndex) => (prevIndex + 1) % projectsData.length);
@@ -40,8 +43,8 @@ const Projects = () => {
   if (projectsData.length === 0) {
     return (
       <section className="projects-section">
-        <h2>Projects</h2>
-        <p>Loading projects...</p>
+        <h2>{t('projects.title')}</h2>
+        <p>{t('projects.loading')}</p>
       </section>
     );
   }
@@ -51,7 +54,7 @@ const Projects = () => {
 
   return (
     <section className="projects-section" id="projects"> 
-      <h2>Projects</h2>
+      <h2>{t('projects.title')}</h2>
       <div className="carousel-container">
         <button className="arrow-button left" onClick={handlePrevProject}>←</button>
         <div className="project-card">
@@ -66,7 +69,7 @@ const Projects = () => {
                   target="_blank" 
                   rel="noopener noreferrer"
                 >
-                  Demo
+                  {t('projects.demo')}
                 </a>
               )}
               {currentProject.repoLink && (
@@ -76,7 +79,7 @@ const Projects = () => {
                   target="_blank" 
                   rel="noopener noreferrer"
                 >
-                  Repo
+                  {t('projects.repo')}
                 </a>
               )}
             </div>

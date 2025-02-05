@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import './Contact.css';
 
 const Contact = () => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -42,10 +44,10 @@ const Contact = () => {
       });
 
       if (response.status === 200) {
-        setResponseMessage('Message sent successfully!');
+        setResponseMessage(t('contact.successMessage'));
       }
     } catch (error) {
-      setResponseMessage('Failed to send the message. Please try again.');
+      setResponseMessage(t('contact.failMessage'));
       console.error('Error sending message:', error);
     } finally {
       setIsSubmitting(false);
@@ -54,12 +56,12 @@ const Contact = () => {
 
   return (
     <section className="contact-section" id="contact">
-      <h2>Contact</h2>
+      <h2>{t('contact.title')}</h2>
       <form className="contact-form" onSubmit={handleSubmit}>
         <input
           type="text"
           name="name"
-          placeholder="Your Name"
+          placeholder={t('contact.name')}
           value={formData.name}
           onChange={handleInputChange}
           required 
@@ -67,26 +69,26 @@ const Contact = () => {
         <input
           type="email"
           name="email"
-          placeholder="Your Email"
+          placeholder={t('contact.email')}
           value={formData.email}
           onChange={handleInputChange}
         />
         <input
           type="text"
           name="subject"
-          placeholder="Your Subject"
+          placeholder={t('contact.subject')}
           value={formData.subject}
           onChange={handleInputChange}
         />
         <textarea
           name="message"
-          placeholder="Your Message"
+          placeholder={t('contact.message')}
           value={formData.message}
           onChange={handleInputChange}
           required 
         ></textarea>
         <button type="submit" disabled={isSubmitting || !formData.name || !formData.message}>
-          {isSubmitting ? 'Sending...' : 'Send'}
+          {isSubmitting ? t('contact.sending') : t('contact.sendButton')}
         </button>
       </form>
       {responseMessage && <p className="response-message">{responseMessage}</p>}

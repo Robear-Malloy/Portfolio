@@ -37,10 +37,12 @@ public class VideoController implements IVideoController {
 
     @GetMapping
     @Override
-    public ResponseEntity<List<Video>> getAllVideos() {
+    public ResponseEntity<List<Video>> getAllVideos(
+            @RequestParam(value = "lang", required = false, defaultValue = "en") String lang
+    ) {
         try {
             logger.info("Getting All Videos.");
-            List<Video> result = videoService.getAllVideos();
+            List<Video> result = videoService.getAllVideos(lang);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("Error getting all videos.");
