@@ -68,7 +68,7 @@ public class ExperienceServiceTest {
     @Test
     public void testGetAllExperiencesWhenRecordsFound() {
         List<Experience> experiences = Collections.singletonList(experience);
-        when(experienceRepository.findAll())
+        when(experienceRepository.findAllByLanguage("en"))
                 .thenReturn(experiences);
 
         List<Experience> result =
@@ -76,12 +76,12 @@ public class ExperienceServiceTest {
 
         assertThat(result).isNotNull();
         assertThat(result).isEqualTo(experiences);
-        verify(experienceRepository).findAll();
+        verify(experienceRepository).findAllByLanguage("en");
     }
 
     @Test
     public void testGetAllExperiencesWhenNoRecordsFound() {
-        when(experienceRepository.findAll())
+        when(experienceRepository.findAllByLanguage("en"))
                 .thenReturn(Collections.emptyList());
 
         ExperienceNotFoundException exception = assertThrows(ExperienceNotFoundException.class, () -> {
@@ -90,12 +90,12 @@ public class ExperienceServiceTest {
 
         assertThat(exception.getMessage())
                 .isEqualTo("No Experiences Found in Database");
-        verify(experienceRepository).findAll();
+        verify(experienceRepository).findAllByLanguage("en");
     }
 
     @Test
     public void testGetAllExperiencesWhenThrowsException() {
-        when(experienceRepository.findAll())
+        when(experienceRepository.findAllByLanguage("en"))
                 .thenThrow(new RuntimeException(""));
 
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
@@ -104,7 +104,7 @@ public class ExperienceServiceTest {
 
         assertThat(exception.getMessage())
                 .isEqualTo("Error Retrieving Experiences");
-        verify(experienceRepository).findAll();
+        verify(experienceRepository).findAllByLanguage("en");
     }
 
     @Test
