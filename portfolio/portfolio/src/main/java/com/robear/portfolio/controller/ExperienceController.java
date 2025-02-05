@@ -40,10 +40,12 @@ public class ExperienceController implements IExperienceController {
 
     @GetMapping
     @Override
-    public ResponseEntity<List<Experience>> getAllExperiences() {
+    public ResponseEntity<List<Experience>> getAllExperiences(
+            @RequestParam(value = "lang", required = false, defaultValue = "en") String lang
+    ) {
         try {
             logger.info("Retrieving All Experiences");
-            List<Experience> result = experienceService.getAllExperiences();
+            List<Experience> result = experienceService.getAllExperiences(lang);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (ExperienceNotFoundException e) {
             logger.warn("No Experiences Found");
@@ -75,10 +77,12 @@ public class ExperienceController implements IExperienceController {
 
     @GetMapping("/isFeatured")
     @Override
-    public ResponseEntity<List<Experience>> getFeaturedExperiences() {
+    public ResponseEntity<List<Experience>> getFeaturedExperiences(
+            @RequestParam(value = "lang", required = false, defaultValue = "en") String lang
+    ) {
         try {
             logger.info("Retrieving All Featured Experiences");
-            List<Experience> result = experienceService.getAllFeaturedExperiences();
+            List<Experience> result = experienceService.getAllFeaturedExperiences(lang);
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (ExperienceNotFoundException e) {
             logger.warn("No Featured Experiences Found");

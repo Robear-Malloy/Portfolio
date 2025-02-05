@@ -22,6 +22,10 @@ public class Skill
     @Column(name = "type")
     private SkillType type;
 
+    @Basic(optional = false)
+    @Column(name = "language")
+    private String language;
+
     public Long getId() {
         return id;
     }
@@ -41,4 +45,8 @@ public class Skill
     public SkillType getType() { return type; }
 
     public void setType(SkillType type) {this.type = type;}
+
+    public String getLanguage() { return language; }
+
+    public void setLanguage(String language) { this.language = language; }
 }

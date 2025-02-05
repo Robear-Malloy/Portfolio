@@ -34,6 +34,10 @@ public class Experience {
     @Column(name = "is_featured")
     private Boolean isFeatured;
 
+    @Basic(optional = false)
+    @Column(name = "language")
+    private String language;
+
     public Long getId() { return id; }
 
     public void setId(Long id) { this.id = id; }
@@ -57,4 +61,8 @@ public class Experience {
     public Boolean getIsFeatured() { return isFeatured; }
 
     public void setIsFeatured(Boolean isFeatured) { this.isFeatured = isFeatured; }
+
+    public String getLanguage() { return language; }
+
+    public void setLanguage(String language) { this.language = language; }
 }

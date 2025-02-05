@@ -3,33 +3,34 @@ import { useTranslation } from 'react-i18next';
 import './Projects.css';
 
 const Projects = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [projectsData, setProjectsData] = useState([]);
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
-
+  
   const username = process.env.REACT_APP_API_USERNAME;
   const password = process.env.REACT_APP_API_PASSWORD;
   const encodedAuth = btoa(`${username}:${password}`); 
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const response = await fetch('http://localhost:8080/api/projects/featured', {
-          method: 'GET',
-          headers: {
-            'Authorization': `Basic ${encodedAuth}`, 
-          },
-        });
-        const data = await response.json();
-        const featuredProjects = data.filter(project => project.isFeatured);
-        setProjectsData(featuredProjects);
-      } catch (error) {
-        console.error('Error fetching projects:', error);
-      }
-    };
+  const fetchProjects = async (lang) => {
+    try {
+      const response = await fetch(`http://localhost:8080/api/projects/featured?lang=${lang}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Basic ${encodedAuth}`, 
+        },
+      });
+      const data = await response.json();
+      const featuredProjects = data.filter(project => project.isFeatured);
+      setProjectsData(featuredProjects);
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+    }
+  };
 
-    fetchProjects();
-  }, [encodedAuth]);
+  useEffect(() => {
+    const currentLang = i18n.language;
+    fetchProjects(currentLang);
+  }, [i18n.language]);
 
   const handleNextProject = () => {
     setCurrentProjectIndex((prevIndex) => (prevIndex + 1) % projectsData.length);

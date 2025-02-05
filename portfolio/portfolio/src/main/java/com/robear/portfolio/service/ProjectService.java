@@ -36,10 +36,10 @@ public class ProjectService implements IProjectService {
 
     @Cacheable(value="projects")
     @Override
-    public List<Project> getAllProjects() {
+    public List<Project> getAllProjects(String lang) {
         try {
             logger.info("Getting all projects from database");
-            List<Project> projects = projectRepository.findAll();
+            List<Project> projects = projectRepository.findAllByLanguage(lang);
 
             if (projects.isEmpty()) {
                 throw new ProjectNotFoundException("No projects found in database");
@@ -74,10 +74,10 @@ public class ProjectService implements IProjectService {
 
     @Cacheable(value="projects")
     @Override
-    public List<Project> getFeaturedProjects() {
+    public List<Project> getFeaturedProjects(String lang) {
         try {
             logger.info("Retrieving All Featured Projects.");
-            List<Project> featuredProjects = projectRepository.findFeatured();
+            List<Project> featuredProjects = projectRepository.findFeatured(lang);
             if (featuredProjects.isEmpty()) {
                 throw new ProjectNotFoundException(true);
             }

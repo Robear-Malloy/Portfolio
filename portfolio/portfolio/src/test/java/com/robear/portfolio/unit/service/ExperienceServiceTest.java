@@ -72,7 +72,7 @@ public class ExperienceServiceTest {
                 .thenReturn(experiences);
 
         List<Experience> result =
-                experienceService.getAllExperiences();
+                experienceService.getAllExperiences("en");
 
         assertThat(result).isNotNull();
         assertThat(result).isEqualTo(experiences);
@@ -85,7 +85,7 @@ public class ExperienceServiceTest {
                 .thenReturn(Collections.emptyList());
 
         ExperienceNotFoundException exception = assertThrows(ExperienceNotFoundException.class, () -> {
-           experienceService.getAllExperiences();
+           experienceService.getAllExperiences("en");
         });
 
         assertThat(exception.getMessage())
@@ -99,7 +99,7 @@ public class ExperienceServiceTest {
                 .thenThrow(new RuntimeException(""));
 
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            experienceService.getAllExperiences();
+            experienceService.getAllExperiences("en");
         });
 
         assertThat(exception.getMessage())

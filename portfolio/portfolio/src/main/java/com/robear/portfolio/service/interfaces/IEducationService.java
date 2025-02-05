@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface IEducationService {
     Education addEducation(Education education);
-    List<Education> getAllEducation();
+    List<Education> getAllEducation(String lang);
     Education getEducationById(Long id);
     Education updateEducationById(Long id, Education education);
     Education updateGpaById(Long id, Float gpa);

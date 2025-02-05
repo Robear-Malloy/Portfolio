@@ -33,10 +33,10 @@ public class ExperienceService implements IExperienceService {
 
     @Cacheable(value="experiences")
     @Override
-    public List<Experience> getAllExperiences() {
+    public List<Experience> getAllExperiences(String lang) {
         try {
             logger.info("Retrieving All Experiences from Database");
-            List<Experience> experiences = experienceRepository.findAll();
+            List<Experience> experiences = experienceRepository.findAllByLanguage(lang);
             if (experiences.isEmpty()) {
                 throw new ExperienceNotFoundException("No Experiences Found in Database");
             }
@@ -72,10 +72,10 @@ public class ExperienceService implements IExperienceService {
 
     @Cacheable(value="experiences")
     @Override
-    public List<Experience> getAllFeaturedExperiences() {
+    public List<Experience> getAllFeaturedExperiences(String lang) {
         try {
             logger.info("Retrieving All Featured Experiences from Database");
-            List<Experience> experiences = experienceRepository.findFeatured();
+            List<Experience> experiences = experienceRepository.findFeatured(lang);
             if (experiences.isEmpty()) {
                 throw new ExperienceNotFoundException("No Experiences Found in Database");
             }

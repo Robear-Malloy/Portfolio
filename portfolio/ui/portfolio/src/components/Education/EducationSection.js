@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import axios from 'axios';
 import './EducationSection.css';
 import EducationItem from './EducationItem';
 import EducationModal from './EducationModal';
@@ -23,19 +22,29 @@ const EducationSection = () => {
     try {
       setLoading(true);
       const [educationResponse, certificationResponse] = await Promise.all([
-        axios.get(`http://localhost:8080/api/education`, {
+        fetch(`http://localhost:8080/api/education?lang=${language}`, {
+          method: 'GET',
           headers: {
             'Authorization': `Basic ${encodedAuth}`,
           },
         }),
-        axios.get(`http://localhost:8080/api/certification?lang=${language}`, {
+        fetch(`http://localhost:8080/api/certification?lang=${language}`, {
+          method: 'GET',
           headers: {
             'Authorization': `Basic ${encodedAuth}`,
           },
         }),
       ]);
-      setEducationData(educationResponse.data);
-      setCertifications(certificationResponse.data);
+
+      if (!educationResponse.ok || !certificationResponse.ok) {
+        throw new Error('Failed to fetch data');
+      }
+
+      const educationData = await educationResponse.json();
+      const certificationData = await certificationResponse.json();
+
+      setEducationData(educationData);
+      setCertifications(certificationData);
     } catch (err) {
       setError(t('educationSection.error'));
       console.error('Error fetching data:', err);

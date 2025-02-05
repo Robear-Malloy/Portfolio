@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import './Skills.css';
 
 const Skills = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();  // Added i18n to access the current language
   const [skills, setSkills] = useState([]);
   const [randomSkill, setRandomSkill] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -18,8 +18,11 @@ const Skills = () => {
         const username = process.env.REACT_APP_API_USERNAME;
         const password = process.env.REACT_APP_API_PASSWORD;
         const encodedAuth = btoa(`${username}:${password}`);
+        
+        // Get the current language (default is "en")
+        const language = i18n.language || 'en';
 
-        const response = await fetch('http://localhost:8080/api/skills', {
+        const response = await fetch(`http://localhost:8080/api/skills?lang=${language}`, {
           method: 'GET',
           headers: {
             'Authorization': `Basic ${encodedAuth}`,
@@ -38,7 +41,7 @@ const Skills = () => {
     };
 
     fetchSkills();
-  }, []);
+  }, [i18n.language]);  
 
   const backendSkills = skills.filter(skill => skill.type === 'BACKEND');
   const frontendSkills = skills.filter(skill => skill.type === 'FRONTEND');
@@ -115,7 +118,7 @@ const Skills = () => {
       </div>
 
       <button className="see-more-button" onClick={handleSeeMoreClick}>
-      {t('skills.button')}
+        {t('skills.button')}
       </button>
     </section>
   );

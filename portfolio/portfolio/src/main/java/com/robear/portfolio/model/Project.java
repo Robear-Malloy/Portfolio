@@ -36,6 +36,10 @@ public class Project {
     @Column(name = "is_featured")
     private Boolean isFeatured;
 
+    @Basic(optional = false)
+    @Column(name = "language")
+    private String language;
+
     public Long getId() {
         return id;
     }
@@ -71,4 +75,8 @@ public class Project {
     public String getPhotoFile() { return photoFile; }
 
     public void setPhotoFile(String photoFile) { this.photoFile = photoFile; }
+
+    public String getLanguage() { return language; }
+
+    public void setLanguage(String language) { this.language = language; }
 }

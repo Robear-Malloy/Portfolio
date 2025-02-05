@@ -14,7 +14,7 @@ const Tutorial = () => {
     alert(t('tutorial.alert'));
   };
 
-  const getCurlCommand = `curl -X GET http://localhost:8080/api/resume`;
+  const getCurlCommand = `curl -X GET http://localhost:8080/api/resume/en`;
   const postCurlCommand = `curl -X POST http://localhost:8080/api/visitor/demo \\
   -H "Content-Type: application/json" \\
   -d '{"name": "Your Name", "message": "Your Message"}'`;

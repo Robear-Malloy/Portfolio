@@ -69,11 +69,11 @@ public class ExperienceControllerTest {
     @Test
     public void testGetAllExperiencesWhenRecordsExist() {
         List<Experience> experiences = Collections.singletonList(experience);
-        when(experienceService.getAllExperiences())
+        when(experienceService.getAllExperiences("en"))
                 .thenReturn(experiences);
 
         ResponseEntity<List<Experience>> response =
-                experienceController.getAllExperiences();
+                experienceController.getAllExperiences("en");
 
         assertThat(response.getStatusCode())
                 .isEqualTo(HttpStatus.OK);
@@ -85,11 +85,11 @@ public class ExperienceControllerTest {
 
     @Test
     public void testGetAllExperiencesWhenRecordDoesNotExist() {
-        when(experienceService.getAllExperiences())
+        when(experienceService.getAllExperiences("en"))
                 .thenThrow(new ExperienceNotFoundException(""));
 
         ResponseEntity<List<Experience>> response =
-                experienceController.getAllExperiences();
+                experienceController.getAllExperiences("en");
 
         assertThat(response.getStatusCode())
                 .isEqualTo(HttpStatus.NOT_FOUND);
@@ -98,11 +98,11 @@ public class ExperienceControllerTest {
 
     @Test
     public void testGetAllExperiencesWhenThrowsException() {
-        when(experienceService.getAllExperiences())
+        when(experienceService.getAllExperiences("en"))
                 .thenThrow(new RuntimeException(""));
 
         ResponseEntity<List<Experience>> response =
-                experienceController.getAllExperiences();
+                experienceController.getAllExperiences("en");
 
         assertThat(response.getStatusCode())
                 .isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);

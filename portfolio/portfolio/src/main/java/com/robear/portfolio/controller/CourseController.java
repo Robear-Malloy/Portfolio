@@ -34,10 +34,10 @@ public class CourseController implements ICourseController {
         }
     }
 
-    @GetMapping("/{lang}")
+    @GetMapping()
     @Override
     public ResponseEntity<List<Course>> getAllCourses(
-            @PathVariable String lang) {
+            @RequestParam(value = "lang", required = false, defaultValue = "en") String lang) {
         try {
             logger.info("Getting all courses");
             List<Course> result = courseService.getAllCourses(lang);
@@ -48,10 +48,11 @@ public class CourseController implements ICourseController {
         }
     }
 
-    @GetMapping("/{lang}/{educationId}")
+    @GetMapping("/{educationId}")
     @Override
     public ResponseEntity<List<Course>> getAllCoursesForSchool(
-            @PathVariable String lang, @PathVariable Long educationId) {
+            @RequestParam(value = "lang", required = false, defaultValue = "en") String lang,
+            @PathVariable Long educationId) {
         try {
             logger.info("Getting all courses associated with education id: {}", educationId);
             List<Course> result = courseService.getAllEducationCourses(lang, educationId);

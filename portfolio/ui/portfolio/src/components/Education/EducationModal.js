@@ -18,10 +18,10 @@ const EducationModal = ({ isOpen, onClose, educationId }) => {
 
     const fetchCourses = async () => {
       setLoading(true);
-      setError(null); // Reset error state before fetching
+      setError(null); 
       try {
         const response = await fetch(
-          `http://localhost:8080/api/course/${i18n.language}/${educationId}`,
+          `http://localhost:8080/api/course/${educationId}?lang=${i18n.language}`,
           {
             method: 'GET',
             headers: {

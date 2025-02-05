@@ -39,10 +39,12 @@ public class ProjectController implements IProjectController {
 
     @GetMapping
     @Override
-    public ResponseEntity<List<Project>> getAllProjects() {
+    public ResponseEntity<List<Project>> getAllProjects(
+            @RequestParam(value = "lang", required = false, defaultValue = "en") String lang
+    ) {
         try {
             logger.info("Getting all Projects");
-            List<Project> projects = projectService.getAllProjects();
+            List<Project> projects = projectService.getAllProjects(lang);
             return new ResponseEntity<>(projects, HttpStatus.OK);
         } catch (ProjectNotFoundException e) {
             logger.warn("No Projects Found. Exception: {}",
@@ -76,10 +78,12 @@ public class ProjectController implements IProjectController {
 
     @GetMapping("/featured")
     @Override
-    public ResponseEntity<List<Project>> getFeaturedProjects() {
+    public ResponseEntity<List<Project>> getFeaturedProjects(
+            @RequestParam(value = "lang", required = false, defaultValue = "en") String lang
+    ) {
         try {
             logger.info("Retrieving Featured Projects");
-            List<Project> projects = projectService.getFeaturedProjects();
+            List<Project> projects = projectService.getFeaturedProjects(lang);
             return new ResponseEntity<>(projects, HttpStatus.OK);
         } catch (ProjectNotFoundException e) {
             logger.warn("Attempted to Find Featured Projects, but None Found. Exception: {}",
