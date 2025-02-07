@@ -24,11 +24,16 @@ public class DbConfig {
 
     @Bean
     public DataSource dataSource() {
+        String dbUrl = env.getProperty("spring.datasource.url");
+        String dbUsername = env.getProperty("spring.datasource.username");
+        String dbPassword = env.getProperty("spring.datasource.password");
+        String driver = env.getProperty("spring.datasource.driver-class-name");
+
         return DataSourceBuilder.create()
-                .driverClassName("org.postgresql.Driver")
-                .url("jdbc:postgresql://localhost:5432/postgres")
-                .username("postgres")
-                .password("password")
+                .driverClassName(driver)
+                .url(dbUrl)
+                .username(dbUsername)
+                .password(dbPassword)
                 .build();
     }
 
