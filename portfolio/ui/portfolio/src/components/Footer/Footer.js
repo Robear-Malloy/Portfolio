@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import './Footer.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -18,9 +18,10 @@ const Footer = () => {
       try {
         const username = process.env.REACT_APP_API_USERNAME;
         const password = process.env.REACT_APP_API_PASSWORD;
+        const apiUrl = process.env.REACT_APP_API_URL;
         const encodedAuth = btoa(`${username}:${password}`);
 
-        const response = await fetch('http://localhost:8080/api/health', {
+        const response = await fetch(`${apiUrl}health`, {
           method: 'GET',
           headers: {
             'Authorization': `Basic ${encodedAuth}`,

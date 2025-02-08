@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { ThemeContext } from '../../utils/ThemeContext';
 import { useTranslation } from 'react-i18next';
 import './SettingsModal.css';

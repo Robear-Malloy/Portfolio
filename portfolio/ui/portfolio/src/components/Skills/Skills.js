@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import { useTranslation } from 'react-i18next';
 import './Skills.css';
@@ -14,13 +14,14 @@ const Skills = () => {
   useEffect(() => {
     const fetchSkills = async () => {
       try {
+        const apiUrl = process.env.REACT_APP_API_URL;
         const username = process.env.REACT_APP_API_USERNAME;
         const password = process.env.REACT_APP_API_PASSWORD;
         const encodedAuth = btoa(`${username}:${password}`);
         
         const language = i18n.language || 'en';
 
-        const response = await fetch(`http://localhost:8080/api/skills?lang=${language}`, {
+        const response = await fetch(`${apiUrl}skills?lang=${language}`, {
           method: 'GET',
           headers: {
             'Authorization': `Basic ${encodedAuth}`,

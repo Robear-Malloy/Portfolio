@@ -36,7 +36,7 @@ h2 {
   justify-content: space-between;
   align-items: center;
   background-color: var(--accent-light);
-  color: var(--text-color); /* Use the dynamic text color */
+  color: var(--text-color);
   padding: 20px;
   border-radius: 15px;
   width: 100%;

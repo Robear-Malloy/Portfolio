@@ -1,4 +1,3 @@
-import React from 'react';
 import AppRoutes from './routes';
 import { I18nextProvider } from 'react-i18next';
 import i18n from './utils/i18n';

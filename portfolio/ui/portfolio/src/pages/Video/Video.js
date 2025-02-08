@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ThemeContext } from '../../utils/ThemeContext';
 import { useTranslation } from 'react-i18next';
 import './Video.css';
@@ -16,11 +16,12 @@ const Video = () => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
+        const apiUrl = process.env.REACT_APP_API_URL;
         const username = process.env.REACT_APP_API_USERNAME;
         const password = process.env.REACT_APP_API_PASSWORD;
         const encodedAuth = btoa(`${username}:${password}`); 
 
-        const response = await fetch(`http://localhost:8080/api/video?lang=${i18n.language}`, {
+        const response = await fetch(`${apiUrl}video?lang=${i18n.language}`, {
           headers: {
             'Authorization': `Basic ${encodedAuth}`,
           },
@@ -41,7 +42,7 @@ const Video = () => {
     };
 
     fetchVideos();
-  }, [i18n.language]); 
+  }, [i18n.language, t]); 
 
   const getVideoId = (link) => {
     const url = new URL(link);
@@ -77,7 +78,7 @@ const Video = () => {
                 onClick={() => setCurrentVideo(video)}
               >
                 <img
-                  src={`https://img.youtube.com/vi/${getVideoId(video.link)}/0.jpg`}
+                  src={`https://img.youtube.com/vi/${videoId}/0.jpg`}
                   alt={video.title}
                   className="thumbnail-image"
                 />

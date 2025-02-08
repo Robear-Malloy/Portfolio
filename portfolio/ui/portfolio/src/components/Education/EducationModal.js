@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactDOM from 'react-dom';
 import './EducationModal.css';
@@ -9,6 +9,7 @@ const EducationModal = ({ isOpen, onClose, educationId }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const apiUrl = process.env.REACT_APP_API_URL;
   const username = process.env.REACT_APP_API_USERNAME;
   const password = process.env.REACT_APP_API_PASSWORD;
   const encodedAuth = btoa(`${username}:${password}`);
@@ -21,7 +22,7 @@ const EducationModal = ({ isOpen, onClose, educationId }) => {
       setError(null); 
       try {
         const response = await fetch(
-          `http://localhost:8080/api/course/${educationId}?lang=${i18n.language}`,
+          `${apiUrl}course/${educationId}?lang=${i18n.language}`,
           {
             method: 'GET',
             headers: {
@@ -50,7 +51,7 @@ const EducationModal = ({ isOpen, onClose, educationId }) => {
     };
 
     fetchCourses();
-  }, [educationId, i18n.language, encodedAuth, t]);
+  }, [educationId, i18n.language, encodedAuth, t, apiUrl]);
 
   if (!isOpen) {
     return null;

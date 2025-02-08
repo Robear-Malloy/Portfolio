@@ -7,7 +7,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 @Entity

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactDOM from 'react-dom';
 import './ExperienceModal.css';
@@ -10,6 +10,7 @@ const ExperienceModal = ({ isOpen, onClose, job }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const apiUrl = process.env.REACT_APP_API_URL;
   const username = process.env.REACT_APP_API_USERNAME;
   const password = process.env.REACT_APP_API_PASSWORD;
   const encodedAuth = btoa(`${username}:${password}`);
@@ -20,7 +21,7 @@ const ExperienceModal = ({ isOpen, onClose, job }) => {
     const fetchResponsibilities = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`http://localhost:8080/api/experience-description/${job.id}?lang=${i18n.language}`, {
+        const response = await fetch(`${apiUrl}experience-description/${job.id}?lang=${i18n.language}`, {
           method: 'GET',
           headers: {
             'Authorization': `Basic ${encodedAuth}`,
@@ -42,7 +43,7 @@ const ExperienceModal = ({ isOpen, onClose, job }) => {
     };
 
     fetchResponsibilities();
-  }, [job, encodedAuth, i18n.language]);
+  }, [job, encodedAuth, i18n.language, t, apiUrl]);
 
   if (!isOpen || !job) {
     return null;

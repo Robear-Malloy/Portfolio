@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import './EducationSection.css';
 import EducationItem from './EducationItem';
 import EducationModal from './EducationModal';
-import i18next from 'i18next';
 
 const EducationSection = () => {
   const { t, i18n } = useTranslation();
@@ -14,21 +13,22 @@ const EducationSection = () => {
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const apiUrl = process.env.REACT_APP_API_URL;
   const username = process.env.REACT_APP_API_USERNAME;
   const password = process.env.REACT_APP_API_PASSWORD;
   const encodedAuth = btoa(`${username}:${password}`);
 
-  const fetchData = async (language) => {
+  const fetchData = useCallback(async (language) => {
     try {
       setLoading(true);
       const [educationResponse, certificationResponse] = await Promise.all([
-        fetch(`http://localhost:8080/api/education?lang=${language}`, {
+        fetch(`${apiUrl}education?lang=${language}`, {
           method: 'GET',
           headers: {
             'Authorization': `Basic ${encodedAuth}`,
           },
         }),
-        fetch(`http://localhost:8080/api/certification?lang=${language}`, {
+        fetch(`${apiUrl}certification?lang=${language}`, {
           method: 'GET',
           headers: {
             'Authorization': `Basic ${encodedAuth}`,
@@ -51,7 +51,7 @@ const EducationSection = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [encodedAuth, t, apiUrl]); 
 
   useEffect(() => {
     fetchData(i18n.language);
@@ -65,7 +65,7 @@ const EducationSection = () => {
     return () => {
       i18n.off('languageChanged', handleLanguageChange);
     };
-  }, [i18n]);
+  }, [i18n, fetchData]);
 
   if (loading) {
     return <div className="education-section">{t('educationSection.loading')}</div>;

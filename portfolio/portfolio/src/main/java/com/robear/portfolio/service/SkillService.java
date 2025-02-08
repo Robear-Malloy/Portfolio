@@ -11,13 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.stream.*;
+//import java.util.stream.*;
 import java.util.List;
 
 @Service
 public class SkillService implements ISkillService {
 
-    private static Logger logger = LoggerFactory.getLogger(SkillService.class);
+    private final static Logger logger = LoggerFactory.getLogger(SkillService.class);
     private final SkillRepository skillRepository;
 
     @Autowired
@@ -74,7 +74,7 @@ public class SkillService implements ISkillService {
 
     @Override
     public void deleteSkill(Long id) {
-        Skill skill = getSkillById(id);
+        getSkillById(id);
         skillRepository.deleteById(id);
         logger.info("Deleted skill ID: {}", id);
     }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import './Experience.css';
 import ExperienceModal from './ExperienceModal';
@@ -12,15 +12,15 @@ const Experience = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
 
+  const apiUrl = process.env.REACT_APP_API_URL;
   const username = process.env.REACT_APP_API_USERNAME;
   const password = process.env.REACT_APP_API_PASSWORD;
   const encodedAuth = btoa(`${username}:${password}`);
 
-  // Fetch the experiences data
-  const fetchExperiences = async (language) => {
+  const fetchExperiences = useCallback(async (language) => {
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:8080/api/experiences/isFeatured?lang=${language}`, {
+      const response = await fetch(`${apiUrl}experiences/isFeatured?lang=${language}`, {
         method: 'GET',
         headers: {
           'Authorization': `Basic ${encodedAuth}`,
@@ -40,7 +40,7 @@ const Experience = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [encodedAuth, t, apiUrl]);
 
   useEffect(() => {
     fetchExperiences(i18n.language);
@@ -54,7 +54,7 @@ const Experience = () => {
     return () => {
       i18n.off('languageChanged', handleLanguageChange);
     };
-  }, [i18n]);
+  }, [i18n, fetchExperiences]); // Include fetchExperiences in dependency array
 
   if (loading) {
     return <div className="experience-section">{t('experience.loading')}</div>;

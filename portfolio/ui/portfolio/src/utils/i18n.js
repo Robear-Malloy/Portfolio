@@ -70,13 +70,10 @@ i18n.use(initReactI18next).init({
             aboutSite: "About this site: Built using React on a Java Spring API and PostgreSQL Database",
             privacyPolicy: {
                 title: "Privacy Policy",
-                privacyValue:   "We value your privacy and are committed to protecting your personal information. \
-                                This website only stores information provided by users who:",
+                privacyValue:   "We value your privacy and are committed to protecting your personal information. This website only stores information provided by users who:",
                 use1: "Contact us via the Contact Form.",
                 use2: "Use the visitor POST endpoint.",
-                dataStorage:    "All data is securely stored and protected using industry-standard encryption methods. \
-                                Additionally, this website uses SSL (Secure Sockets Layer) to ensure \
-                                all communication between your browser and our servers is encrypted and secure.",
+                dataStorage:    "All data is securely stored and protected using industry-standard encryption methods. Additionally, this website uses SSL (Secure Sockets Layer) to ensure all communication between your browser and our servers is encrypted and secure.",
                 sharePolicy: "We do not share or sell your information to third parties. For more details, please contact us directly.",
                 button: "Close",
             },
@@ -171,14 +168,10 @@ i18n.use(initReactI18next).init({
             postContent: "Use this cURL command to send a POST request with parameters:",
             postAuthHeader: "POST Endpoint with Authorization",
             postAuthContent: "The following POST request attempts to add a visitor. If you do not feel comfortable sharing your name, leave it empty, and it will assign \"Anonymous\" to you. However, if authorization is required, the request will be rejected:",
-            postAuthNote: "<strong>Note:</strong> If the endpoint requires authorization, you must include an authorization header \
-            (e.g., <code>-H \"Authorization: Bearer &lt;token&gt;\"</code>). Without proper credentials, the server will \
-            deny access.",
+            postAuthNote: "<strong>Note:</strong> If the endpoint requires authorization, you must include an authorization header (e.g., <code>-H \"Authorization: Bearer &lt;token&gt;\"</code>). Without proper credentials, the server will deny access.",
             copyButton: "Copy",
             thankYouHeader: "Thank You!",
-            thankYouContent:    "A heartfelt thank you to all the visitors who have taken the time to explore my site. Your support and \
-                                interest mean the world to me, and I hope you find the content here helpful and inspiring. Feel free to \
-                                reach out with any feedback or questions!",
+            thankYouContent:    "A heartfelt thank you to all the visitors who have taken the time to explore my site. Your support and interest mean the world to me, and I hope you find the content here helpful and inspiring. Feel free to reach out with any feedback or questions!",
         },
         video: {
             title: "Featured Videos",
