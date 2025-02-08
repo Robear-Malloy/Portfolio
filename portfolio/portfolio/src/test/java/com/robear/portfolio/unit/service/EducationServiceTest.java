@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -33,8 +34,8 @@ public class EducationServiceTest {
         education.setSchool("Test University");
         education.setDegree("4.0");
         education.setGpa(4.0f);
-        education.setDateStarted("12-01-20");
-        education.setDateEnded("12-01-20");
+        education.setDateStarted(LocalDate.of(2020, 1, 1));
+        education.setDateEnded(LocalDate.of(2020, 1, 1));
         education.setLanguage("en");
         MockitoAnnotations.openMocks(this);
     }
@@ -202,8 +203,8 @@ public class EducationServiceTest {
         updatedEducation.setSchool("New University");
         updatedEducation.setDegree("New Degree");
         updatedEducation.setGpa(1.0f);
-        updatedEducation.setDateStarted("2001/01/01");
-        updatedEducation.setDateEnded("2001/02/04");
+        updatedEducation.setDateStarted(LocalDate.of(2020, 1, 1));
+        updatedEducation.setDateEnded(LocalDate.of(2020, 1, 1));
 
         when(educationRepository.findById(education.getId()))
                 .thenReturn(Optional.of(education));

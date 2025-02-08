@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ContactRepository extends JpaRepository<Contact, Long> {
-    @Query("SELECT c FROM Contact c WHERE reachedOut = 0")
+    @Query("SELECT c FROM Contact c WHERE reachedOut = false")
     List<Contact> findPendingContacts();
 }

@@ -16,7 +16,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 @Configuration
 @EnableJpaRepositories(basePackages = "com.robear.portfolio.repository")
-@PropertySource("classpath:persistence-sqlite.properties")
+@PropertySource("classpath:persistence-postgresql.properties")
 public class DbConfig {
 
     @Autowired
@@ -24,9 +24,16 @@ public class DbConfig {
 
     @Bean
     public DataSource dataSource() {
+        String dbUrl = env.getProperty("spring.datasource.url");
+        String dbUsername = env.getProperty("spring.datasource.username");
+        String dbPassword = env.getProperty("spring.datasource.password");
+        String driver = env.getProperty("spring.datasource.driver-class-name");
+
         return DataSourceBuilder.create()
-                .driverClassName("org.sqlite.JDBC")
-                .url("jdbc:sqlite:./portfolioDb.sqlite") // Specify your database file location
+                .driverClassName(driver)
+                .url(dbUrl)
+                .username(dbUsername)
+                .password(dbPassword)
                 .build();
     }
 

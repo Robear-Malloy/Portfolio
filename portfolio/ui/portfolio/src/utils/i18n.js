@@ -38,6 +38,7 @@ i18n.use(initReactI18next).init({
             sending: "Sending",
             successMessage: "'Message sent successfully!'",
             failMessage: "Failed to send the message. Please try again.",
+            checkboxLabel: "I agree that Robert may use my name and e-mail address to contact me"
         },
         educationModal: {
             title: "Related Courses",

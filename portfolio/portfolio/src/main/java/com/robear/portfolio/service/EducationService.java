@@ -93,10 +93,10 @@ public class EducationService implements IEducationService {
             if (education.getGpa() != null && education.getGpa() != 0) {
                 result.setGpa(education.getGpa());
             }
-            if (education.getDateStarted() != null && !education.getDateStarted().isEmpty()) {
+            if (education.getDateStarted() != null) {
                 result.setDateStarted(education.getDateStarted());
             }
-            if (education.getDateEnded() != null && !education.getDateEnded().isEmpty()) {
+            if (education.getDateEnded() != null) {
                 result.setDateEnded(education.getDateEnded());
             }
 

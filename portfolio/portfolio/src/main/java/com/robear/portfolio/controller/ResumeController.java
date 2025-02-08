@@ -31,9 +31,9 @@ public class ResumeController {
     public ResponseEntity<Object> getResume(@PathVariable String lang) {
         try {
             ResponseEntity<List<Education>> educationResponse = educationController.getAllEducation(lang);
-            ResponseEntity<List<Experience>> experienceResponse = experienceController.getAllExperiences();
-            ResponseEntity<List<Project>> projectResponse = projectController.getAllProjects();
-            ResponseEntity<List<Skill>> skillResponse = skillController.getAllSkills();
+            ResponseEntity<List<Experience>> experienceResponse = experienceController.getAllExperiences(lang);
+            ResponseEntity<List<Project>> projectResponse = projectController.getAllProjects(lang);
+            ResponseEntity<List<Skill>> skillResponse = skillController.getAllSkills(lang);
 
             Resume resumeData = new Resume();
             resumeData.setEducation(educationResponse.getBody());

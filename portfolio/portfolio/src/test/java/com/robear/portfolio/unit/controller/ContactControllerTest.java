@@ -33,7 +33,7 @@ public class ContactControllerTest {
         contact.setId(1L);
         contact.setName("John Doe");
         contact.setEmail("john.doe@example.com");
-        contact.setReachedOut(0);
+        contact.setReachedOut(false);
         MockitoAnnotations.openMocks(this);
     }
 

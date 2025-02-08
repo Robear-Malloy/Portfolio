@@ -1,4 +1,4 @@
-import React from 'react';
+import { formatDate } from '../../utils/DateUtil';
 
 const EducationItem = ({ degree, school, gpa, dateStarted, dateEnded }) => {
   return (
@@ -8,7 +8,7 @@ const EducationItem = ({ degree, school, gpa, dateStarted, dateEnded }) => {
       {gpa && <p className="education-gpa">GPA: {gpa.toFixed(2)}</p>}
       <p className="education-dates">
         <em>
-          {dateStarted} - {dateEnded || 'Present'}
+          {formatDate(dateStarted)} - {dateEnded ? formatDate(dateEnded) : 'Present'}
         </em>
       </p>
     </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactDOM from 'react-dom';
 import './ExperienceModal.css';
+import { formatDate } from '../../utils/DateUtil';
 
 const ExperienceModal = ({ isOpen, onClose, job }) => {
   const { t, i18n } = useTranslation();
@@ -58,7 +59,7 @@ const ExperienceModal = ({ isOpen, onClose, job }) => {
         </h2>
         <p className="modal-dates">
           <em>
-            {job.dateStarted} - {job.dateEnded || 'Present'}
+            {formatDate(job.dateStarted)} - {job.dateEnded ? formatDate(job.dateEnded) : 'Present'}
           </em>
         </p>
         {loading ? (

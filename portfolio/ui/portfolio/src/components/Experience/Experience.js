@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import './Experience.css';
 import ExperienceModal from './ExperienceModal';
+import { formatDate } from '../../utils/DateUtil';
 
 const Experience = () => {
   const { t, i18n } = useTranslation();
@@ -82,7 +83,7 @@ const Experience = () => {
             <h4 className="experience-company">{experience.company}</h4>
             <p className="experience-dates">
               <em>
-                {experience.dateStarted} - {experience.dateEnded || 'Present'}
+                {formatDate(experience.dateStarted)} - {experience.dateEnded ? formatDate(experience.dateEnded) : 'Present'}
               </em>
             </p>
           </div>

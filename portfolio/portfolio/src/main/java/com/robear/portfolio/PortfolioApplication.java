@@ -6,20 +6,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Arrays;
-
-import static org.springframework.security.config.Customizer.withDefaults;
 
 @SpringBootApplication(scanBasePackages = "com.robear.portfolio")
 public class PortfolioApplication {
@@ -28,8 +18,14 @@ public class PortfolioApplication {
 		Dotenv dotenv = Dotenv.load();
 
 		String emailPassword = dotenv.get("EMAIL_PASSWORD");
+		String dbUsername = dotenv.get("DB_USERNAME");
+		String dbPassword = dotenv.get("DB_PASSWORD");
+		String connectionString = dotenv.get("CONNECTION_STRING");
 
 		System.setProperty("EMAIL_PASSWORD", emailPassword);
+		System.setProperty("DB_USERNAME", dbUsername);
+		System.setProperty("DB_PASSWORD", dbPassword);
+		System.setProperty("CONNECTION_STRING", connectionString);
 
 		SpringApplication.run(PortfolioApplication.class, args);
 	}
