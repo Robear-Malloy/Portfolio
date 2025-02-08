@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import './EducationSection.css';
 import EducationItem from './EducationItem';
 import EducationModal from './EducationModal';
-import i18next from 'i18next';
 
 const EducationSection = () => {
   const { t, i18n } = useTranslation();

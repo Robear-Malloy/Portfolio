@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ThemeContext } from '../../utils/ThemeContext';
 import { useTranslation } from 'react-i18next';
 import './Video.css';

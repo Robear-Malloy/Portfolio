@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import './Experience.css';
 import ExperienceModal from './ExperienceModal';
@@ -16,7 +16,6 @@ const Experience = () => {
   const password = process.env.REACT_APP_API_PASSWORD;
   const encodedAuth = btoa(`${username}:${password}`);
 
-  // Fetch the experiences data
   const fetchExperiences = async (language) => {
     try {
       setLoading(true);
