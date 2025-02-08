@@ -14,7 +14,7 @@ import java.util.List;
 
 @Service
 public class ExperienceService implements IExperienceService {
-    private static Logger logger = LoggerFactory.getLogger(ExperienceService.class);
+    private final static Logger logger = LoggerFactory.getLogger(ExperienceService.class);
     private final ExperienceRepository experienceRepository;
 
     @Autowired
@@ -56,9 +56,7 @@ public class ExperienceService implements IExperienceService {
             logger.info("Retrieving Experience ID: {}",
                     id);
             return experienceRepository.findById(id)
-                    .orElseThrow(() -> {
-                return new ExperienceNotFoundException(id);
-            });
+                    .orElseThrow(() -> new ExperienceNotFoundException(id));
         } catch (ExperienceNotFoundException e) {
             logger.warn("No Experience ID: {} Found in DB",
                     id);
@@ -124,7 +122,7 @@ public class ExperienceService implements IExperienceService {
     @Override
     public void deleteExperience(Long id) {
         try {
-            Experience experience = getExperienceById(id);
+            getExperienceById(id);
             experienceRepository.deleteById(id);
             logger.info("Deleted Experience ID: {}", id);
         } catch (ExperienceNotFoundException e) {

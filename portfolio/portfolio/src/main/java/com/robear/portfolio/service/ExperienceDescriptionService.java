@@ -1,7 +1,6 @@
 package com.robear.portfolio.service;
 
 import com.robear.portfolio.exception.ExperienceDescriptionNotFoundException;
-import com.robear.portfolio.exception.ExperienceNotFoundException;
 import com.robear.portfolio.model.ExperienceDescription;
 import com.robear.portfolio.repository.ExperienceDescriptionRepository;
 import com.robear.portfolio.service.interfaces.IExperienceDescriptionService;
@@ -16,7 +15,7 @@ import java.util.Optional;
 
 @Service
 public class ExperienceDescriptionService implements IExperienceDescriptionService {
-    private static Logger logger = LoggerFactory.getLogger(ExperienceService.class);
+    private final static Logger logger = LoggerFactory.getLogger(ExperienceService.class);
     private final ExperienceDescriptionRepository experienceDescriptionRepository;
 
     @Autowired

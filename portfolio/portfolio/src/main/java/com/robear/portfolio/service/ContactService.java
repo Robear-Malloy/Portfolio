@@ -1,11 +1,9 @@
 package com.robear.portfolio.service;
 
 import com.robear.portfolio.model.Contact;
-import com.robear.portfolio.model.Email;
 import com.robear.portfolio.repository.ContactRepository;
 import com.robear.portfolio.service.interfaces.IContactService;
 import com.robear.portfolio.exception.ContactNotFoundException;
-import com.robear.portfolio.util.EmailHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +14,13 @@ import java.util.List;
 
 @Service
 public class ContactService implements IContactService {
-    private static Logger logger = LoggerFactory.getLogger(ContactService.class);
+    private final static Logger logger = LoggerFactory.getLogger(ContactService.class);
     private final ContactRepository contactRepository;
-    private final EmailHelper emailHelper;
 
     @Autowired
-    public ContactService(ContactRepository contactRepository, EmailHelper emailHelper) {
-        this.contactRepository = contactRepository;
-        this.emailHelper = emailHelper; }
+    public ContactService(ContactRepository contactRepository) {
+        this.contactRepository = contactRepository; 
+    }
 
     @Override
     public Contact addContact(Contact contact) {
@@ -70,12 +67,11 @@ public class ContactService implements IContactService {
     @Override
     public Contact toggleReachedOut(Long id) {
         try {
-            logger.info("Toggling contact id: {} to true", id);
             Contact contact = contactRepository.findById(id)
-                    .orElseThrow(() -> {
-                        return new ContactNotFoundException(id);
-                    });
-            contact.setReachedOut(true);
+                    .orElseThrow(() ->
+                        new ContactNotFoundException(id));
+            logger.info("Toggling contact id: {} reached out to: {}", id, !contact.getReachedOut());
+            contact.setReachedOut(!contact.getReachedOut());
             return contactRepository.save(contact);
         } catch (ContactNotFoundException e) {
             logger.warn("No contact was found to toggle pending flag.");
@@ -84,23 +80,5 @@ public class ContactService implements IContactService {
             logger.error("Error Toggling Pending Flag");
             throw new RuntimeException("Error Adding Contact to Database");
         }
-    }
-
-    private void sendEmail(Contact contact) {
-        StringBuilder body = new StringBuilder();
-        body.append("<html>")
-                .append("<body>")
-                .append("<h1>Pending Contacts</h1>")
-                .append("<p><b>Name:</b> ").append(contact.getName()).append("</p>")
-                .append("<p><b>Email:</b> ").append(contact.getEmail()).append("</p>")
-                .append("<p><b>Company:</b> ").append(contact.getCompany()).append("</p>")
-                .append("<p><b>Description:</b> ").append(contact.getDescription()).append("</p>")
-                .append("</body>")
-                .append("</html>");
-
-        Email email = new Email();
-        email.setSubject("[Important]: New Contact Reached Out");
-        email.setBody(body.toString());
-        emailHelper.sendEmail(email);
     }
 }

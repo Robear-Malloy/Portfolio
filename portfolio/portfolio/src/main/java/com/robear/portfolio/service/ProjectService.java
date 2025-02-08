@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class ProjectService implements IProjectService {
 
-    private static Logger logger = LoggerFactory.getLogger(ProjectService.class);
+    private final static Logger logger = LoggerFactory.getLogger(ProjectService.class);
     private final ProjectRepository projectRepository;
 
     @Autowired
@@ -59,10 +59,8 @@ public class ProjectService implements IProjectService {
     public Project getProjectById(Long id) {
         try {
             logger.info("Retrieving Project DB Record for ID: {}", id);
-            return projectRepository.findById(id).
-                    orElseThrow(() -> {
-                        return new ProjectNotFoundException(id);
-                    });
+            return projectRepository.findById(id)
+                    .orElseThrow(() -> new ProjectNotFoundException(id));
         } catch (ProjectNotFoundException e) {
             logger.warn("Project not found with ID: {}", id);
             throw e;
@@ -147,7 +145,7 @@ public class ProjectService implements IProjectService {
 
     @Override
     public void deleteProject(Long id) {
-        Project project = getProjectById(id);
+        getProjectById(id);
         projectRepository.deleteById(id);
         logger.info("Deleted project ID: {}", id);
     }

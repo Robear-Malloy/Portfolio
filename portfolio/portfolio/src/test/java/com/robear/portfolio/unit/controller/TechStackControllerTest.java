@@ -3,7 +3,6 @@ package com.robear.portfolio.unit.controller;
 import com.robear.portfolio.controller.TechStackController;
 import com.robear.portfolio.enums.TechType;
 import com.robear.portfolio.exception.TechStackNotFoundException;
-import com.robear.portfolio.exception.InvalidTechStackException;
 import com.robear.portfolio.model.TechStack;
 import com.robear.portfolio.service.TechStackService;
 import org.junit.jupiter.api.BeforeEach;

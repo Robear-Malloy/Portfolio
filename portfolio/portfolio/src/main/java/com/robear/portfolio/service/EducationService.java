@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class EducationService implements IEducationService {
 
-    private static Logger logger = LoggerFactory.getLogger(EducationService.class);
+    private final static Logger logger = LoggerFactory.getLogger(EducationService.class);
     private final EducationRepository educationRepository;
 
     @Autowired
@@ -63,9 +63,7 @@ public class EducationService implements IEducationService {
             logger.info("Retrieving Education ID: {}",
                     id);
             return educationRepository.findById(id)
-                    .orElseThrow(() -> {
-                return new EducationNotFoundException(id);
-            });
+                    .orElseThrow(() -> new EducationNotFoundException(id));
         } catch(EducationNotFoundException e) {
             logger.warn("No Education Found With ID: {}",
                     id);
@@ -133,7 +131,7 @@ public class EducationService implements IEducationService {
 
     @Override
     public void deleteEducation(Long id) {
-        Education education = getEducationById(id);
+        getEducationById(id);
         educationRepository.deleteById(id);
         logger.info("Deleted Project ID: {}",
                 id);
