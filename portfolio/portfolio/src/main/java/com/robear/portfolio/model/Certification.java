@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
+import java.time.LocalDate;
 
 @Entity
 public class Certification {
@@ -21,7 +22,7 @@ public class Certification {
 
     @Basic(optional = false)
     @Column(name = "date_completed")
-    private String dateCompleted;
+    private LocalDate dateCompleted;
 
     @Basic(optional = false)
     @Column(name = "language")
@@ -35,9 +36,9 @@ public class Certification {
 
     public void setName(String name) { this.name = name; }
 
-    public String getDateCompleted() { return dateCompleted; }
+    public LocalDate getDateCompleted() { return dateCompleted; }
 
-    public void setDateCompleted(String dateCompleted) { this.dateCompleted = dateCompleted; }
+    public void setDateCompleted(LocalDate dateCompleted) { this.dateCompleted = dateCompleted; }
 
     public String getLanguage() { return language; }
 

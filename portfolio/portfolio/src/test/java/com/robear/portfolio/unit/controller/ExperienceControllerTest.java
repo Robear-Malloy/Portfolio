@@ -33,8 +33,8 @@ public class ExperienceControllerTest {
         experience.setId(1L);
         experience.setCompany("Test Company");
         experience.setPosition("Tester");
-        experience.setDateStarted(LocalDate.now().toString());
-        experience.setDateEnded(LocalDate.now().toString());
+        experience.setDateStarted(LocalDate.now());
+        experience.setDateEnded(LocalDate.now());
         MockitoAnnotations.openMocks(this);
     }
 

@@ -8,6 +8,7 @@ import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 public class Education {
@@ -30,10 +31,10 @@ public class Education {
 
     @Basic(optional = false)
     @Column(name = "date_started")
-    private String dateStarted;
+    private LocalDate dateStarted;
 
     @Column(name = "date_ended")
-    private String dateEnded;
+    private LocalDate dateEnded;
 
     @Basic(optional = false)
     @Column(name = "language")
@@ -59,13 +60,13 @@ public class Education {
 
     public void setGpa(Float gpa) { this.gpa = gpa; }
 
-    public String getDateStarted() { return dateStarted; }
+    public LocalDate getDateStarted() { return dateStarted; }
 
-    public void setDateStarted(String dateStarted) { this.dateStarted = dateStarted; }
+    public void setDateStarted(LocalDate dateStarted) { this.dateStarted = dateStarted; }
 
-    public String getDateEnded() { return dateEnded; }
+    public LocalDate getDateEnded() { return dateEnded; }
 
-    public void setDateEnded(String dateEnded) { this.dateEnded = dateEnded; }
+    public void setDateEnded(LocalDate dateEnded) { this.dateEnded = dateEnded; }
 
     public String getLanguage() { return language; }
 

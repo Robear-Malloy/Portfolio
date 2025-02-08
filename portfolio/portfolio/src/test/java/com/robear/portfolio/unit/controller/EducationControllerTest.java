@@ -12,6 +12,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,8 +34,8 @@ public class EducationControllerTest {
         education.setSchool("Test University");
         education.setDegree("4.0");
         education.setGpa(4.0f);
-        education.setDateStarted("12-01-20");
-        education.setDateEnded("12-01-20");
+        education.setDateStarted(LocalDate.of(2020, 1, 1));
+        education.setDateEnded(LocalDate.of(2020, 1, 1));
         education.setLanguage("en");
         MockitoAnnotations.openMocks(this);
     }

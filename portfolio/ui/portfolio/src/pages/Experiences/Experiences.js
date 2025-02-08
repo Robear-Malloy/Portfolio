@@ -6,6 +6,7 @@ import './Experiences.css';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import { ThemeContext } from '../../utils/ThemeContext';
+import { formatDate } from '../../utils/DateUtil';
 
 const Experiences = () => {
   const { t, i18n } = useTranslation();
@@ -141,7 +142,7 @@ const Experiences = () => {
           t('experienceTables.education.title'),
           education.map((row) => ({
             ...row,
-            duration: `${row.dateStarted} - ${row.dateEnded || t('experienceTables.education.present')}`,
+            duration: `${formatDate(row.dateStarted)} - ${row.dateEnded ? formatDate(row.dateEnded) : t('experienceTables.education.present')}`,
           })),
           [
             { key: 'school', header: t('experienceTables.education.school') },
@@ -160,7 +161,7 @@ const Experiences = () => {
           t('experienceTables.experience.title'),
           experiences.map((row) => ({
             ...row,
-            duration: `${row.dateStarted} - ${row.dateEnded || t('experienceTables.experience.present')}`,
+            duration: `${formatDate(row.dateStarted)} - ${row.dateEnded ? formatDate(row.dateEnded) : t('experienceTables.experience.present')}`,
           })),
           [
             { key: 'company', header: t('experienceTables.experience.company') },

@@ -73,7 +73,7 @@ public class ContactService implements IContactService {
                     .orElseThrow(() -> {
                         return new ContactNotFoundException(id);
                     });
-            contact.setReachedOut(1);
+            contact.setReachedOut(true);
             return contactRepository.save(contact);
         } catch (ContactNotFoundException e) {
             logger.warn("No contact was found to toggle pending flag.");

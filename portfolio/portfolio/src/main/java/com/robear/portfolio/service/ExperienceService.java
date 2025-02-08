@@ -102,10 +102,10 @@ public class ExperienceService implements IExperienceService {
             if (experience.getPosition() != null && !experience.getPosition().isEmpty()) {
                 result.setPosition(experience.getPosition());
             }
-            if (experience.getDateStarted() != null && !experience.getDateStarted().isEmpty()) {
+            if (experience.getDateStarted() != null) {
                 result.setDateStarted(experience.getDateStarted());
             }
-            if (experience.getDateEnded() != null && !experience.getDateEnded().isEmpty()) {
+            if (experience.getDateEnded() != null) {
                 result.setDateEnded(experience.getDateEnded());
             }
 

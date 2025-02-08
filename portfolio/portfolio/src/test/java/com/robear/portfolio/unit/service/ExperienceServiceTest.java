@@ -33,8 +33,8 @@ public class ExperienceServiceTest {
         experience.setId(1L);
         experience.setCompany("Test Company");
         experience.setPosition("Tester");
-        experience.setDateStarted(LocalDate.now().toString());
-        experience.setDateEnded(LocalDate.now().toString());
+        experience.setDateStarted(LocalDate.now());
+        experience.setDateEnded(LocalDate.now());
         MockitoAnnotations.openMocks(this);
     }
 
@@ -200,8 +200,8 @@ public class ExperienceServiceTest {
         Experience updatedExperience = new Experience();
         updatedExperience.setCompany("New Company");
         updatedExperience.setPosition("New Position");
-        updatedExperience.setDateStarted(LocalDate.now().toString());
-        updatedExperience.setDateEnded(LocalDate.now().toString());
+        updatedExperience.setDateStarted(LocalDate.now());
+        updatedExperience.setDateEnded(LocalDate.now());
 
         when(experienceRepository.findById(experience.getId()))
                 .thenReturn(Optional.of(experience));

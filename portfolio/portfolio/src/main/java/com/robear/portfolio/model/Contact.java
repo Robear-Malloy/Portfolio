@@ -7,6 +7,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Entity
 public class Contact {
     @Id
@@ -31,11 +34,11 @@ public class Contact {
 
     @Basic(optional = false)
     @Column(name = "date_sent")
-    private String dateSent;
+    private LocalDateTime dateSent;
 
     @Basic(optional = false)
     @Column(name = "reached_out")
-    private Integer reachedOut;
+    private Boolean reachedOut;
 
     public Long getId() { return this.id; }
 
@@ -57,11 +60,11 @@ public class Contact {
 
     public void setDescription(String description) { this.description = description; }
 
-    public String getDateSent() { return this.dateSent; }
+    public LocalDateTime getDateSent() { return this.dateSent; }
 
-    public void setDateSent(String dateSent) { this.dateSent = dateSent; }
+    public void setDateSent(LocalDateTime dateSent) { this.dateSent = dateSent; }
 
-    public Integer getReachedOut() { return this.reachedOut; }
+    public Boolean getReachedOut() { return this.reachedOut; }
 
-    public void setReachedOut(Integer reachedOut) { this.reachedOut = reachedOut; }
+    public void setReachedOut(Boolean reachedOut) { this.reachedOut = reachedOut; }
 }

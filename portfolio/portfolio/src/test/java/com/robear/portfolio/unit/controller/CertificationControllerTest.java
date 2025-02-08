@@ -11,6 +11,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class CertificationControllerTest {
 
         certification.setId(1L);
         certification.setName("Test Certification");
-        certification.setDateCompleted("01/01/2025");
+        certification.setDateCompleted(LocalDate.of(2025, 2, 7));
         certification.setLanguage("en");
     }
 

@@ -7,6 +7,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 
+import java.time.LocalDate;
+
 @Entity
 public class Experience {
     @Id
@@ -25,10 +27,10 @@ public class Experience {
 
     @Basic(optional = false)
     @Column(name = "date_started")
-    private String dateStarted;
+    private LocalDate dateStarted;
 
     @Column(name = "date_ended")
-    private String dateEnded;
+    private LocalDate dateEnded;
 
     @Basic(optional = false)
     @Column(name = "is_featured")
@@ -50,13 +52,13 @@ public class Experience {
 
     public void setPosition(String position) { this.position = position; }
 
-    public String getDateStarted() { return dateStarted; }
+    public LocalDate getDateStarted() { return dateStarted; }
 
-    public void setDateStarted(String dateStarted) { this.dateStarted = dateStarted; }
+    public void setDateStarted(LocalDate dateStarted) { this.dateStarted = dateStarted; }
 
-    public String getDateEnded() { return dateEnded; }
+    public LocalDate getDateEnded() { return dateEnded; }
 
-    public void setDateEnded(String dateEnded) { this.dateEnded = dateEnded; }
+    public void setDateEnded(LocalDate dateEnded) { this.dateEnded = dateEnded; }
 
     public Boolean getIsFeatured() { return isFeatured; }
 
