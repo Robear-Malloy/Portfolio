@@ -15,6 +15,7 @@ const Contact = () => {
   const [responseMessage, setResponseMessage] = useState('');
   const [isChecked, setIsChecked] = useState(false); 
 
+  const apiUrl = process.env.REACT_APP_API_URL;
   const username = process.env.REACT_APP_API_USERNAME;
   const password = process.env.REACT_APP_API_PASSWORD;
   const encodedAuth = btoa(`${username}:${password}`);
@@ -42,7 +43,7 @@ const Contact = () => {
     };
 
     try {
-      const emailResponse = await axios.post('http://localhost:8080/api/email/contact', emailData, {
+      const emailResponse = await axios.post(`${apiUrl}email/contact`, emailData, {
         headers: {
           'Authorization': `Basic ${encodedAuth}`,
         },
@@ -55,7 +56,7 @@ const Contact = () => {
           description: formData.message,  
         };
 
-        const contactResponse = await axios.post('http://localhost:8080/api/contact', contactData, {
+        const contactResponse = await axios.post(`${apiUrl}contact`, contactData, {
           headers: {
             'Authorization': `Basic ${encodedAuth}`,
           },

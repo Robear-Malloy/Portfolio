@@ -18,7 +18,6 @@ const Tutorial = () => {
   const postCurlCommand = `curl -X POST http://localhost:8080/api/visitor/demo \\
   -H "Content-Type: application/json" \\
   -d '{"name": "Your Name", "message": "Your Message"}'`;
-  const currentDateTime = new Date().toISOString();
   const visitorPostCommand = `curl -X POST http://localhost:8080/api/visitor/auth \\
   -H "Content-Type: application/json" \\
   -d '{"name": "Your name", message: "Your Message"}'`;

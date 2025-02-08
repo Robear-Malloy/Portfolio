@@ -19,34 +19,35 @@ const Experiences = () => {
   const [techStack, setTechStack] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
 
+  const apiUrl = process.env.REACT_APP_API_URL;
+  const username = process.env.REACT_APP_API_USERNAME;
+  const password = process.env.REACT_APP_API_PASSWORD;
+  const encodedAuth = btoa(`${username}:${password}`);
+  const language = i18n.language || 'en'; 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const username = process.env.REACT_APP_API_USERNAME;
-        const password = process.env.REACT_APP_API_PASSWORD;
-        const encodedAuth = btoa(`${username}:${password}`);
-        const language = i18n.language || 'en'; 
-
         const [educationRes, skillsRes, experiencesRes, projectsRes] = await Promise.all([
-          fetch(`http://localhost:8080/api/education?lang=${language}`, {
+          fetch(`${apiUrl}education?lang=${language}`, {
             method: 'GET',
             headers: {
               'Authorization': `Basic ${encodedAuth}`,
             },
           }),
-          fetch(`http://localhost:8080/api/skills?lang=${language}`, {
+          fetch(`${apiUrl}skills?lang=${language}`, {
             method: 'GET',
             headers: {
               'Authorization': `Basic ${encodedAuth}`,
             },
           }),
-          fetch(`http://localhost:8080/api/experiences?lang=${language}`, {
+          fetch(`${apiUrl}experiences?lang=${language}`, {
             method: 'GET',
             headers: {
               'Authorization': `Basic ${encodedAuth}`,
             },
           }),
-          fetch(`http://localhost:8080/api/projects?lang=${language}`, {
+          fetch(`${apiUrl}projects?lang=${language}`, {
             method: 'GET',
             headers: {
               'Authorization': `Basic ${encodedAuth}`,
@@ -71,7 +72,7 @@ const Experiences = () => {
     };
 
     fetchData();
-  }, [i18n.language]); 
+  }, [i18n.language, apiUrl, encodedAuth, language]); 
 
   const handleRowClick = async (type, id) => {
     if (type === 'education' || type === 'skills') {
@@ -79,12 +80,7 @@ const Experiences = () => {
     }
   
     try {
-      const username = process.env.REACT_APP_API_USERNAME;
-      const password = process.env.REACT_APP_API_PASSWORD;
-      const encodedAuth = btoa(`${username}:${password}`);
-      const language = i18n.language || 'en'; 
-  
-      const response = await fetch(`http://localhost:8080/api/tech/${type}/${id}?lang=${language}`, {
+      const response = await fetch(`${apiUrl}tech/${type}/${id}?lang=${language}`, {
         method: 'GET',
         headers: {
           'Authorization': `Basic ${encodedAuth}`,

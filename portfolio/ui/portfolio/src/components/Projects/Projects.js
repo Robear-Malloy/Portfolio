@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import './Projects.css';
 
@@ -6,14 +6,15 @@ const Projects = () => {
   const { t, i18n } = useTranslation();
   const [projectsData, setProjectsData] = useState([]);
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
-  
+
+  const apiUrl = process.env.REACT_APP_API_URL;
   const username = process.env.REACT_APP_API_USERNAME;
   const password = process.env.REACT_APP_API_PASSWORD;
-  const encodedAuth = btoa(`${username}:${password}`); 
+  const encodedAuth = btoa(`${username}:${password}`);
 
-  const fetchProjects = async (lang) => {
+  const fetchProjects = useCallback(async (lang) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/projects/featured?lang=${lang}`, {
+      const response = await fetch(`${apiUrl}projects/featured?lang=${lang}`, {
         method: 'GET',
         headers: {
           'Authorization': `Basic ${encodedAuth}`, 
@@ -25,12 +26,12 @@ const Projects = () => {
     } catch (error) {
       console.error('Error fetching projects:', error);
     }
-  };
+  }, [encodedAuth, apiUrl]);
 
   useEffect(() => {
     const currentLang = i18n.language;
     fetchProjects(currentLang);
-  }, [i18n.language]);
+  }, [i18n.language, fetchProjects]); 
 
   const handleNextProject = () => {
     setCurrentProjectIndex((prevIndex) => (prevIndex + 1) % projectsData.length);
