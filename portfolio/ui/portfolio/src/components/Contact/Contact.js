@@ -13,6 +13,7 @@ const Contact = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [responseMessage, setResponseMessage] = useState('');
+  const [isChecked, setIsChecked] = useState(false); // State for checkbox
 
   const username = process.env.REACT_APP_API_USERNAME;
   const password = process.env.REACT_APP_API_PASSWORD;
@@ -23,28 +24,48 @@ const Contact = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked); // Toggle checkbox state
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     setResponseMessage('');
 
     const emailData = {
-      subject: formData.subject,       
-      body: formData.message,          
-      toEmail: formData.email,         
-      fromEmail: formData.email,       
-      name: formData.name,             
+      subject: formData.subject,
+      body: formData.message,
+      toEmail: formData.email,
+      fromEmail: formData.email,
+      name: formData.name,
     };
 
     try {
-      const response = await axios.post('http://localhost:8080/api/email/contact', emailData, {
+      const emailResponse = await axios.post('http://localhost:8080/api/email/contact', emailData, {
         headers: {
           'Authorization': `Basic ${encodedAuth}`,
         },
       });
 
-      if (response.status === 200) {
-        setResponseMessage(t('contact.successMessage'));
+      if (emailResponse.status === 200) {
+        const contactData = {
+          name: formData.name,
+          email: formData.email,
+          description: formData.message,  
+        };
+
+        const contactResponse = await axios.post('http://localhost:8080/api/contact', contactData, {
+          headers: {
+            'Authorization': `Basic ${encodedAuth}`,
+          },
+        });
+
+        if (contactResponse.status === 201) {
+          setResponseMessage(t('contact.successMessage'));
+        } else {
+          setResponseMessage(t('contact.failMessage'));
+        }
       }
     } catch (error) {
       setResponseMessage(t('contact.failMessage'));
@@ -64,7 +85,7 @@ const Contact = () => {
           placeholder={t('contact.name')}
           value={formData.name}
           onChange={handleInputChange}
-          required 
+          required
         />
         <input
           type="email"
@@ -85,9 +106,26 @@ const Contact = () => {
           placeholder={t('contact.message')}
           value={formData.message}
           onChange={handleInputChange}
-          required 
+          required
         ></textarea>
-        <button type="submit" disabled={isSubmitting || !formData.name || !formData.message}>
+
+        <div className="checkbox-container">
+          <input
+            type="checkbox"
+            id="contract-checkbox"
+            checked={isChecked}
+            onChange={handleCheckboxChange}
+          />
+          <label htmlFor="contract-checkbox">
+            {t('contact.checkboxLabel')}
+          </label>
+        </div>
+
+        <button 
+          type="submit" 
+          disabled={isSubmitting || !formData.name || !formData.message || !isChecked}
+          className={isChecked ? 'button-checked' : ''}
+        >
           {isSubmitting ? t('contact.sending') : t('contact.sendButton')}
         </button>
       </form>

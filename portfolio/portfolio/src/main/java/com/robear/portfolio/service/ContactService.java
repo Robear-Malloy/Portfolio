@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -27,8 +28,9 @@ public class ContactService implements IContactService {
     @Override
     public Contact addContact(Contact contact) {
         try {
-            logger.info("Adding Contact: {} to Database", contact);
-            //sendEmail(contact);
+            contact.setDateSent(LocalDateTime.now());
+            contact.setReachedOut(false);
+            logger.info("Adding Contact: {}", contact);
             return contactRepository.save(contact);
         } catch (Exception e) {
             logger.error("Error adding contact to the database");
